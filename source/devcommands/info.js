@@ -14,7 +14,7 @@ require("moment-duration-format");
   const duration = moment.duration(client.uptime).format(" D [gün], H [saat], m [dakika], s [saniye]");
   interaction.reply(`= İstatistikler =
 • Bellek kullanımı :: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB
-• Kullanıcılar     :: ${client.guilds.reduce((a, b) => a + b.memberCount, 0).toLocaleString()}
+• Kullanıcılar     :: ${client.guilds.memberCount}
 • Sunucular        :: ${client.guilds.size.toLocaleString()}
 • Kanallar         :: ${client.channels.size.toLocaleString()}
 • Ping             :: ${client.ping}`);
