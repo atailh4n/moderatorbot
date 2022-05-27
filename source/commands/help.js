@@ -11,7 +11,9 @@ module.exports = {
       
    async execute(interaction) {
    const serverConf = await GuildModel.findOne({ discordId: interaction.guild.id });
-   let langDb = await serverConf.needed.systems.langPr;
+   let langDb = serverConf.needed.systems.langPr;
+       
+   console.log(langDb)
 
    if (langDb == "en") {
       const helpembed  = new MessageEmbed()

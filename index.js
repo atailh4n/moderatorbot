@@ -14,7 +14,7 @@ require('dotenv').config({
 });
 
 // MongoDB Connection
-mongoose.connect("mongodb+srv://kokturkdb_admin:atabey1221@clusterkokturk.owzhc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", {
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
@@ -58,6 +58,7 @@ module.exports.client = client;
 client.events = new Collection();
 client.cooldowns = new Collection();
 client.commands = new Collection();
+client.devcommands = new Collection();
 
 //Loaders\\
 //Application Commands Update
@@ -89,6 +90,16 @@ for (const file of cmdFiles) {
 
   client.commands.set(command.data.name, command);
   console.log(`🗂️[CMD HANDLER] - ${file} was loaded`)
+};
+
+// Dev Commands Loader
+
+const cmdFilesdev = fs.readdirSync('./source/devcommands').filter(file => file.endsWith('.js'));
+for (const filedev of cmdFilesdev) {
+  const commanddev = require(`./source/devcommands/${filedev}`);
+
+  client.devcommands.set(commanddev.name, commanddev);
+  console.log(`🗂️[DEV COMMANDS] - ${filedev} was loaded`)
 };
 
 // Event Loader
@@ -129,16 +140,6 @@ client.login(process.env.TOKEN);
      domain: 'http://panel.moderatorbot.gq',
      bot: client,
      acceptPrivacyPolicy: true,
-     invite: {
-        clientId: process.env.CLIENT_ID,
-        scopes: ["bot", "applications.commands"],
-        permissions: '8',
-        redirectUri: 'https://moderatorbot.gq/',
-     },
-     supportServer: {
-        slash: '/support-server',
-        inviteUrl: 'https://discord.com/invite/DJxGA4mrXN'
-     },
      guildAfterAuthorization: {
         use: true,
         guildId: main.datasowner.mainserver
@@ -242,6 +243,46 @@ client.login(process.env.TOKEN);
                      }
                  },
              ]
+         },
+         {
+
+             categoryId: 'premium',
+
+             categoryName: "Premium",
+
+             categoryDescription: "If you have premium, you can use premium features.",
+
+             categoryOptionsList: [
+
+                 {
+
+                     optionId: '2fa',
+
+                     optionName: "Captcha",
+
+                     optionDescription: "On/Off Captcha",
+
+                     optionType: DBD.formTypes.switch({ disabled: false }),
+
+                     getActualSet: async ({guild}) => {
+
+                         const serverConf = await GuildModel.findOne({ discordId: guild.id })
+
+                         return serverConf.needed.systems.langPr || null;
+
+                     },
+
+                     setNew: async ({guild,newData}) => {
+
+                      await GuildModel.findOneAndUpdate({ discordId: guild.id }, { "needed.systems.langPr": newData });
+
+                      return;
+
+                     }
+
+                 },               
+             ]
+
          },
      ]
  });

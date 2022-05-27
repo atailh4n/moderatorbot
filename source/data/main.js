@@ -3,7 +3,7 @@ const main = {
           info: {
         bot_name: "Moderator",
         prefix: "/",
-        ownerdcname: "atailh4n#4906",
+        ownerdcname: "Ata İlhan#0528, smollmancar#4906",
         ownername: "Ata İlhan Köktürk",
         version: "0.0.2CB_patch2",
         bot_website: "www.moderatorbot.gq",
@@ -17,13 +17,13 @@ const main = {
         bot_webpanel: "https://panel.moderatorbot.gq/",
         vote_link: "https://top.gg/bot/733670294086221865",
         bot_logo: "https://cdn.discordapp.com/attachments/877875685652307978/882306438632964207/moderator.png",
-        banner_added: "http://cdn.kokturk.ga/bot/images/welcomebanner.jpg",
+        banner_added: "https://media.discordapp.net/attachments/877875685652307978/978658869976924261/welcomer.jpg",
         logo_warn: "https://i.hizliresim.com/7e3bga1.png",
         logo_info: "https://i.hizliresim.com/cnzcgp7.png",
         logo_err: "https://i.hizliresim.com/hosah2k.png",
         logo_succ: "https://i.hizliresim.com/b7y2dem.png",
         bot_logo_gif: "https://cdn.discordapp.com/attachments/877875685652307978/882306430227603506/moderator_gif.gif",
-        banner_gif: "https://cdn.discordapp.com/attachments/877875685652307978/889874684127092766/standard.gif"
+        banner_gif: "https://media.discordapp.net/attachments/877875685652307978/978659087820652574/def.jpg"
       },
   
       colors: {
@@ -67,7 +67,9 @@ const main = {
     datasowner: {
       logchannel: "860257607675805716",
       ownerevalchannel: "860257607675805717",
-      mainserver: "877671612156084224"
+      mainserver: "877671612156084224",
+	  ownerids: ["733757903139504148", "440048470100017183"],
+      devprefix: "md."
     }
   };
   
