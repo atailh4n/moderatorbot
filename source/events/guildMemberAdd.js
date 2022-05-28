@@ -5,12 +5,13 @@ const Discord = require('discord.js');
 const moment = require('moment');
 
 client.on("guildMemberAdd", async(member, guild) => {
+    /*
     let los = client.users.cache.get(member.id);
     const req = await guildSchema.findOne({ discordId: member.guild.id });
     let lang = req.needed.systems.langPr;
     require("moment-duration-format");
     const kurulus = new Date().getTime() - los.createdAt.getTime();
-    const authSys = req.needed.pres.pre1;
+    const authSys = req.other.preOne;
   
   var kontrol;
   if (kurulus < 1296000000) kontrol = `Account Safety: **Not Safe. Protected.** ${main.displaythings.emoj_err}`
@@ -41,4 +42,5 @@ kanal.send({ embeds: [embed]})
 .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
 .setDescription(`${los} dlı üye sunucunuza katılmıştır`)
 }
+*/
 })
