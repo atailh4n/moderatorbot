@@ -1,11 +1,11 @@
-const guildSchema = require('../models/GuildModel');
-const { client } = require('../../index');
-const main = require('../data/main');
-const Discord = require('discord.js');
-const moment = require('moment');
+const guildSchema = require("../models/GuildModel");
+const { client } = require("../../index");
+const main = require("../data/main");
+const Discord = require("discord.js");
+const moment = require("moment");
 
-client.on("guildMemberAdd", async(member, guild) => {
-    /*
+client.on("guildMemberAdd", async (member, guild) => {
+  /*
     let los = client.users.cache.get(member.id);
     const req = await guildSchema.findOne({ discordId: member.guild.id });
     let lang = req.needed.systems.langPr;
@@ -43,4 +43,4 @@ kanal.send({ embeds: [embed]})
 .setDescription(`${los} dlı üye sunucunuza katılmıştır`)
 }
 */
-})
+});

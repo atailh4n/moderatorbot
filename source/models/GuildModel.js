@@ -6,304 +6,304 @@ const GuildModel = new Schema({
     type: String,
     default: null,
     required: true,
-    unique: true
+    unique: true,
   },
   needed: {
     //Needed values
     texts: {
       modlog: {
         type: String,
-        default: null
+        default: null,
       },
       chat: {
         type: String,
-        default: null
-      }
+        default: null,
+      },
     },
     safe: {
       safeUsr: {
         type: Array,
-        default: null
+        default: null,
       },
       safeBot: {
         type: Array,
-        default: null
+        default: null,
       },
       safeRol: {
         type: Array,
-        default: null
+        default: null,
       },
       safeLink: {
         type: Array,
-        default: null
-      }
+        default: null,
+      },
     },
     systems: {
       linkKill: {
         default: false,
-        type: Boolean
+        type: Boolean,
       },
       badWKill: {
         default: false,
-        type: Boolean
+        type: Boolean,
       },
       voiceMuteSys: {
         default: false,
-        type: Boolean
+        type: Boolean,
       },
       logSys: {
         default: false,
-        type: Boolean
+        type: Boolean,
       },
       langPr: {
-         default: "en",
-         type: String
-      }
+        default: "en",
+        type: String,
+      },
     },
     roles: {
       jailRol: {
         default: null,
-        type: String
+        type: String,
       },
 
       susRol: {
         default: null,
-        type: String
-      }
+        type: String,
+      },
     },
     events: {
       appCmdCr: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       appCmdDel: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       chCr: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       chDel: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       chUp: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       banAdd: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       banRem: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       usrAdd: {
         authSys: {
           default: false,
-          type: Boolean
-        }
+          type: Boolean,
+        },
       },
       usrRem: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       usrUp: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       guildUp: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       invCr: {
         killty: {
           defualt: null,
-          type: String
-        }
+          type: String,
+        },
       },
       invDel: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       msgSnd: {
         badWordPr: {
           default: false,
-          type: Boolean
+          type: Boolean,
         },
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       msgDel: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       msgDelBulk: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       msgRecAdd: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       msgRecRem: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       msgRecRemAll: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       msgRecRemEmoj: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       msgUp: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       prsUp: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       rolCr: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       rolDel: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       rolUp: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       stcCr: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       stcDel: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       stcUp: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       thrCr: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       thrDel: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       thrListSync: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       thrMemsUp: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       thrMemUp: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       thrUp: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       usrUp: {
         killty: {
           default: null,
-          type: String
-        }
+          type: String,
+        },
       },
       vcStatUp: {
         killed: {
           default: false,
-          type: Boolean
-        }
-      }
-    }
+          type: Boolean,
+        },
+      },
+    },
   },
   other: {
     preOne: {
       default: false,
-      type: Boolean
+      type: Boolean,
     },
     preTwo: {
       default: false,
-      type: Boolean
-    }
-  }
+      type: Boolean,
+    },
+  },
 });
 
 module.exports = model("Guild_DB", GuildModel);
