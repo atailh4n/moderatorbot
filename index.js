@@ -144,6 +144,32 @@ client.login(process.env.TOKEN);
         use: true,
         guildId: main.datasowner.mainserver
      },
+     rateLimits: {
+     manage: {
+         windowMs: 10 * 60 * 1000,
+         max: 75,
+         message: 'Sorry, you are limited.',
+         store: null,
+     },
+     guildPage: {
+         windowMs: 10 * 60 * 1000,
+         max: 40,
+         message: 'Sorry, you are limited.',
+         store: null,
+     },
+     settingsUpdatePostAPI: {
+         windowMs: 15 * 60 * 1000,
+         max: 75,
+         message: 'Sorry, you are limited.',
+         store: null,
+     },
+     discordOAuth2: {
+         windowMs: 15 * 60 * 1000,
+         max: 2,
+         message: 'Sorry, you are limited.',
+         store: null,
+     }
+      },
      minimizedConsoleLogs: true,
      theme: DarkDashboard({
      information: {
@@ -262,7 +288,7 @@ client.login(process.env.TOKEN);
 
                      optionDescription: "On/Off Captcha",
 
-                     optionType: DBD.formTypes.switch({ disabled: false }),
+                     optionType: DBD.formTypes.switch({ disabled: true }),
 
                      getActualSet: async ({guild}) => {
 
