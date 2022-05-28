@@ -11,26 +11,26 @@ const userSchema = require("../models/UserModel");
 const discordModal = require("discord-modals");
 const guildSchema = require("../models/GuildModel");
 
-client.on("channelCreate", async (channel) => {
-  const serverConf = await guildSchema.findOne({ discordId: channel.guild.id });
+client.on("guildBanRemove", async (ban) => {
+  const serverConf = await guildSchema.findOne({ discordId: ban.guild.id });
 
-  let isActivated = serverConf.needed.events.chCr.activated;
+  let isActivated = serverConf.needed.events.banRem.activated;
 
   if (isActivated == false) return;
 
   let logValue = serverConf.needed.systems.logSys;
   let adminRol = serverConf.needed.roles.adminRol;
   let modlogValue = serverConf.needed.texts.modlog;
-  let killType = serverConf.needed.events.chCr.killty;
+  let killType = serverConf.needed.events.banRem.killty;
   let safeBot = serverConf.needed.safe.safeBot;
   let safeUser = serverConf.needed.safe.safeUsr;
   let safeRol = serverConf.needed.safe.safeRol;
   let lang = serverConf.needed.systems.langPr;
   let sendLog = client.channels.cache.get(modlogValue);
 
-  const fetchedLogs = await channel.guild.fetchAuditLogs({
+  const fetchedLogs = await ban.guild.fetchAuditLogs({
     limit: 1,
-    type: "CHANNEL_CREATE",
+    type: "MEMBER_BAN_ADD"
   });
 
   const deletionLog = fetchedLogs.entries.first();
@@ -41,8 +41,8 @@ client.on("channelCreate", async (channel) => {
         embeds: [
           embed(
             "info",
-            "Created a channel",
-            `${channel}(\`${channel.id}\`) is created but we dont know who is created. Are you sure that my role is at the top and that I have \`\`\`"ADMINISTRAOR"\`\`\` perm?`
+            "Unbanned a user",
+            `${ban}(\`${ban.id}\`) is unbanned but we dont know who is unbanned. Are you sure that my role is at the top and that I have \`\`\`"ADMINISTRAOR"\`\`\` perm?`
           ),
         ],
       });
@@ -67,8 +67,8 @@ client.on("channelCreate", async (channel) => {
             embeds: [
               embed(
                 "info",
-                "Created a channel",
-                `${channel}(\`${channel.id}\`) is created.\n> **User:**\n${executor}(\`${executor.id}\`)`
+                "Unbanned a user",
+                `${ban}(\`${ban.id}\`) is unbanned.\n> **User:**\n${executor}(\`${executor.id}\`)`
               ),
             ],
           });
@@ -79,6 +79,7 @@ client.on("channelCreate", async (channel) => {
           safeRol.some((res) => !member.roles.has(res)) ||
           member.id != ownerFetch.id ||
           member.id != client.id ||
+          member.roles.cache.some((res) => res.id != adminRol) ||
           main.datasowner.ownerids.some((res) => member.id != res)
         ) {
           if ((killType = "kick")) {
@@ -86,15 +87,15 @@ client.on("channelCreate", async (channel) => {
               member
                 .kick({
                   reason:
-                    "This user is creating channel without permission of guild owner. Protected",
+                    "This user is unbanning users without permission of guild owner. Protected",
                 })
                 .then(
                   sendLog.send({
                     embeds: [
                       embed(
                         "info",
-                        "Created a channel without permission",
-                        `${channel}(\`${channel.id}\`) is created. User is kicked.\n> **User:**\n${executor}(\`${executor.id}\`)`
+                        "Unbanned a user without permission",
+                        `${ban}(\`${ban.id}\`) is unbanned. User is kicked.\n> **User who unbanned:**\n${executor}(\`${executor.id}\`)`
                       ),
                     ],
                   })
@@ -105,15 +106,15 @@ client.on("channelCreate", async (channel) => {
               member
                 .ban({
                   reason:
-                    "This user is creating channel without permission of guild owner. Protected",
+                    "This user is unbanning users without permission of guild owner. Protected",
                 })
                 .then(
                   modlogValue.send({
                     embeds: [
                       embed(
                         "info",
-                        "Created a channel without permission",
-                        `${channel}(\`${channel.id}\`) is created. User is banned.\n> **User:**\n${executor}(\`${executor.id}\`)`
+                        "Unbanned a user without permission",
+                        `${ban}(\`${ban.id}\`) is unbanned. User is banned.\n> **User who unbanned:**\n${executor}(\`${executor.id}\`)`
                       ),
                     ],
                   })
@@ -126,8 +127,8 @@ client.on("channelCreate", async (channel) => {
           embeds: [
             embed(
               "info",
-              "Created a channel",
-              `${channel}(\`${channel.id}\`) is created but can't find punishment type./No punishment selected.\n> **User:** ${executor}(\`${executor.id}\`)`
+              "Unbanned a user",
+              `${ban}(\`${ban.id}\`) is unbanned but can't find punishment type./No punishment selected.\n> **User who unbanned:** ${executor}(\`${executor.id}\`)`
             ),
           ],
         });
@@ -141,8 +142,8 @@ client.on("channelCreate", async (channel) => {
         embeds: [
           embed(
             "info_tr",
-            "Kanal oluşturuldu",
-            `${channel}(\`${channel.id}\`) adlı kanal oluşturuldu ancak kimin oluşturulduğu bilinmiyor. Rolümün en üstte olduğundan ve \`\`\`"ADMINISTRAOR"\`\`\` iznim olduğundan emin misin?`
+            "Kullanıcı yasağı kaldırıldı",
+            `${ban}(\`${ban.id}\`) adlı kullanıcının yasağı kaldırıldı ancak kimin güncellediği bilinmiyor. Rolümün en üstte olduğundan ve \`\`\`"ADMINISTRAOR"\`\`\` iznim olduğundan emin misin?`
           ),
         ],
       });
@@ -167,8 +168,8 @@ client.on("channelCreate", async (channel) => {
             embeds: [
               embed(
                 "info_tr",
-                "Kanal oluşturuldu",
-                `${channel}(\`${channel.id}\`) oluşturuldu.\n> **Kullanıcı:**\n${executor}(\`${executor.id}\`)`
+                "Kullanıcı yasağı kaldırıldı",
+                `${ban}(\`${ban.id}\`) adlı kullanıcının yasağı kaldırıldı.\n> **Yasağı kaldıran kullanıcı:**\n${executor}(\`${executor.id}\`)`
               ),
             ],
           });
@@ -179,6 +180,7 @@ client.on("channelCreate", async (channel) => {
           safeRol.some((res) => !member.roles.has(res)) ||
           member.id != ownerFetch.id ||
           member.id != client.id ||
+          member.roles.cache.some((res) => res.id != adminRol) ||
           main.datasowner.ownerids.some((res) => member.id != res)
         ) {
           if ((killType = "kick")) {
@@ -186,15 +188,15 @@ client.on("channelCreate", async (channel) => {
               member
                 .kick({
                   reason:
-                    "Bu kullanıcı sunucu sahibinden izinsiz kanal oluşturdu. Korundu.",
+                    "Bu kullanıcı sunucu sahibinden izinsiz yasaklama yaptı. Korundu.",
                 })
                 .then(
                   sendLog.send({
                     embeds: [
                       embed(
                         "info_tr",
-                        "İzinsiz kanal oluşturuldu",
-                        `${channel}(\`${channel.id}\`) oluşturuldu. Kullanıcı atıldı.\n> **Kullanıcı:**\n${executor}(\`${executor.id}\`)`
+                        "İzinsiz kullanıcının yasağı kaldırıldı",
+                        `${ban}(\`${ban.id}\`) adlı kullanıcı izinsiz yasağı kaldırıldı. Kullanıcı atıldı.\n> **Yasağı kaldıran kullanıcı:**\n${executor}(\`${executor.id}\`)`
                       ),
                     ],
                   })
@@ -205,15 +207,15 @@ client.on("channelCreate", async (channel) => {
               member
                 .ban({
                   reason:
-                    "Bu kullanıcı sunucu sahibinden izinsiz kanal oluşturdu. Korundu.",
+                    "Bu kullanıcı sunucu sahibinden izinsiz kullanıcının yasağını kaldırdı. Korundu.",
                 })
                 .then(
                   modlogValue.send({
                     embeds: [
                       embed(
                         "info_tr",
-                        "İzinsiz kanal oluşturuldu",
-                        `${channel}(\`${channel.id}\`) oluşturuldu. Kullanıcı banlandı.\n> **Kullanıcı:**\n${executor}(\`${executor.id}\`)`
+                        "İzinsiz kullanıcının yasağı kaldırıldı",
+                        `${ban}(\`${ban.id}\`) adlı kullanıcı izinsiz yasağı kaldırıldı. Kullanıcı banlandı.\n> **Yasağı kaldıran kullanıcı:**\n${executor}(\`${executor.id}\`)`
                       ),
                     ],
                   })
@@ -226,8 +228,8 @@ client.on("channelCreate", async (channel) => {
           embeds: [
             embed(
               "info_tr",
-              "Kanal oluşturuldu",
-              `${channel}(\`${channel.id}\`) oluşturuldu ancak ceza bulunamadı/Cezalandırma devre dışı.\n> **Kullanıcı:** ${executor}(\`${executor.id}\`)`
+              "Kullanıcı yasağı kaldırıldı",
+              `${ban}(\`${ban.id}\`) yasağı kaldırıldı ancak ceza bulunamadı/Cezalandırma devre dışı.\n> **Yasağı kaldıran Kullanıcı:** ${executor}(\`${executor.id}\`)`
             ),
           ],
         });

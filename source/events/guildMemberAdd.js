@@ -1,8 +1,15 @@
-const guildSchema = require("../models/GuildModel");
-const { client } = require("../../index");
+const embed = require("../data/embeds");
 const main = require("../data/main");
-const Discord = require("discord.js");
-const moment = require("moment");
+const {
+  MessageActionRow,
+  MessageButton,
+  MessageEmbed,
+  Formatters,
+} = require("discord.js");
+const { client } = require("../../index");
+const userSchema = require("../models/UserModel");
+const discordModal = require("discord-modals");
+const guildSchema = require("../models/GuildModel");
 
 client.on("guildMemberAdd", async (member, guild) => {
   /*

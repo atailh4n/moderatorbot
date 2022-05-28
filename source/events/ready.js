@@ -1,4 +1,3 @@
-const DarkDashboard = require("dbd-dark-dashboard");
 const { client } = require("../../index");
 
 client.on("ready", async (client) => {

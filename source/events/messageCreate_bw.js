@@ -1,16 +1,26 @@
-const { client } = require("../../index");
-const main = require("../data/main");
-const GuildModel = require("../models/GuildModel");
-const Discord = require("discord.js");
 const embed = require("../data/embeds");
+const main = require("../data/main");
+const {
+  MessageActionRow,
+  MessageButton,
+  MessageEmbed,
+  Formatters,
+} = require("discord.js");
+const { client } = require("../../index");
+const userSchema = require("../models/UserModel");
+const discordModal = require("discord-modals");
+const guildSchema = require("../models/GuildModel");
 
 client.on("messageCreate", async (message) => {
-  const serverConf = await GuildModel.findOne({ discordId: message.guild.id });
+  const serverConf = await guildSchema.findOne({ discordId: message.guild.id });
+
+  let isActivated = serverConf.needed.events.chCr.activated;
+
+  if (isActivated == false) return;
 
   let logValue = serverConf.needed.systems.logSys;
   let modlogValue = serverConf.needed.texts.modlog;
   let badWkiller = serverConf.needed.events.msgSnd.badWordPr;
-  let linkkiller = serverConf.needed.events.msgSnd.linkPr;
   let killType = serverConf.needed.events.msgSnd.killty;
   let safeBot = serverConf.needed.safe.safeBot;
   let safeUser = serverConf.needed.safe.safeUsr;

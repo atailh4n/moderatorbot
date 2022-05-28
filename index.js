@@ -182,6 +182,30 @@ client.login(process.env.TOKEN);
       },
     },
     minimizedConsoleLogs: true,
+    underMaintenanceAccessKey: "totalsecretkey",
+    underMaintenanceAccessPage: "/total-secret-get-access",
+    useUnderMaintenance: true,
+    underMaintenance: {
+      title: "Under Maintenance",
+      contentTitle: "This page is under maintenance",
+      texts: [
+        "<br>",
+        "We still want to change for the better for you.",
+        "Therefore, we are introducing technical updates so that we can allow you to enjoy the quality of our services.",
+        "<br>",
+        'Come back to us later or join our <a href="https://www.moderatorbot.gq/support">Discord Support Server</a>',
+      ],
+      bodyBackgroundColors: ["#ffa191", "#ffc247"],
+      buildingsColor: "#ff6347",
+      craneDivBorderColor: "#ff6347",
+      craneArmColor: "#f88f7c",
+      craneWeightColor: "#f88f7c",
+      outerCraneColor: "#ff6347",
+      craneLineColor: "#ff6347",
+      craneCabinColor: "#f88f7c",
+      craneStandColors: ["#ff6347", , "#f29b8b"],
+    },
+    ownerIDs: main.datasowner.ownerids,
     theme: DarkDashboard({
       information: {
         createdBy: "Ata İlhan Köktürk",
@@ -298,36 +322,26 @@ client.login(process.env.TOKEN);
       },
       {
         categoryId: "premium",
-
         categoryName: "Premium",
-
         categoryDescription:
           "If you have premium, you can use premium features.",
-
         categoryOptionsList: [
           {
             optionId: "2fa",
-
             optionName: "Captcha",
-
             optionDescription: "On/Off Captcha",
-
             optionType: DBD.formTypes.switch({ disabled: true }),
-
             getActualSet: async ({ guild }) => {
               const serverConf = await GuildModel.findOne({
                 discordId: guild.id,
               });
-
               return serverConf.needed.systems.langPr || null;
             },
-
             setNew: async ({ guild, newData }) => {
               await GuildModel.findOneAndUpdate(
                 { discordId: guild.id },
                 { "needed.systems.langPr": newData }
               );
-
               return;
             },
           },

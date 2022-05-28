@@ -7,16 +7,16 @@ const {
   Formatters,
 } = require("discord.js");
 const { client } = require("../../index");
-const UserModel = require("../models/UserModel");
+const userSchema = require("../models/UserModel");
 const discordModal = require("discord-modals");
-const GuildModel = require("../models/GuildModel");
+const guildSchema = require("../models/GuildModel");
 
 client.on("messageCreate", async (message) => {
   const prefix = main.datasowner.devprefix;
   const owners = main.datasowner.ownerids;
 
   if (!message.content.startsWith(prefix)) return;
-  if (message.author.id != "440048470100017183") return;
+  if (main.datasowner.ownerids.some((res) => message.author.id != res)) return;
 
   const args = message.content.slice(prefix.length).trim().split(/ +/);
   const commandName = args.shift().toLowerCase();
@@ -25,7 +25,7 @@ client.on("messageCreate", async (message) => {
   if (!command) return;
 
   try {
-    await command.execute(command);
+    await command.execute(message);
   } catch (error) {
     console.error(error);
   }

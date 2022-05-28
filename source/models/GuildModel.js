@@ -65,29 +65,24 @@ const GuildModel = new Schema({
         default: null,
         type: String,
       },
-
       susRol: {
+        default: null,
+        type: String,
+      },
+      adminRol: {
         default: null,
         type: String,
       },
     },
     events: {
-      appCmdCr: {
-        killty: {
-          default: null,
-          type: String,
-        },
-      },
-      appCmdDel: {
-        killty: {
-          default: null,
-          type: String,
-        },
-      },
       chCr: {
         killty: {
           default: null,
           type: String,
+        },
+        activated: {
+          default: false,
+          type: Boolean,
         },
       },
       chDel: {
@@ -95,11 +90,19 @@ const GuildModel = new Schema({
           default: null,
           type: String,
         },
+        activated: {
+          default: false,
+          type: Boolean,
+        },
       },
       chUp: {
         killty: {
           default: null,
           type: String,
+        },
+        activated: {
+          default: false,
+          type: Boolean,
         },
       },
       banAdd: {
@@ -107,29 +110,36 @@ const GuildModel = new Schema({
           default: null,
           type: String,
         },
+        activated: {
+          default: false,
+          type: Boolean,
+        },
       },
       banRem: {
         killty: {
           default: null,
           type: String,
         },
-      },
-      usrAdd: {
-        authSys: {
+        activated: {
           default: false,
           type: Boolean,
         },
       },
-      usrRem: {
-        killty: {
-          default: null,
-          type: String,
+      usrAdd: {
+        // Added to Captcha
+        activated: {
+          default: false,
+          type: Boolean,
         },
       },
       usrUp: {
         killty: {
           default: null,
           type: String,
+        },
+        activated: {
+          default: false,
+          type: Boolean,
         },
       },
       guildUp: {
@@ -137,11 +147,19 @@ const GuildModel = new Schema({
           default: null,
           type: String,
         },
+        activated: {
+          default: false,
+          type: Boolean,
+        },
       },
       invCr: {
         killty: {
           defualt: null,
           type: String,
+        },
+        activated: {
+          default: false,
+          type: Boolean,
         },
       },
       invDel: {
@@ -149,15 +167,23 @@ const GuildModel = new Schema({
           default: null,
           type: String,
         },
-      },
-      msgSnd: {
-        badWordPr: {
+        activated: {
           default: false,
           type: Boolean,
         },
-        killty: {
-          default: null,
-          type: String,
+      },
+      msgSnd: {
+        badWordPr: {
+          killty: {
+            default: null,
+            type: String,
+          },
+        },
+        linkPr: {
+          killty: {
+            default: null,
+            type: String,
+          },
         },
       },
       msgDel: {
@@ -165,35 +191,19 @@ const GuildModel = new Schema({
           default: null,
           type: String,
         },
+        activated: {
+          default: false,
+          type: Boolean,
+        },
       },
       msgDelBulk: {
         killty: {
           default: null,
           type: String,
         },
-      },
-      msgRecAdd: {
-        killty: {
-          default: null,
-          type: String,
-        },
-      },
-      msgRecRem: {
-        killty: {
-          default: null,
-          type: String,
-        },
-      },
-      msgRecRemAll: {
-        killty: {
-          default: null,
-          type: String,
-        },
-      },
-      msgRecRemEmoj: {
-        killty: {
-          default: null,
-          type: String,
+        activated: {
+          default: false,
+          type: Boolean,
         },
       },
       msgUp: {
@@ -201,11 +211,19 @@ const GuildModel = new Schema({
           default: null,
           type: String,
         },
+        activated: {
+          default: false,
+          type: Boolean,
+        },
       },
       prsUp: {
         killty: {
           default: null,
           type: String,
+        },
+        activated: {
+          default: false,
+          type: Boolean,
         },
       },
       rolCr: {
@@ -213,11 +231,19 @@ const GuildModel = new Schema({
           default: null,
           type: String,
         },
+        activated: {
+          default: false,
+          type: Boolean,
+        },
       },
       rolDel: {
         killty: {
           default: null,
           type: String,
+        },
+        activated: {
+          default: false,
+          type: Boolean,
         },
       },
       rolUp: {
@@ -225,59 +251,9 @@ const GuildModel = new Schema({
           default: null,
           type: String,
         },
-      },
-      stcCr: {
-        killty: {
-          default: null,
-          type: String,
-        },
-      },
-      stcDel: {
-        killty: {
-          default: null,
-          type: String,
-        },
-      },
-      stcUp: {
-        killty: {
-          default: null,
-          type: String,
-        },
-      },
-      thrCr: {
-        killty: {
-          default: null,
-          type: String,
-        },
-      },
-      thrDel: {
-        killty: {
-          default: null,
-          type: String,
-        },
-      },
-      thrListSync: {
-        killty: {
-          default: null,
-          type: String,
-        },
-      },
-      thrMemsUp: {
-        killty: {
-          default: null,
-          type: String,
-        },
-      },
-      thrMemUp: {
-        killty: {
-          default: null,
-          type: String,
-        },
-      },
-      thrUp: {
-        killty: {
-          default: null,
-          type: String,
+        activated: {
+          default: false,
+          type: Boolean,
         },
       },
       usrUp: {
@@ -285,9 +261,17 @@ const GuildModel = new Schema({
           default: null,
           type: String,
         },
+        activated: {
+          default: false,
+          type: Boolean,
+        },
       },
       vcStatUp: {
-        killed: {
+        killty: {
+          default: false,
+          type: Boolean,
+        },
+        activated: {
           default: false,
           type: Boolean,
         },
@@ -302,6 +286,22 @@ const GuildModel = new Schema({
     preTwo: {
       default: false,
       type: Boolean,
+    },
+    prefeature: {
+      captcha: {
+        channel: {
+          default: null,
+          type: String,
+        },
+        role: {
+          default: null,
+          type: String,
+        },
+        activated: {
+          default: false,
+          type: Boolean,
+        },
+      },
     },
   },
 });

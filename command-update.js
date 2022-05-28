@@ -16,12 +16,12 @@ for (const file of commandFiles) {
 
 // RestFULL API
 const rest = new REST({ version: "9" }).setToken(
-  "OTA1NTY0OTk4NjE1NTkyOTkx.YYL7IA.83EGV1OkMKZmw6z4mAAMYhdoNlQ"
+  process.env.TOKEN
 ); // Connecting API
 
 //RestFULL API put commands to Discord
 rest
-  .put(Routes.applicationCommands("905564998615592991"), { body: commands })
+  .put(Routes.applicationCommands(process.env.TOKEN), { body: commands })
   .then(() =>
     console.log("🖥️[REST API] Sucessfully commands registered globally.")
   )

@@ -7,9 +7,9 @@ const {
   Formatters,
 } = require("discord.js");
 const { client } = require("../../index");
-const UserModel = require("../models/UserModel");
+const userSchema = require("../models/UserModel");
 const discordModal = require("discord-modals");
-const GuildModel = require("../models/GuildModel");
+const guildSchema = require("../models/GuildModel");
 
 const davet = new MessageButton()
   .setStyle("LINK")
@@ -57,20 +57,20 @@ client.on("interactionCreate", async (interaction) => {
   let permissions = command.options.perms;
   let cooldownconf = command.options.cooldown;
 
-  const userConfig = await UserModel.findOne({
+  const userConfig = await userSchema.findOne({
     discordId: interaction.user.id,
   });
 
   let checkagree = userConfig.rules_accepted;
   let blacklist = userConfig.blacklisted;
 
-  const serverConf = await GuildModel.findOne({
+  const serverConf = await guildSchema.findOne({
     discordId: interaction.guild.id,
   });
   let lang = serverConf.needed.systems.langPr;
 
   if (userConfig == null) {
-    const document = new UserModel({
+    const document = new userSchema({
       discordId: interaction.user.id,
     });
 
