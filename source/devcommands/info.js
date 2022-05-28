@@ -2,7 +2,7 @@ module.exports = {
     
 name: "info",
     
-async execute(interaction) {
+async execute(message) {
 const guildSchema = require('../models/GuildModel');
 const { client } = require('../../index');
 const main = require('../data/main');
@@ -12,12 +12,12 @@ const moment = require("moment");
 require("moment-duration-format");
 
   const duration = moment.duration(client.uptime).format(" D [gün], H [saat], m [dakika], s [saniye]");
-  interaction.reply(`= İstatistikler =
+  message.reply(`= İstatistikler =
 • Bellek kullanımı :: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB
-• Kullanıcılar     :: ${client.guilds.memberCount}
-• Sunucular        :: ${client.guilds.size.toLocaleString()}
-• Kanallar         :: ${client.channels.size.toLocaleString()}
-• Ping             :: ${client.ping}`);
+• Kullanıcılar     :: ${client.users.cache.size}
+• Sunucular        :: ${client.guilds.cache.size}
+• Kanallar         :: ${client.channels.cache.size}
+• Ping             :: ${client.ws.ping}`);
     
 }
 }
