@@ -1,0 +1,7 @@
+{
+    "buttons": {
+        "inv": "Invite {{botn}}",
+        "vote": "Vote {{botn}}",
+        "site": "Website (Panel, Commands etc.)"
+    }
+}

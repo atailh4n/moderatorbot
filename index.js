@@ -7,17 +7,33 @@ const fs = require("fs");
 const mongoose = require("mongoose");
 const GuildModel = require("./source/models/GuildModel");
 const main = require("./source/data/main");
+const i18next = require("i18next");
+const backend = require("i18next-fs-backend");
 
 // .env Config Reader
 require("dotenv").config({
   path: "./source/data/.env",
 });
 
-// MongoDB Connection
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+//Multi lang system
+i18next.use(backend).init({
+  initImmediate: false,
+  ns: fs
+    .readdirSync("./source/data/langs/en-US")
+    .map((a) => a.replace(".json", "")),
+  defaultNS: "commands",
+  fallbackLng: "en-US",
+  preload: fs.readdirSync("./source/data/langs"),
+  backend: {
+    loadPath: "./source/data/langs/{{lng}}/{{ns}}.json",
+  },
 });
+
+  // MongoDB Connection
+  mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
 
 // When Connected
 mongoose.connection.on("connected", (data, err) => {

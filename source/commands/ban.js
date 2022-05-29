@@ -1,3 +1,4 @@
+// Tanımlayıcılar
 const {
   MessageActionRow,
   MessageButton,
@@ -5,9 +6,10 @@ const {
   Formatters,
   Permissions,
 } = require("discord.js");
+const { t } = require("i18next");
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const GuildModel = require("../models/GuildModel");
-const embed = require("../data/embeds");
+const main = require("../../data/main");
+const GuildModel = require("../../models/GuildModel");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -40,193 +42,96 @@ module.exports = {
 
     const userRes = interaction.options.getUser("user");
     const reasonRes =
-      interaction.options.getString("reason") || "No reason given";
+      interaction.options.getString("reason") || t("ban.noreason", { ns: "commands", lng: interaction.locale });
     const daysRes = interaction.options.getInteger("days") || null;
 
     const guild = interaction.guild;
 
-    if (lang == "en") {
-      if (interaction.user.id == userRes.id) {
-        interaction.reply({
-          content: `${interaction.user}`,
-          embeds: [embed("err2", "ban user reason day(1-7)")],
-          ephermal: true,
-        });
-        return;
-      }
+    if (interaction.user.id == userRes.id) {
+      interaction.reply({
+        content: `${interaction.user}`,
+        embeds: [embed(t("ban.errcd2", { ns: "commands", lng: interaction.locale }), t("ban.errusg", { ns: "commands", lng: interaction.locale }))],
+        ephermal: true,
+      });
+      return;
+    }
 
-      if (interaction.applicationId == userRes.id) {
-        interaction.reply({
-          content: `${interaction.user}`,
-          embeds: [embed("err3", "ban user reason day(1-7)")],
-          ephermal: true,
-        });
-        return;
-      }
+    if (interaction.applicationId == userRes.id) {
+      interaction.reply({
+        content: `${interaction.user}`,
+        embeds: [embed(t("ban.errcd3", { ns: "commands", lng: interaction.locale }), t("ban.errusg", { ns: "commands", lng: interaction.locale }))],
+        ephermal: true,
+      });
+      return;
+    }
 
-      if (reasonRes == "No reason given") {
-        if (daysRes == null) {
-          interaction.reply({
-            content: `${interaction.user}`,
-            embeds: [
-              embed(
-                "success",
-                "Someone banned from server",
-                `Member named ${userRes} was banned from the server forever for no reason.`
-              ),
-            ],
-          });
-          setTimeout(() => interaction.deleteReply(), 10000);
-          guild.members.ban(userRes);
-        } else {
-          if (daysRes >= 8 || daysRes <= 0 || isNaN(daysRes))
-            return interaction.reply({
-              content: `${interaction.user}`,
-              embeds: [embed("warn1", "ban reason day(1-7)")],
-              ephermal: true,
-            });
-          interaction.reply({
-            content: `${interaction.user}`,
-            embeds: [
-              embed(
-                "success",
-                "Someone banned from server",
-                `Member named ${userRes} was banned from the server ${daysRes} days for no reason.`
-              ),
-            ],
-          });
-          setTimeout(() => interaction.deleteReply(), 10000);
-          guild.members.ban(userRes, { days: daysRes });
-        }
-      } else {
-        if (daysRes == null) {
-          interaction.reply({
-            content: `${interaction.user}`,
-            embeds: [
-              embed(
-                "success",
-                "Someone banned from server",
-                `Member named ${userRes} was banned from the server forever for ${reasonRes} reason.`
-              ),
-            ],
-          });
-          setTimeout(() => interaction.deleteReply(), 10000);
-          guild.members.ban(userRes, { reason: reasonRes });
-        } else {
-          if (daysRes >= 8 || daysRes <= 0 || isNaN(daysRes))
-            return interaction.reply({
-              content: `${interaction.user}`,
-              embeds: [embed("warn1", "ban reason day(1-7)")],
-              ephermal: true,
-            });
-          interaction.reply({
-            content: `${interaction.user}`,
-            embeds: [
-              embed(
-                "success",
-                "Someone banned from server",
-                `Member named ${userRes} was banned from the server ${daysRes} days for ${reasonRes} reason.`
-              ),
-            ],
-          });
-          setTimeout(() => interaction.deleteReply(), 10000);
-          guild.members.ban(userRes, { reason: reasonRes, days: daysRes });
-        }
-      }
-    } else if (lang == "tr") {
-      if (interaction.user.id == userRes.id) {
+    if (reasonRes == t("ban.noreason", { ns: "commands", lng: interaction.locale })) {
+      if (daysRes == null) {
         interaction.reply({
           content: `${interaction.user}`,
           embeds: [
             embed(
-              "err2_tr",
-              "ban user(Kullanıcı) reason(Sebep) day(Gün sayısı 1-7)"
+              t("ban.successcd", { ns: "commands", lng: interaction.locale }),
+              t("ban.success_title", { ns: "commands", lng: interaction.locale }),
+              t("ban.success_desc", { ns: "commands", lng: interaction.locale })
             ),
           ],
-          ephermal: true,
         });
-        return;
-      }
-
-      if (interaction.applicationId == userRes.id) {
+        setTimeout(() => interaction.deleteReply(), 10000);
+        guild.members.ban(userRes);
+      } else {
+        if (daysRes >= 8 || daysRes <= 0 || isNaN(daysRes))
+          return interaction.reply({
+            content: `${interaction.user}`,
+            embeds: [embed(t("ban.warncd1", { ns: "commands", lng: interaction.locale }), t("ban.warnusg", { ns: "commands", lng: interaction.locale }))],
+            ephermal: true,
+          });
         interaction.reply({
           content: `${interaction.user}`,
-          embeds: [embed("err3_tr", "ban user reason day(1-7)")],
-          ephermal: true,
+          embeds: [
+            embed(
+              t("ban.successcd", { ns: "commands", lng: interaction.locale }),
+              t("ban.success_title", { ns: "commands", lng: interaction.locale }),
+              t("ban.success_desc2", { ns: "commands", lng: interaction.locale })
+            ),
+          ],
         });
-        return;
+        setTimeout(() => interaction.deleteReply(), 10000);
+        guild.members.ban(userRes, { days: daysRes });
       }
-
-      if (reasonRes == "No reason given") {
-        if (daysRes == null) {
-          interaction.reply({
-            content: `${interaction.user}`,
-            embeds: [
-              embed(
-                "success_tr",
-                "Birileri sunucudan banlandı",
-                `${userRes} isimli kullanıcı sebepsiz şekilde banlandı.`
-              ),
-            ],
-          });
-          setTimeout(() => interaction.deleteReply(), 10000);
-          guild.members.ban(userRes);
-        } else {
-          if (daysRes >= 8 || daysRes <= 0 || isNaN(daysRes))
-            return interaction.reply({
-              content: `${interaction.user}`,
-              embeds: [
-                embed("warn1_tr", "ban reason(Sebep) day(Gün sayısı 1-7)"),
-              ],
-              ephermal: true,
-            });
-          interaction.reply({
-            content: `${interaction.user}`,
-            embeds: [
-              embed(
-                "success_tr",
-                "Birileri sunucudan banlandı",
-                `${userRes} adlı kullanıcı ${daysRes} gün boyunca sebepsiz olarak banlandı.`
-              ),
-            ],
-          });
-          setTimeout(() => interaction.deleteReply(), 10000);
-          guild.members.ban(userRes, { days: daysRes });
-        }
+    } else {
+      if (daysRes == null) {
+        interaction.reply({
+          content: `${interaction.user}`,
+          embeds: [
+            embed(
+              t("ban.successcd", { ns: "commands", lng: interaction.locale }),
+              t("ban.success_title", { ns: "commands", lng: interaction.locale }),
+              t("ban.success_desc3", { ns: "commands", lng: interaction.locale })
+            ),
+          ],
+        });
+        setTimeout(() => interaction.deleteReply(), 10000);
+        guild.members.ban(userRes, { reason: reasonRes });
       } else {
-        if (daysRes == null) {
-          interaction.reply({
+        if (daysRes >= 8 || daysRes <= 0 || isNaN(daysRes))
+          return interaction.reply({
             content: `${interaction.user}`,
-            embeds: [
-              embed(
-                "success_tr",
-                "Birileri sunucudan banlandı",
-                `${userRes} isimli kullanıcı ${reasonRes} sebebi ile sonsuza kadar banlandı.`
-              ),
-            ],
+            embeds: [embed(t("ban.warncd1", { ns: "commands", lng: interaction.locale }), t("ban.warnusg", { ns: "commands", lng: interaction.locale }))],
+            ephermal: true,
           });
-          setTimeout(() => interaction.deleteReply(), 10000);
-          guild.members.ban(userRes, { reason: reasonRes });
-        } else {
-          if (daysRes >= 8 || daysRes <= 0 || isNaN(daysRes))
-            return interaction.reply({
-              content: `${interaction.user}`,
-              embeds: [embed("warn1", "ban reason(Sebep) day(Gün sayısı 1-7)")],
-              ephermal: true,
-            });
-          interaction.reply({
-            content: `${interaction.user}`,
-            embeds: [
-              embed(
-                "success_tr",
-                "Birileri sunucudan banlandı",
-                `${userRes} adlı kullanıcı ${daysRes} gün boyunca ${reasonRes} sebebiyle banlandı.`
-              ),
-            ],
-          });
-          setTimeout(() => interaction.deleteReply(), 10000);
-          guild.members.ban(userRes, { reason: reasonRes, days: daysRes });
-        }
+        interaction.reply({
+          content: `${interaction.user}`,
+          embeds: [
+            embed(
+              t("ban.successcd", { ns: "commands", lng: interaction.locale }),
+              t("ban.success_title", { ns: "commands", lng: interaction.locale }),
+              t("ban.success_desc4", { ns: "commands", lng: interaction.locale })
+            ),
+          ],
+        });
+        setTimeout(() => interaction.deleteReply(), 10000);
+        guild.members.ban(userRes, { reason: reasonRes, days: daysRes });
       }
     }
   },
