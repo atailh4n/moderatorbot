@@ -1,23 +1,23 @@
 {
     "help":  {
         "embed": {
-            "author": "Moderator - Her zaman güvende olun!",
-            "title": "Merhaba {{usr}}",
-            "desc": "> **Merhaba! Sorunun mu var? Aşağıdaki linklerden sorunlarını çözebilirsin!**"
+            "author": "Moderator - Always stay safe!",
+            "title": "Hello {{usr}}",
+            "desc": "> **Hello! You got problem? You can solve your problems with the links below!**"
         }
     },
     "ban": {
-        "noreason": "Sebep girilmemiş.",
-        "errcd2": "err2_tr",
-        "errusg": "ban user(Kullanıcı) reason(Sebep) days(Gün sayısı 1-7)",
-        "errcd3": "err3_tr",
-        "warncd1": "warn1_tr",
-        "warnusg": "ban user(Kullanıcı) reason(Sebep) day(Gün sayısı 1-7)",
-        "successcd": "success_tr",
-        "sucess_title": "Birileri sunucudan yasaklandı",
-        "sucess_desc": "{{usrRes}} adındaki kullanıcı sebepsiz şekilde sonsuza kadar yasaklandı.",
-        "sucess_desc2": "{{usrRes}} adındaki kullanıcı sebepsiz şekilde {{days}} gün boyunca yasaklandı.",
-        "sucess_desc3": "{{usrRes}} adındaki kullanıcı {{rsn}} sebebi ile sonsuza kadar yasaklandı.",
-        "sucess_desc4": "{{usrRes}} adındakş kullanıcı {{rsn}} sebebi ile {{days}} gün boyunca yasaklandı."
+        "noreason": "No reason given.",
+        "errcd2": "err2",
+        "errusg": "ban user reason days(1-7)",
+        "errcd3": "err3",
+        "warncd1": "warn1",
+        "warnusg": "ban user reason days(1-7)",
+        "successcd": "success",
+        "sucess_title": "Someone banned from server",
+        "sucess_desc": "User named `{{usrRes}}` is banned from server forever for no reason.",
+        "sucess_desc2": "User named `{{usrRes}}` is banned from server `{{days}}` days for no reason.",
+        "sucess_desc3": "User named `{{usrRes}}` is banned from server forever for `{{rsn}}` reason",
+        "sucess_desc4": "User named `{{usrRes}}` is banned from server `{{days}}` days for `{{rsn}}` reason."
     }
 }

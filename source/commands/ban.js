@@ -8,8 +8,10 @@ const {
 } = require("discord.js");
 const { t } = require("i18next");
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const main = require("../../data/main");
-const GuildModel = require("../../models/GuildModel");
+const main = require("../data/main");
+const embed = require("../data/embeds");
+const userConfig = require("../models/UserModel");
+const guildConf = require("../models/GuildModel");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -35,14 +37,15 @@ module.exports = {
     ),
 
   async execute(interaction) {
-    const serverConf = await GuildModel.findOne({
+    const serverConf = await guildConf.findOne({
       discordId: interaction.guild.id,
     });
     const lang = serverConf.needed.systems.langPr;
 
     const userRes = interaction.options.getUser("user");
     const reasonRes =
-      interaction.options.getString("reason") || t("ban.noreason", { ns: "commands", lng: interaction.locale });
+      interaction.options.getString("reason") ||
+      t("ban.noreason", { ns: "commands", lng: interaction.locale });
     const daysRes = interaction.options.getInteger("days") || null;
 
     const guild = interaction.guild;
@@ -50,7 +53,12 @@ module.exports = {
     if (interaction.user.id == userRes.id) {
       interaction.reply({
         content: `${interaction.user}`,
-        embeds: [embed(t("ban.errcd2", { ns: "commands", lng: interaction.locale }), t("ban.errusg", { ns: "commands", lng: interaction.locale }))],
+        embeds: [
+          embed(
+            t("ban.errcd2", { ns: "commands", lng: interaction.locale }),
+            t("ban.errusg", { ns: "commands", lng: interaction.locale })
+          ),
+        ],
         ephermal: true,
       });
       return;
@@ -59,21 +67,32 @@ module.exports = {
     if (interaction.applicationId == userRes.id) {
       interaction.reply({
         content: `${interaction.user}`,
-        embeds: [embed(t("ban.errcd3", { ns: "commands", lng: interaction.locale }), t("ban.errusg", { ns: "commands", lng: interaction.locale }))],
+        embeds: [
+          embed(
+            t("ban.errcd3", { ns: "commands", lng: interaction.locale }),
+            t("ban.errusg", { ns: "commands", lng: interaction.locale })
+          ),
+        ],
         ephermal: true,
       });
       return;
     }
 
-    if (reasonRes == t("ban.noreason", { ns: "commands", lng: interaction.locale })) {
+    if (
+      reasonRes ==
+      t("ban.noreason", { ns: "commands", lng: interaction.locale })
+    ) {
       if (daysRes == null) {
         interaction.reply({
           content: `${interaction.user}`,
           embeds: [
             embed(
               t("ban.successcd", { ns: "commands", lng: interaction.locale }),
-              t("ban.success_title", { ns: "commands", lng: interaction.locale }),
-              t("ban.success_desc", { ns: "commands", lng: interaction.locale })
+              t("ban.success_title", {
+                ns: "commands",
+                lng: interaction.locale,
+              }),
+              t("ban.success_desc", { ns: "commands", lng: interaction.locale, usrRes: userRes.username })
             ),
           ],
         });
@@ -83,7 +102,12 @@ module.exports = {
         if (daysRes >= 8 || daysRes <= 0 || isNaN(daysRes))
           return interaction.reply({
             content: `${interaction.user}`,
-            embeds: [embed(t("ban.warncd1", { ns: "commands", lng: interaction.locale }), t("ban.warnusg", { ns: "commands", lng: interaction.locale }))],
+            embeds: [
+              embed(
+                t("ban.warncd1", { ns: "commands", lng: interaction.locale }),
+                t("ban.warnusg", { ns: "commands", lng: interaction.locale })
+              ),
+            ],
             ephermal: true,
           });
         interaction.reply({
@@ -91,8 +115,16 @@ module.exports = {
           embeds: [
             embed(
               t("ban.successcd", { ns: "commands", lng: interaction.locale }),
-              t("ban.success_title", { ns: "commands", lng: interaction.locale }),
-              t("ban.success_desc2", { ns: "commands", lng: interaction.locale })
+              t("ban.success_title", {
+                ns: "commands",
+                lng: interaction.locale,
+              }),
+              t("ban.success_desc2", {
+                ns: "commands",
+                lng: interaction.locale,
+                usrRes: userRes.username,
+                days: daysRes,
+              })
             ),
           ],
         });
@@ -106,8 +138,16 @@ module.exports = {
           embeds: [
             embed(
               t("ban.successcd", { ns: "commands", lng: interaction.locale }),
-              t("ban.success_title", { ns: "commands", lng: interaction.locale }),
-              t("ban.success_desc3", { ns: "commands", lng: interaction.locale })
+              t("ban.success_title", {
+                ns: "commands",
+                lng: interaction.locale,
+              }),
+              t("ban.success_desc3", {
+                ns: "commands",
+                lng: interaction.locale,
+                usrRes: userRes.username,
+                rsn: reasonRes,
+              })
             ),
           ],
         });
@@ -117,7 +157,12 @@ module.exports = {
         if (daysRes >= 8 || daysRes <= 0 || isNaN(daysRes))
           return interaction.reply({
             content: `${interaction.user}`,
-            embeds: [embed(t("ban.warncd1", { ns: "commands", lng: interaction.locale }), t("ban.warnusg", { ns: "commands", lng: interaction.locale }))],
+            embeds: [
+              embed(
+                t("ban.warncd1", { ns: "commands", lng: interaction.locale }),
+                t("ban.warnusg", { ns: "commands", lng: interaction.locale })
+              ),
+            ],
             ephermal: true,
           });
         interaction.reply({
@@ -125,8 +170,17 @@ module.exports = {
           embeds: [
             embed(
               t("ban.successcd", { ns: "commands", lng: interaction.locale }),
-              t("ban.success_title", { ns: "commands", lng: interaction.locale }),
-              t("ban.success_desc4", { ns: "commands", lng: interaction.locale })
+              t("ban.success_title", {
+                ns: "commands",
+                lng: interaction.locale,
+              }),
+              t("ban.success_desc4", {
+                ns: "commands",
+                lng: interaction.locale,
+                usrRes: userRes.username,
+                rsn: reasonRes,
+                days: daysRes,
+              })
             ),
           ],
         });

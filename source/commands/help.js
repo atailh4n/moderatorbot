@@ -8,8 +8,8 @@ const {
 } = require("discord.js");
 const { t } = require("i18next");
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const main = require("../../data/main");
-const GuildModel = require("../../models/GuildModel");
+const main = require("../data/main");
+const GuildModel = require("../models/GuildModel");
 
 (module.exports = {
   data: new SlashCommandBuilder().setName("help").setDescription("Help Menu"),

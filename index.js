@@ -129,22 +129,15 @@ for (const filedev of cmdFilesdev) {
 
 // Event Loader
 
-fs.readdirSync("./source/events/").forEach((file) => {
-  var jsFiles = fs
-    .readdirSync("./source/events/")
-    .filter((f) => f.split(".").pop() === "js");
-  if (jsFiles.length <= 0) return console.log("Can't find any event!");
+const eventloaded = fs
+  .readdirSync("./source/events")
+  .filter((file) => file.endsWith(".js"));
+for (const eventFile of eventloaded) {
+  const event = require(`./source/events/${eventFile}`);
 
-  jsFiles.forEach((file) => {
-    var eventGet = require(`./source/events/${file}`);
-    try {
-      client.events.set(eventGet.name, eventGet);
-      console.log(`▶️[EVENT HANDLER] - ${file} was loaded`);
-    } catch (err) {
-      return console.log(err);
-    }
-  });
-});
+  client.events.set(event.name, event);
+  console.log(`▶️[EVENT LOADER] - ${eventFile} was loaded`);
+}
 
 // Login
 client.login(process.env.TOKEN);

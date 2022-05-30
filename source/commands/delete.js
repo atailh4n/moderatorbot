@@ -6,10 +6,10 @@ const {
   Formatters,
   Permissions,
 } = require("discord.js");
+const { t } = require("i18next");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const main = require("../data/main");
 const GuildModel = require("../models/GuildModel");
-const embed = require("../data/embeds");
 
 module.exports = {
   data: new SlashCommandBuilder()
