@@ -1,5 +1,5 @@
 module.exports = {
-  name: "info",
+  name: "dbupdt",
 
   async execute(message) {
     const guildSchema = require("../models/GuildModel");
@@ -9,9 +9,9 @@ module.exports = {
     const embed = require("../data/embeds");
     const Discord = require("discord.js");
 
-    const splitted = message.join(' ');
+    const splitted = message.content.split(' ');
     
-    if (splitted[1] && splitted[2] && splitted[3] && splitted[4] == null) return message.channel.send('enter args ```md.dbupdt userdb/guilddb discordId type(push, set) key data```');
+    if (splitted[1] && splitted[2] && splitted[3] && splitted[4] && splitted[5] == null) return message.channel.send('enter args ```md.dbupdt userdb/guilddb discordId type(push, set) key data```');
     const idToChange = splitted[2].toString();
     const __typeToChange = splitted[3].toString();
     const keyToChange = splitted[4].toString();

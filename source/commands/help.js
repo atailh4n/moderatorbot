@@ -69,13 +69,13 @@ const GuildModel = require("../models/GuildModel");
       .setStyle("LINK")
       .setLabel(t("buttons.site", { ns: "common", lng: interaction.locale }))
       .setEmoji(main.displaythings.emojis.emoj_web)
-      .setURL(main.displaythings.cdn.bot_webpanel);
+      .setURL(main.displaythings.cdn.bot_website_link);
 
     const supp = new MessageButton()
       .setStyle("LINK")
       .setLabel(t("buttons.support", { ns: "common", lng: interaction.locale }))
-      .setEmoji(main.displaythings.emojis.emoj_web)
-      .setURL(main.displaythings.cdn.bot_webpanel);
+      .setEmoji(main.displaythings.emojis.emoj_sup)
+      .setURL(main.displaythings.cdn.bot_supserver);
 
     const row = new MessageActionRow().addComponents([
       davet,

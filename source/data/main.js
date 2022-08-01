@@ -13,6 +13,7 @@ const main = {
 
     cdn: {
       bot_supserver: "https://www.moderatorbot.gq/support",
+      bot_website_link: "https://www.moderatorbot.gq/",
       bot_invite: "https://www.moderatorbot.gq/invite",
       bot_webpanel: "https://panel.moderatorbot.gq/",
       vote_link: "https://top.gg/bot/733670294086221865",
