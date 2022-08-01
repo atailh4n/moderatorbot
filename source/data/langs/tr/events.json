@@ -1,0 +1,41 @@
+{
+    "invCr": {
+        "infocd": "info",
+        "info_title_unc": "Davet oluşturuldu",
+        "invite_desc_unc": "{{invite}} oluşturuldu ancak kimin oluşturduğu bilinmiyor. ```ADMINISTRAOR``` iznim olduğundan ve rolümün en üstte olduğundan emin misin?",
+        "asd": "test"
+    },
+    "intCr": {
+        "usernull": {
+            "warntype": "warn_tr",
+            "title": "Moderator'u kullanmanıza izin yok.",
+            "desc": "Moderatör botu kullanabilmeniz için 'Destek sunucusu'na gelip hesabınızı #email-confirmation kanalından onaylamanızı ister. Hesabınızı onaylamazsanız botu kullanamazsınız."
+        },
+        "err1": {
+            "errtype": "error_tr",
+            "title": "ERRCD: PERM_ERR",
+            "desc": "Bu komutu çalıştırabilmek için şu izin(ler)e ihtiyacınız var:\n> {{cmdperms}}"
+        },
+        "err2": {
+            "errtype": "error_tr",
+            "title": "ERRCD: RUNTIME_{{runtimecd}}",
+            "desc": "Komut çalıştırılırken bir hata oluştu. Lütfen geliştirici ile iletişime geçin.\n\n> **Hata Mesajı:**\n > {{runtimemsg}}"
+        },
+        "err3": {
+            "errtype": "error_tr",
+            "title": "ERRCD: ERRCD: NOT_AGREED",
+            "desc": "Bu komut çalıştırılabilmek için **E-mail Doğrulaması** gerektirir. Lütfen emailinizi **[Destek Sunucusu]({{suppserver}}) {{rightarr}} #email-confirmation** kanalında onaylatın."
+        },
+        "warn1": {
+            "warntype": "warn_tr",
+            "title": "Hâla beklemedesiniz (Zaman aşımı)",
+            "desc": "Hâla bekleme süresindesiniz (Zaman aşımı). Maalesef fazla yük olmaması için bekleme süreleri (Zaman aşımları) gereklidir.\n\n> Kalan bekleme (Zaman aşımı) süreniz:\n {{cooldown}}"
+        }
+    },
+    "row": {
+        "invite": "Moderator'u Davet Et",
+        "vote": "Moderator'e Oy Ver",
+        "website": "Web Sitesi (Panel, Komutlar v.s.)",
+        "support": "Destek Sunucusu"
+    }
+}

@@ -4,7 +4,6 @@ const GuildModel = new Schema({
   //Guild ID
   discordId: {
     type: String,
-    default: null,
     required: true,
     unique: true,
   },
@@ -56,7 +55,7 @@ const GuildModel = new Schema({
         type: Boolean,
       },
       langPr: {
-        default: "en",
+        default: "en-US",
         type: String,
       },
     },
@@ -132,6 +131,12 @@ const GuildModel = new Schema({
           type: Boolean,
         },
       },
+      usrRem: {
+        activated: {
+          default: false,
+          type: Boolean,
+        },
+      },
       usrUp: {
         killty: {
           default: null,
@@ -174,12 +179,20 @@ const GuildModel = new Schema({
       },
       msgSnd: {
         badWordPr: {
+          activated: {
+            default: false,
+            type: Boolean,
+          },
           killty: {
             default: null,
             type: String,
           },
         },
         linkPr: {
+          activated: {
+            default: false,
+            type: Boolean,
+          },
           killty: {
             default: null,
             type: String,
@@ -257,6 +270,26 @@ const GuildModel = new Schema({
         },
       },
       usrUp: {
+        killty: {
+          default: null,
+          type: String,
+        },
+        activated: {
+          default: false,
+          type: Boolean,
+        },
+      },
+      thrCr: {
+        killty: {
+          default: null,
+          type: String,
+        },
+        activated: {
+          default: false,
+          type: Boolean,
+        },
+      },
+      thrDel: {
         killty: {
           default: null,
           type: String,

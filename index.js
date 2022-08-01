@@ -6,9 +6,12 @@ const { Routes } = require("discord-api-types/v9");
 const fs = require("fs");
 const mongoose = require("mongoose");
 const GuildModel = require("./source/models/GuildModel");
+const UserModel = require("./source/models/UserModel");
 const main = require("./source/data/main");
+const embed = require("./source/data/embeds");
 const i18next = require("i18next");
 const backend = require("i18next-fs-backend");
+const { dashconf } = require("./source/data/panel");
 
 // .env Config Reader
 require("dotenv").config({
@@ -27,7 +30,7 @@ i18next.use(backend).init({
   backend: {
     loadPath: "./source/data/langs/{{lng}}/{{ns}}.json",
   },
-});
+}).finally(console.log("㊗️[MULTILANG SYS] Multiple language system is loaded successfully."));
 
   // MongoDB Connection
   mongoose.connect(process.env.MONGO_URI, {
@@ -56,6 +59,7 @@ mongoose.connection.on("disconnect", (data, err) => {
 
 // CLient Init
 const client = new Client({
+
   allowedMentions: { parse: ["users", "roles"], repliedUser: true },
   intents: [
     Intents.FLAGS.GUILDS,
@@ -75,6 +79,7 @@ client.events = new Collection();
 client.cooldowns = new Collection();
 client.commands = new Collection();
 client.devcommands = new Collection();
+client.tempemail = new Collection();
 
 //Loaders\\
 //Application Commands Update
@@ -142,223 +147,8 @@ for (const eventFile of eventloaded) {
 // Login
 client.login(process.env.TOKEN);
 
-//Dashboard (Beta)
+//Dash import
 
-(async () => {
-  const DBD = require("discord-dashboard");
-  const DarkDashboard = require("dbd-dark-dashboard");
-  await DBD.useLicense("8ebf6810-76a3-4503-966a-c01a2a604b41");
-  DBD.Dashboard = DBD.UpdatedClass();
-
-  const Dashboard = new DBD.Dashboard({
-    port: 27102,
-    client: {
-      id: process.env.CLIENT_ID,
-      secret: process.env.CLIENT_SECRET,
-    },
-    redirectUri: "http://panel.moderatorbot.gq/discord/callback",
-    domain: "http://panel.moderatorbot.gq",
-    bot: client,
-    acceptPrivacyPolicy: true,
-    guildAfterAuthorization: {
-      use: true,
-      guildId: main.datasowner.mainserver,
-    },
-    rateLimits: {
-      manage: {
-        windowMs: 10 * 60 * 1000,
-        max: 75,
-        message: "Sorry, you are limited.",
-        store: null,
-      },
-      guildPage: {
-        windowMs: 10 * 60 * 1000,
-        max: 40,
-        message: "Sorry, you are limited.",
-        store: null,
-      },
-      settingsUpdatePostAPI: {
-        windowMs: 15 * 60 * 1000,
-        max: 75,
-        message: "Sorry, you are limited.",
-        store: null,
-      },
-      discordOAuth2: {
-        windowMs: 15 * 60 * 1000,
-        max: 2,
-        message: "Sorry, you are limited.",
-        store: null,
-      },
-    },
-    minimizedConsoleLogs: true,
-    underMaintenanceAccessKey: "totalsecretkey",
-    underMaintenanceAccessPage: "/total-secret-get-access",
-    useUnderMaintenance: true,
-    underMaintenance: {
-      title: "Under Maintenance",
-      contentTitle: "This page is under maintenance",
-      texts: [
-        "<br>",
-        "We still want to change for the better for you.",
-        "Therefore, we are introducing technical updates so that we can allow you to enjoy the quality of our services.",
-        "<br>",
-        'Come back to us later or join our <a href="https://www.moderatorbot.gq/support">Discord Support Server</a>',
-      ],
-      bodyBackgroundColors: ["#ffa191", "#ffc247"],
-      buildingsColor: "#ff6347",
-      craneDivBorderColor: "#ff6347",
-      craneArmColor: "#f88f7c",
-      craneWeightColor: "#f88f7c",
-      outerCraneColor: "#ff6347",
-      craneLineColor: "#ff6347",
-      craneCabinColor: "#f88f7c",
-      craneStandColors: ["#ff6347", , "#f29b8b"],
-    },
-    ownerIDs: main.datasowner.ownerids,
-    theme: DarkDashboard({
-      information: {
-        createdBy: "Ata İlhan Köktürk",
-        websiteTitle: "Moderator - Always Stay Safe!",
-        websiteName: "Moderator",
-        websiteUrl: "panel.moderatorbot.gq",
-        dashboardUrl: "panel.moderatorbot.gq",
-        supporteMail: "kokturkwebsfo@kokturk.ml",
-        supportServer: "https://dsc.gg/modsupp",
-        imageFavicon:
-          "https://cdn.discordapp.com/attachments/877875685652307978/882306438632964207/moderator.png",
-        iconURL:
-          "https://cdn.discordapp.com/attachments/877875685652307978/882306438632964207/moderator.png",
-        pageBackGround: "linear-gradient(#2CA8FF, #155b8d)",
-        loggedIn: "Successfully signed in panel.",
-        mainColor: main.displaythings.colors.color_main,
-        subColor: "#ebdbdb",
-      },
-      index: {
-        card: {
-          category: "Moderator's Panel",
-          title: `Welcome the Moderator's web panel. You can easily manage Moderator's settings here`,
-          image: "https://i.imgur.com/axnP93g.png",
-          footer: "Footer",
-        },
-        information: {
-          category: "Updates",
-          title: "Version Updated",
-          description: `New version 0.0.2CB_patch2 is avable! Check patch notes on our server.`,
-          footer: "Kokturk Web Software",
-        },
-        feeds: {
-          category: "Updates",
-          title: "Database Schema Changes",
-          description: `Schemas and Models has changed. Check patch notes on our server`,
-          footer: "Kokturk Web Software",
-        },
-      },
-      commands: [
-        {
-          category: "All Commands",
-          subTitle:
-            "Here all commands are listed. {} means 'required', [] means 'optional'",
-          aliasesDisabled: true,
-          list: [
-            {
-              commandName: "bug",
-              commandUsage: ";bug <bug>",
-              commandDescription: "Report a bug to the developers of Wooar.",
-              commandAlias: "No aliases",
-            },
-            {
-              commandName: "2nd command",
-              commandUsage: "oto.nd <arg> <arg2> [op]",
-              commandDescription: "Lorem ipsum dolor sth, arg sth arg2 stuff",
-              commandAlias: "Alias",
-            },
-            {
-              commandName: "Test command",
-              commandUsage: "prefix.test <arg> [op]",
-              commandDescription: "Lorem ipsum dolor sth",
-              commandAlias: "Alias",
-            },
-          ],
-        },
-      ],
-    }),
-    settings: [
-      {
-        categoryId: "setup",
-        categoryName: "Set-Up",
-        categoryDescription: "Default settings is here. Can you change it.",
-        categoryOptionsList: [
-          {
-            optionId: "lang",
-            optionName: "Language",
-            optionDescription: "Change bot language",
-            optionType: DBD.formTypes.select({ English: "en", Türkçe: "tr" }),
-            getActualSet: async ({ guild }) => {
-              const serverConf = await GuildModel.findOne({
-                discordId: guild.id,
-              });
-              return serverConf.needed.systems.langPr || null;
-            },
-            setNew: async ({ guild, newData }) => {
-              await GuildModel.findOneAndUpdate(
-                { discordId: guild.id },
-                { "needed.systems.langPr": newData }
-              );
-              return;
-            },
-          },
-          {
-            optionId: "logsyst",
-            optionName: "Log System",
-            optionDescription:
-              "On/Off log system. If Log Channel not selected, will automatically be disabled.",
-            optionType: DBD.formTypes.switch((disabled = false)),
-            getActualSet: async ({ guild }) => {
-              const serverConf = await GuildModel.findOne({
-                discordId: guild.id,
-              });
-              return serverConf.needed.systems.logSys || false;
-            },
-            setNew: async ({ guild, newData }) => {
-              await GuildModel.findOneAndUpdate(
-                { discordId: guild.id },
-                { "needed.systems.logSys": newData }
-              );
-              return;
-            },
-          },
-        ],
-      },
-      {
-        categoryId: "premium",
-        categoryName: "Premium",
-        categoryDescription:
-          "If you have premium, you can use premium features.",
-        categoryOptionsList: [
-          {
-            optionId: "2fa",
-            optionName: "Captcha",
-            optionDescription: "On/Off Captcha",
-            optionType: DBD.formTypes.switch({ disabled: true }),
-            getActualSet: async ({ guild }) => {
-              const serverConf = await GuildModel.findOne({
-                discordId: guild.id,
-              });
-              return serverConf.needed.systems.langPr || null;
-            },
-            setNew: async ({ guild, newData }) => {
-              await GuildModel.findOneAndUpdate(
-                { discordId: guild.id },
-                { "needed.systems.langPr": newData }
-              );
-              return;
-            },
-          },
-        ],
-      },
-    ],
-  });
-  Dashboard.init();
-})();
+dashconf;
 
 //https://discord.com/oauth2/authorize?client_id=905564998615592991&permissions=2415922176&scope=bot%20applications.commands

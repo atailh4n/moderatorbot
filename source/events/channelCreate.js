@@ -35,7 +35,7 @@ client.on("channelCreate", async (channel) => {
 
   const deletionLog = fetchedLogs.entries.first();
 
-  if (lang == "en") {
+  if (lang == "en-US") {
     if (!deletionLog) {
       sendLog.send({
         embeds: [
@@ -57,9 +57,9 @@ client.on("channelCreate", async (channel) => {
         if (
           member.id == ownerFetch.id ||
           member.id == client.id ||
-          safeBot.some((res) => member.id == res) ||
-          safeUser.some((res) => member.id == res) ||
-          safeRol.some((res) => member.roles.has(res)) ||
+          safeBot.includes(res => member.id == res) ||
+          safeUser.includes(res => member.id == res) ||
+          safeRol.includes(res => member.roles.cache.has(res)) ||
           member.roles.cache.some((res) => res.id == adminRol) ||
           main.datasowner.ownerids.some((res) => member.id == res)
         ) {

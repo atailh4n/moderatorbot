@@ -19,10 +19,10 @@ const GuildModel = require("../models/GuildModel");
       discordId: interaction.guild.id,
     });
     const helpembed = new MessageEmbed()
-      .setAuthor(
-        t("help.embed.author", { ns: "commands", lng: interaction.locale }),
-        main.displaythings.cdn.bot_logo
-      )
+      .setAuthor({
+        name: `${t("help.embed.author", { ns: "commands", lng: interaction.locale })}`,
+        iconUrl: `${main.displaythings.cdn.bot_logo}`
+      })
       .setTitle(
         t("help.embed.title", {
           ns: "commands",
@@ -71,7 +71,18 @@ const GuildModel = require("../models/GuildModel");
       .setEmoji(main.displaythings.emojis.emoj_web)
       .setURL(main.displaythings.cdn.bot_webpanel);
 
-    const row = new MessageActionRow().addComponents([davet, oyver, site]);
+    const supp = new MessageButton()
+      .setStyle("LINK")
+      .setLabel(t("buttons.support", { ns: "common", lng: interaction.locale }))
+      .setEmoji(main.displaythings.emojis.emoj_web)
+      .setURL(main.displaythings.cdn.bot_webpanel);
+
+    const row = new MessageActionRow().addComponents([
+      davet,
+      supp,
+      site,
+      oyver,
+    ]);
     interaction.reply({
       content: `${interaction.user}`,
       ephemeral: true,

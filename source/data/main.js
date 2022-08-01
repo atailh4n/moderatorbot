@@ -66,6 +66,8 @@ const main = {
       emoj_vote: "<:pps:888420251035906099>",
       emoj_sup: "<:sup:888738778355740683>",
       emoj_web: "<:ppw:888740286065434675>",
+      emoj_arrow_right: "<:arr:878338531641139210>",
+      emoj_arrow_left: "<:arl:878338531284619284>",
     },
   },
   datasowner: {

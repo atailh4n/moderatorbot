@@ -35,7 +35,7 @@ client.on("guildBanRemove", async (ban) => {
 
   const deletionLog = fetchedLogs.entries.first();
 
-  if (lang == "en") {
+  if (lang == "en-US") {
     if (!deletionLog) {
       sendLog.send({
         embeds: [

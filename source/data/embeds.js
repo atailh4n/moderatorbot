@@ -72,7 +72,7 @@ module.exports = (type, title, desc, image, author, thumb) => {
   else if (type == "warn")
     (newColor = `${main.displaythings.colors.color_warn}`),
       (emojidisp = `${main.displaythings.emojis.emoj_warn}`),
-      (newThumb = `${main.displaythings.emojis.emoj_warn}`),
+      (newThumb = `${main.displaythings.cdn.logo_warn}`),
       (newFooter = `${main.displaythings.info.bot_name} | Ver: ${main.displaythings.info.version} | Prefix: ${main.displaythings.info.prefix} | ${main.displaythings.info.bot_website}`),
       (newAuthor = `${main.displaythings.info.bot_name} | Warning`),
       (newDescription = desc),
@@ -123,7 +123,7 @@ module.exports = (type, title, desc, image, author, thumb) => {
       (newAuthor = `${main.displaythings.info.bot_name} | Uyarı`),
       (newDescription = desc),
       (newTitle = title);
-  else if (type == "err1_tr")
+      else if (type == "err1_tr")
     (newColor = `${main.displaythings.colors.color_err}`),
       (emojidisp = `${main.displaythings.emojis.emoj_err}`),
       (newThumb = `${main.displaythings.cdn.logo_err}`),
@@ -177,13 +177,7 @@ module.exports = (type, title, desc, image, author, thumb) => {
       (newTitle = title);
 
   if (
-    newColor == "" ||
-    emojidisp == "" ||
-    newThumb == "" ||
-    newFooter == "" ||
-    newAuthor == "" ||
-    newDescription == "" ||
-    newTitle == ""
+    type = null
   ) {
     kokturkembed
       .setColor(`${main.displaythings.colors.color_main}`)
@@ -191,7 +185,7 @@ module.exports = (type, title, desc, image, author, thumb) => {
       .setImage(`${image}`)
       .setThumbnail(`${thumb}`)
       .setFooter(
-        `${main.displaythings.info.bot_name} | Ver: ${main.displaythings.version} | For Help: ${main.displaythings.prefix}help`
+        `${main.displaythings.info.bot_name} | Ver: ${main.displaythings.version} | Prefix: ${main.displaythings.prefix}`
       )
       .setDescription(desc)
       .setAuthor(author);
@@ -202,7 +196,11 @@ module.exports = (type, title, desc, image, author, thumb) => {
       .setThumbnail(`${newThumb}`)
       .setFooter(`${newFooter}`, `${main.displaythings.cdn.bot_logo}`)
       .setDescription(emojidisp + " " + newDescription)
-      .setAuthor(`${newAuthor}`, `${newThumb}`);
+      .setAuthor({
+        name: newAuthor,
+        url: main.displaythings.cdn.bot_webpanel,
+        iconURL: newThumb,
+      });
   }
   return kokturkembed;
 };

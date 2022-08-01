@@ -35,7 +35,7 @@ client.on("channelDelete", async (channel) => {
 
   const deletionLog = fetchedLogs.entries.first();
 
-  if (lang == "en") {
+  if (lang == "en-US") {
     if (!deletionLog) {
       sendLog.send({
         embeds: [

@@ -16,7 +16,7 @@ client.on("messageCreate", async (message) => {
   const owners = main.datasowner.ownerids;
 
   if (!message.content.startsWith(prefix)) return;
-  if (main.datasowner.ownerids.some((res) => message.author.id != res)) return;
+  if (!main.datasowner.ownerids.includes(message.author.id)) return;
 
   const args = message.content.slice(prefix.length).trim().split(/ +/);
   const commandName = args.shift().toLowerCase();

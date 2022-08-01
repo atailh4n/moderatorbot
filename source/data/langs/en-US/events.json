@@ -1,0 +1,41 @@
+{
+    "invCr": {
+        "infocd": "info",
+        "info_title_unc": "Created a invite",
+        "invite_desc_unc": "{{invite}} is created but we dont know who is created. Are you sure that my role is at the top and that I have ```ADMINISTRAOR``` perm?",
+        "asd": "test"
+    },
+    "intCr": {
+        "usernull": {
+            "warntype": "warn",
+            "title": "You are not confirmed to use Moderator",
+            "desc": "Moderator requires you to come to the 'Support server' and confirm your account on #email-confirmation channel in order to use the bot. If you do not confirm your account, you cannot use the bot."
+        },
+        "err1": {
+            "errtype": "error",
+            "title": "ERRCD: PERM_ERR",
+            "desc": "To run this command, you need this permission(s):\n> {{cmdperms}}"
+        },
+        "err2": {
+            "errtype": "error",
+            "title": "ERRCD: RUNTIME_{{runtimecd}}",
+            "desc": "There was an error while executing this command. Contact with developer.\n\n> **Error Message:**\n > {{runtimemsg}}"
+        },
+        "err3": {
+            "errtype": "error",
+            "title": "ERRCD: ERRCD: NOT_AGREED",
+            "desc": "This command needs **E-mail Confirmation** to run. Please confirm your email on: **[Support server]({{suppserver}}) {{rightarr}} #email-confirmation**"
+        },
+        "warn1": {
+            "warntype": "warn",
+            "title": "You are still in cooldown",
+            "desc": "You are still in the cooldown. Sorry, cooldowns are required to avoid overload.\n\n> Your remaining cooldown:\n {{cooldown}}"
+        }
+    },
+    "row": {
+        "invite": "Moderator'u Davet Et",
+        "vote": "Moderator'e Oy Ver",
+        "website": "Web Sitesi (Panel, Komutlar v.s.)",
+        "support": "Destek Sunucusu"
+    }
+}

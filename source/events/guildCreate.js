@@ -22,9 +22,13 @@ client.on("guildCreate", async (guild) => {
 
   const guildId_unique = await guildSchema.findOne({ discordId: guild.id });
 
+  let serverowner = await guild.fetchOwner();
+  
+  await guildSchema.findOneAndUpdate({ discordId: guild.id }, { $push: { "needed.safe.safeUser": serverowner.id }}, {new: true})
+
   let botname = main.displaythings.info.bot_name;
 
-  const welcmemb = new Discord.MessageEmbed()
+  const welcmemb = new MessageEmbed()
     .setThumbnail(main.displaythings.botlogo)
     .setAuthor(`${botname} Discord Bot`, `${main.displaythings.cdn.bot_logo}`)
     .addField(
@@ -70,31 +74,31 @@ client.on("guildCreate", async (guild) => {
     .setColor(main.displaythings.colors.color_main)
     .setTimestamp();
 
-  const davet = new Discord.MessageButton()
+  const davet = new MessageButton()
     .setStyle("LINK")
     .setLabel("Invite Moderator")
     .setEmoji(main.displaythings.emojis.emoj_main)
     .setURL(main.displaythings.cdn.bot_invite);
 
-  const supp = new Discord.MessageButton()
+  const supp = new MessageButton()
     .setStyle("LINK")
     .setLabel("Support Server")
     .setEmoji(main.displaythings.emojis.emoj_sup)
     .setURL(main.displaythings.cdn.vote_link);
 
-  const site = new Discord.MessageButton()
+  const site = new MessageButton()
     .setStyle("LINK")
     .setLabel("Web Panel, Privacy Policy, Commands etc.")
     .setEmoji(main.displaythings.emojis.emoj_main)
     .setURL(`https://${main.displaythings.info.bot_website}/`);
 
-  const oyver = new Discord.MessageButton()
+  const oyver = new MessageButton()
     .setStyle("LINK")
     .setLabel("Vote Moderator")
     .setEmoji(main.displaythings.emojis.emoj_vote)
     .setURL(main.displaythings.cdn.vote_link);
 
-  const row = new Discord.MessageActionRow().addComponents([
+  const row = new MessageActionRow().addComponents([
     davet,
     supp,
     site,

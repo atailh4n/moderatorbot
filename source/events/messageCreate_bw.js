@@ -30,7 +30,8 @@ client.on("messageCreate", async (message) => {
 
   const badWords = require("../models/BadWordModel");
 
-  if (lang == "en") {
+  if (lang == "en-US") {
+    console.l
     if (
       badWords.some(
         (res) =>

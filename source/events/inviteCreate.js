@@ -10,6 +10,7 @@ const { client } = require("../../index");
 const userSchema = require("../models/UserModel");
 const discordModal = require("discord-modals");
 const guildSchema = require("../models/GuildModel");
+const { t } = require("i18next");
 
 client.on("inviteCreate", async (invite) => {
   const serverConf = await guildSchema.findOne({ discordId: invite.guild.id });
@@ -39,9 +40,9 @@ client.on("inviteCreate", async (invite) => {
       sendLog.send({
         embeds: [
           embed(
-            "info",
-            "Created a channel",
-            `${channel}(\`${channel.id}\`) is created but we dont know who is created. Are you sure that my role is at the top and that I have \`\`\`"ADMINISTRAOR"\`\`\` perm?`
+            t("invCr.infocd", { ns: "events", lng: lang }),
+            t("invCr.info_title_unc", { ns: "events", lng: lang }),
+            t("invCr.info_desc_unc", { ns: "events", lng: lang })
           ),
         ],
       });
@@ -56,11 +57,11 @@ client.on("inviteCreate", async (invite) => {
         if (
           member.id == ownerFetch.id ||
           member.id == client.id ||
-          safeBot.some((res) => member.id == res) ||
-          safeUser.some((res) => member.id == res) ||
-          safeRol.some((res) => member.roles.has(res)) ||
-          member.roles.cache.some((res) => res.id == adminRol) ||
-          main.datasowner.ownerids.some((res) => member.id == res)
+          safeBot.includes(member.id) ||
+          safeUser.includes(member.id) ||
+          member.roles.cache.hasAny(safeRol) ||
+          member.roles.cache.hasAny((res) => res.id == adminRol) ||
+          main.datasowner.ownerids.includes(member.id)
         ) {
           return sendLog.send({
             embeds: [

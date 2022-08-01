@@ -35,7 +35,7 @@ client.on("guildUpdate", async (oldGuild, newGuild) => {
 
   const deletionLog = fetchedLogs.entries.first();
 
-  if (lang == "en") {
+  if (lang == "en-US") {
     if (!deletionLog) {
       sendLog.send({
         embeds: [

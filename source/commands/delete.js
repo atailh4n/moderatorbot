@@ -37,7 +37,7 @@ module.exports = {
     });
     let langDb = await serverConf.needed.systems.langPr;
 
-    if (langDb == "en") {
+    if (langDb == "en-US") {
       if (deleteamount > 100)
         return interaction.reply({
           content: `${interaction.user}`,
@@ -170,7 +170,7 @@ module.exports = {
 };
 
 module.exports.options = {
-  needagreed: false,
+  needagreed: true,
   perms: ["8192"],
   cooldown: 20,
 };

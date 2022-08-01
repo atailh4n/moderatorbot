@@ -10,47 +10,49 @@ const { client } = require("../../index");
 const userSchema = require("../models/UserModel");
 const discordModal = require("discord-modals");
 const guildSchema = require("../models/GuildModel");
+const { t } = require("i18next");
 
-const davet = new MessageButton()
-  .setStyle("LINK")
-  .setLabel("Invite Moderator")
-  .setEmoji(main.displaythings.emojis.emoj_main)
-  .setURL(main.displaythings.cdn.bot_invite);
-
-const supp = new MessageButton()
-  .setStyle("LINK")
-  .setLabel("Support Server")
-  .setEmoji(main.displaythings.emojis.emoj_sup)
-  .setURL(main.displaythings.cdn.vote_link);
-
-const site = new MessageButton()
-  .setStyle("LINK")
-  .setLabel("Web Panel, Privacy Policy, Commands etc.")
-  .setEmoji(main.displaythings.emojis.emoj_web)
-  .setURL(`https://${main.displaythings.info.bot_website}/`);
-
-const oyver = new MessageButton()
-  .setStyle("LINK")
-  .setLabel("Vote Moderator")
-  .setEmoji(main.displaythings.emojis.emoj_vote)
-  .setURL(main.displaythings.cdn.vote_link);
-
-const row = new MessageActionRow().addComponents([davet, supp, site, oyver]);
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;
   if (!interaction.inGuild()) return;
 
-  if (interaction.isButton) {
-    const collector = interaction.channel.createMessageComponentCollector();
+  const davet = new MessageButton()
+    .setStyle("LINK")
+    .setLabel(
+      t("buttons.inv", {
+        ns: "common",
+        lng: interaction.locale,
+        botn: main.displaythings.info.bot_name,
+      })
+    )
+    .setEmoji(main.displaythings.emojis.emoj_main)
+    .setURL(main.displaythings.cdn.bot_invite);
 
-    collector.on("collect", async (i) => {
-      if (i.customId == "email-button")
-        await discordModal.showModal(modal, {
-          client: client,
-          interaction: interaction,
-        });
-    });
-  }
+  const oyver = new MessageButton()
+    .setStyle("LINK")
+    .setLabel(
+      t("buttons.vote", {
+        ns: "common",
+        lng: interaction.locale,
+        botn: main.displaythings.info.bot_name,
+      })
+    )
+    .setEmoji(main.displaythings.emojis.emoj_vote)
+    .setURL(main.displaythings.cdn.vote_link);
+
+  const site = new MessageButton()
+    .setStyle("LINK")
+    .setLabel(t("buttons.site", { ns: "common", lng: interaction.locale }))
+    .setEmoji(main.displaythings.emojis.emoj_web)
+    .setURL(main.displaythings.cdn.bot_webpanel);
+
+  const supp = new MessageButton()
+    .setStyle("LINK")
+    .setLabel(t("buttons.support", { ns: "common", lng: interaction.locale }))
+    .setEmoji(main.displaythings.emojis.emoj_web)
+    .setURL(main.displaythings.cdn.bot_webpanel);
+
+  const row = new MessageActionRow().addComponents([davet, supp, site, oyver]);
 
   const command = await client.commands.get(interaction.commandName);
   let needagreed = command.options.needagreed;
@@ -61,33 +63,131 @@ client.on("interactionCreate", async (interaction) => {
     discordId: interaction.user.id,
   });
 
-  let checkagree = userConfig.rules_accepted;
-  let blacklist = userConfig.blacklisted;
-
   const serverConf = await guildSchema.findOne({
     discordId: interaction.guild.id,
   });
-  let lang = serverConf.needed.systems.langPr;
+  let lang = interaction.locale;
 
   if (userConfig == null) {
-    const document = new userSchema({
-      discordId: interaction.user.id,
+    return interaction.reply({
+      content: `${interaction.user}`,
+      embeds: [
+        embed(
+          t("intCr.usernull.warntype", {
+            ns: "events",
+            lng: interaction.locale,
+          }),
+          t("intCr.usernull.title", { ns: "events", lng: interaction.locale }),
+          t("intCr.usernull.desc", { ns: "events", lng: interaction.locale })
+        ),
+      ],
+      ephemeral: true,
+      components: [row],
     });
+  } else {
+    let checkagree = userConfig.rules_accepted;
+    let blacklist = userConfig.blacklisted;
 
-    await document
-      .save()
-      .then(
-        console.log(
-          "🔼[ADDED USER DB] A user added to DB named " +
-            interaction.user.username
-        )
-      );
-  }
-
-  if (lang == "en") {
-    if (blacklist == false) {
-      if (needagreed == true) {
-        if (checkagree == true) {
+      if (blacklist == false) {
+        if (needagreed == true) {
+          if (checkagree == true) {
+            if (
+              permissions.some(
+                (res) => interaction.memberPermissions.has(res) || null
+              ) == false
+            ) {
+              return interaction.reply({
+                components: `${interaction.user}`,
+                embeds: [
+                  embed(
+                    t("intCr.err1.errcode", { ns: "events", lng: interaction.locale }),
+                    t("intCr.err1.title", { ns: "events", lng: interaction.locale }),
+                    t("intCr.err1.desc", { ns: "events", lng: interaction.locale, cmdperms: command.options.perms.join(', ') }),
+                  ),
+                ],
+                ephemeral: true,
+                components: [row],
+              });
+            } else {
+              if (
+                client.cooldowns.has(
+                  `${interaction.commandName}_${interaction.user.id}`
+                )
+              ) {
+                const finish = client.cooldowns.get(
+                  `${interaction.commandName}_${interaction.user.id}`
+                );
+                const date = new Date();
+                const kalan = (
+                  new Date(finish - date).getTime() / 1000
+                ).toFixed(2);
+                return interaction.reply({
+                  content: `${interaction.user}`,
+                  embeds: [
+                    embed(
+                      t("intCr.warn1.warntype", { ns: "events", lng: interaction.locale }),
+                      t("intCr.warn1.title", { ns: "events", lng: interaction.locale }),
+                      t("intCr.warn1.desc", { ns: "events", lng: interaction.locale, cooldown: Formatters.codeBlock(kalan + ' ' + t("timeunit_s", { ns: "common", lng: interaction.locale }))}),
+                    ),
+                  ],
+                  ephemeral: true,
+                  components: [row],
+                });
+              }
+              const finish = new Date();
+              finish.setSeconds(finish.getSeconds() + cooldownconf);
+              try {
+                await command
+                  .execute(interaction)
+                  .then(
+                    console.info(
+                      "📌[INTERACTION HANDLER] Command Used: " +
+                        interaction.commandName +
+                        " by " +
+                        interaction.user.id
+                    )
+                  );
+              } catch (error) {
+                console.error(error);
+                await interaction.reply({
+                  content: `${interaction.user}`,
+                  embeds: [
+                    embed(
+                      t("intCr.err2.warntype", { ns: "events", lng: interaction.locale }),
+                      t("intCr.err2.title", { ns: "events", lng: interaction.locale, runtimecd: error.name.toUpperCase() }),
+                      t("intCr.err2.desc", { ns: "events", lng: interaction.locale, runtimemsg: Formatters.codeBlock(error.message) }),
+                    ),
+                  ],
+                  ephemeral: true,
+                });
+              }
+              if (command.options.cooldown > 0) {
+                client.cooldowns.set(
+                  `${interaction.commandName}_${interaction.user.id}`,
+                  finish
+                );
+                setTimeout(() => {
+                  client.cooldowns.delete(
+                    `${interaction.commandName}_${interaction.user.id}`
+                  );
+                }, command.options.cooldown * 1000);
+              }
+            }
+          } else if (checkagree == false) {
+            interaction.reply({
+              content: `${interaction.user}`,
+              embeds: [
+                embed(
+                  t("intCr.err3.warntype", { ns: "events", lng: interaction.locale }),
+                  t("intCr.err3.title", { ns: "events", lng: interaction.locale }),
+                  t("intCr.err3.desc", { ns: "events", lng: interaction.locale, suppserver: main.displaythings.cdn.bot_supserver, rightarr: main.displaythings.emojis.emoj_arrow_right }),
+                ),
+              ],
+              ephemeral: true,
+              components: [row],
+            });
+          }
+        } else if (needagreed == false) {
           if (
             permissions.some(
               (res) => interaction.memberPermissions.has(res) || null
@@ -97,14 +197,13 @@ client.on("interactionCreate", async (interaction) => {
               components: `${interaction.user}`,
               embeds: [
                 embed(
-                  "error",
-                  "ERRCD: PERM_ERR",
-                  `To run this command, you need this permission(s):\n> \`${command.options.perms.join(
-                    ", "
-                  )}\``
+                  t("intCr.err1.errcode", { ns: "events", lng: interaction.locale }),
+                  t("intCr.err1.title", { ns: "events", lng: interaction.locale }),
+                  t("intCr.err1.desc", { ns: "events", lng: interaction.locale, cmdperms: command.options.perms.join(', ') }),
                 ),
               ],
               ephemeral: true,
+              components: [row],
             });
           } else {
             if (
@@ -123,13 +222,13 @@ client.on("interactionCreate", async (interaction) => {
                 content: `${interaction.user}`,
                 embeds: [
                   embed(
-                    "warn",
-                    "You are still in the cooldown",
-                    `You are still in the cooldown. Sorry, cooldowns are required to avoid overload.\n\n> Your remaining cooldown:\n` +
-                      Formatters.codeBlock(kalan + " seconds")
+                    t("intCr.warn1.warntype", { ns: "events", lng: interaction.locale }),
+                    t("intCr.warn1.title", { ns: "events", lng: interaction.locale }),
+                    t("intCr.warn1.desc", { ns: "events", lng: interaction.locale, cooldown: Formatters.codeBlock(kalan + ' ' + t("timeunit_s", { ns: "common", lng: interaction.locale }))}),
                   ),
                 ],
                 ephemeral: true,
+                components: [row],
               });
             }
             const finish = new Date();
@@ -151,13 +250,13 @@ client.on("interactionCreate", async (interaction) => {
                 content: `${interaction.user}`,
                 embeds: [
                   embed(
-                    "error",
-                    "ERRCD: RUNTIME_" + error.name.toUpperCase(),
-                    `There was an error while executing this command. Contact with developer.\n\n> **Error Message:**\n` +
-                      Formatters.codeBlock(error.message)
+                    t("intCr.err2.warntype", { ns: "events", lng: interaction.locale }),
+                    t("intCr.err2.title", { ns: "events", lng: interaction.locale, runtimecd: error.name.toUpperCase() }),
+                    t("intCr.err2.desc", { ns: "events", lng: interaction.locale, runtimemsg: Formatters.codeBlock(error.message) }),
                   ),
                 ],
                 ephemeral: true,
+                components: [row],
               });
             }
             if (command.options.cooldown > 0) {
@@ -172,297 +271,23 @@ client.on("interactionCreate", async (interaction) => {
               }, command.options.cooldown * 1000);
             }
           }
-        } else if (checkagree == false) {
-          interaction.reply({
+        }
+      } else if (blacklist == true) {
+        if (interaction.locale == "tr") {
+          await interaction.reply({
             content: `${interaction.user}`,
-            embeds: [
-              embed(
-                "error",
-                "ERRCD: NOT_AGREED",
-                `This command needs "E-mail Confirmation" to run. Please confirm your email on: **[Support server](${main.displaythings.cdn.bot_supserver})>#email-confirmation**`
-              ),
-            ],
+            embeds: [embed("blacklisted_tr")],
+            ephemeral: true,
+            components: [row],
+          });
+        } else {
+          await interaction.reply({
+            content: `${interaction.user}`,
+            embeds: [embed("blacklisted")],
             ephemeral: true,
             components: [row],
           });
         }
-      } else if (needagreed == false) {
-        if (
-          permissions.some(
-            (res) => interaction.memberPermissions.has(res) || null
-          ) == false
-        ) {
-          return interaction.reply({
-            components: `${interaction.user}`,
-            embeds: [
-              embed(
-                "err",
-                "ERRCD: PERM_ERR",
-                `To run this command, you need this permission(s):\n> \`${command.options.perms.join(
-                  ", "
-                )}\``
-              ),
-            ],
-            ephemeral: true,
-          });
-        } else {
-          if (
-            client.cooldowns.has(
-              `${interaction.commandName}_${interaction.user.id}`
-            )
-          ) {
-            const finish = client.cooldowns.get(
-              `${interaction.commandName}_${interaction.user.id}`
-            );
-            const date = new Date();
-            const kalan = (new Date(finish - date).getTime() / 1000).toFixed(2);
-            return interaction.reply({
-              content: `${interaction.user}`,
-              embeds: [
-                embed(
-                  "warn",
-                  "You are still in the cooldown",
-                  `You are still in the cooldown. Sorry, cooldowns are required to avoid overload.\n\n> Your remaining cooldown:\n` +
-                    Formatters.codeBlock(kalan + " seconds")
-                ),
-              ],
-              ephemeral: true,
-            });
-          }
-          const finish = new Date();
-          finish.setSeconds(finish.getSeconds() + cooldownconf);
-          try {
-            await command
-              .execute(interaction)
-              .then(
-                console.info(
-                  "📌[INTERACTION HANDLER] Command Used: " +
-                    interaction.commandName +
-                    " by " +
-                    interaction.user.id
-                )
-              );
-          } catch (error) {
-            console.error(error);
-            await interaction.reply({
-              content: `${interaction.user}`,
-              embeds: [
-                embed(
-                  "error",
-                  "ERRCD: RUNTIME_" + error.name.toUpperCase(),
-                  `There was an error while executing this command. Contact with developer.\n\n> **Error Message:**\n` +
-                    Formatters.codeBlock(error.message)
-                ),
-              ],
-              ephemeral: true,
-            });
-          }
-          if (command.options.cooldown > 0) {
-            client.cooldowns.set(
-              `${interaction.commandName}_${interaction.user.id}`,
-              finish
-            );
-            setTimeout(() => {
-              client.cooldowns.delete(
-                `${interaction.commandName}_${interaction.user.id}`
-              );
-            }, command.options.cooldown * 1000);
-          }
-        }
-      }
-    } else if (blacklist == true) {
-      await interaction.reply({
-        content: `${interaction.user}`,
-        embeds: [embed("blacklisted")],
-        ephemeral: true,
-      });
-    }
-  } else if (lang == "tr") {
-    if (blacklist == false) {
-      if (needagreed == true) {
-        if (checkagree == true) {
-          if (
-            permissions.some(
-              (res) => interaction.memberPermissions.has(res) || null
-            ) == false
-          ) {
-            return interaction.reply({
-              content: `${interaction.user}`,
-              embeds: [
-                embed(
-                  "error_tr",
-                  "ERRCD: PERM_ERR",
-                  `Bu komutu çalıştırabilmek için şu izin(ler)e ihtiyacınız var:\n> \`${command.options.perms.join(
-                    ", "
-                  )}\``
-                ),
-              ],
-              ephemeral: true,
-            });
-          } else {
-            if (
-              client.cooldowns.has(
-                `${interaction.commandName}_${interaction.user.id}`
-              )
-            ) {
-              const finish = client.cooldowns.get(
-                `${interaction.commandName}_${interaction.user.id}`
-              );
-              const date = new Date();
-              const kalan = (new Date(finish - date).getTime() / 1000).toFixed(
-                2
-              );
-              return interaction.reply({
-                content: `${interaction.user}`,
-                embeds: [
-                  embed(
-                    "warn_tr",
-                    "Hâla beklemedesiniz",
-                    `Hâla bekleme süresindesiniz. Maalesef fazla yük olmaması için bekleme süreleri gereklidir.\n\n> Kalan bekleme süreniz:\n` +
-                      Formatters.codeBlock(kalan + " saniye")
-                  ),
-                ],
-                ephemeral: true,
-              });
-            }
-            const finish = new Date();
-            finish.setSeconds(finish.getSeconds() + cooldownconf);
-            try {
-              await command
-                .execute(interaction)
-                .then(
-                  console.info(
-                    "📌[INTERACTION HANDLER] Command Used: " +
-                      interaction.commandName +
-                      " by " +
-                      interaction.user.id
-                  )
-                );
-            } catch (error) {
-              console.error(error);
-              await interaction.reply({
-                content: `${interaction.user}`,
-                embeds: [
-                  embed(
-                    "error_tr",
-                    "ERRCD: RUNTIME_" + error.name.toUpperCase(),
-                    `Komut çalıştırılırken bir hata oluştu. Geliştirici ile iletişime geçin.\n\n> **Hata Mesajı:**\n` +
-                      Formatters.codeBlock(error.message)
-                  ),
-                ],
-                ephemeral: true,
-              });
-            }
-            if (command.options.cooldown > 0) {
-              client.cooldowns.set(
-                `${interaction.commandName}_${interaction.user.id}`,
-                finish
-              );
-              setTimeout(() => {
-                client.cooldowns.delete(
-                  `${interaction.commandName}_${interaction.user.id}`
-                );
-              }, command.options.cooldown * 1000);
-            }
-          }
-        } else if (checkagree == false) {
-          interaction.reply({
-            content: `${interaction.user}`,
-            embeds: [
-              embed(
-                "error_tr",
-                "ERRCD: NOT_AGREED",
-                `Bu komutun çalıştırılabilmesi için "E-mail Doğrulaması" gerektirmektedir. Lütfen mail adresinizi şurada doğrulayın: **[Destek sunucusu](${main.displaythings.cdn.bot_supserver})>#email-confirmation**`
-              ),
-            ],
-            ephemeral: true,
-            components: [row],
-          });
-        }
-      } else if (needagreed == false) {
-        if (
-          permissions.some(
-            (res) => interaction.memberPermissions.has(res) || null
-          ) == false
-        ) {
-          return interaction.reply({
-            components: `${interaction.user}`,
-            embeds: [
-              embed(
-                "error_tr",
-                "ERRCD: PERM_ERR",
-                `Bu komutu çalıştırabilmek için şu izin(ler)e ihtiyacınız var:\n> \`${command.options.perms.join(
-                  ", "
-                )}\``
-              ),
-            ],
-            ephemeral: true,
-          });
-        } else {
-          if (
-            client.cooldowns.has(
-              `${interaction.commandName}_${interaction.user.id}`
-            )
-          ) {
-            const finish = client.cooldowns.get(
-              `${interaction.commandName}_${interaction.user.id}`
-            );
-            const date = new Date();
-            const kalan = (new Date(finish - date).getTime() / 1000).toFixed(2);
-            return interaction.reply({
-              content: `${interaction.user}`,
-              embeds: [
-                embed(
-                  "warn_tr",
-                  "Hâla beklemedesiniz",
-                  `Hâla bekleme süresindesiniz. Maalesef fazla yük olmaması için bekleme süreleri gereklidir.\n\n> Kalan bekleme süreniz:\n` +
-                    Formatters.codeBlock(kalan + " saniye")
-                ),
-              ],
-              ephemeral: true,
-            });
-          }
-          const finish = new Date();
-          finish.setSeconds(finish.getSeconds() + cooldownconf);
-          try {
-            await command
-              .execute(interaction)
-              .then(
-                console.info(
-                  "📌[INTERACTION HANDLER] Command Used: " +
-                    interaction.commandName +
-                    " by " +
-                    interaction.user.id
-                )
-              );
-          } catch (error) {
-            console.error(error);
-            await interaction.reply({
-              content: `${interaction.user}`,
-              embeds: [
-                embed(
-                  "error_tr",
-                  "ERRCD: RUNTIME_" + error.name.toUpperCase(),
-                  `Komut çalıştırılırken bir hata oluştu. Geliştirici ile iletişime geçin.\n\n> **Hata Mesajı:**\n` +
-                    Formatters.codeBlock(error.message)
-                ),
-              ],
-              ephemeral: true,
-            });
-          }
-          if (command.options.cooldown > 0) {
-            client.cooldowns.set(
-              `${interaction.commandName}_${interaction.user.id}`,
-              finish
-            );
-            setTimeout(() => {
-              client.cooldowns.delete(
-                `${interaction.commandName}_${interaction.user.id}`
-              );
-            }, command.options.cooldown * 1000);
-          }
-        }
       }
     }
-  }
 });
