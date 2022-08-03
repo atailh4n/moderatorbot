@@ -15,7 +15,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("delete")
     .setDescription("Delete messages")
-    .addStringOption((option) =>
+    .addIntegerOption((option) =>
       option
         .setName("amount")
         .setDescription("Delete amount (1-100)")
@@ -37,15 +37,14 @@ module.exports = {
     });
     let langDb = await serverConf.needed.systems.langPr;
 
-    if (langDb == "en-US") {
       if (deleteamount > 100)
         return interaction.reply({
           content: `${interaction.user}`,
           embeds: [
             embed(
-              "warn1",
-              "/delete {amount(1-100)} [@user]",
-              "Delete amount cannot bigger than 100"
+              t("delete.warn1.warncd", { ns: "command", lng: interaction.locale }),
+              t("delete.warn1.title", { ns: "command", lng: interaction.locale }),
+              t("delete.warn1.desc", { ns: "command", lng: interaction.locale })
             ),
           ],
           ephemeral: true,
@@ -55,9 +54,9 @@ module.exports = {
           content: `${interaction.user}`,
           embeds: [
             embed(
-              "warn1",
-              "/delete {amount(1-100)} [@user]",
-              "Delete amount cannot smaller than 1"
+              t("delete.warn2.warncd", { ns: "command", lng: interaction.locale }),
+              t("delete.warn2.title", { ns: "command", lng: interaction.locale }),
+              t("delete.warn2.desc", { ns: "command", lng: interaction.locale })
             ),
           ],
           ephemeral: true,
@@ -68,9 +67,9 @@ module.exports = {
           content: `${interaction.user}`,
           embeds: [
             embed(
-              "success",
-              "Deleted messages",
-              `${deleteamount} message is deleted.`
+              t("delete.success1.succcd", { ns: "command", lng: interaction.locale }),
+              t("delete.success1.title", { ns: "command", lng: interaction.locale }),
+              t("delete.success1.desc", { ns: "command", lng: interaction.locale, delamt: deleteamount })
             ),
           ],
         });
@@ -80,7 +79,7 @@ module.exports = {
         interaction.guild.members.cache.get(user_bulk.id)
       ) {
         return interaction.reply({
-          content: `This option is developing...`,
+          content: t("delete.userdelete.desc", { ns: "command", lng: interaction.locale }),
           ephermal: true,
         });
       } else if (
@@ -91,9 +90,9 @@ module.exports = {
           content: `${interaction.user}`,
           embeds: [
             embed(
-              "err1",
-              "Mentioned user in options of /delete command",
-              "Any user of this ID or name."
+              t("delete.err1.errcd", { ns: "command", lng: interaction.locale }),
+              t("delete.err1.title", { ns: "command", lng: interaction.locale }),
+              t("delete.err1.desc", { ns: "command", lng: interaction.locale })
             ),
           ],
           ephermal: true,
@@ -101,71 +100,6 @@ module.exports = {
       } else {
         return;
       }
-    } else if (langDb == "tr") {
-      if (deleteamount > 100)
-        return interaction.reply({
-          content: `${interaction.user}`,
-          embeds: [
-            embed(
-              "warn1_tr",
-              "/delete {amount(Miktar 1-100)} [@user (Kullanıcı)]",
-              "Silme miktarı 100'den fazla olamaz."
-            ),
-          ],
-          ephemeral: true,
-        });
-      if (deleteamount < 1)
-        return interaction.reply({
-          content: `${interaction.user}`,
-          embeds: [
-            embed(
-              "warn1_tr",
-              "/delete {amount(Miktar 1-100)} [@user]",
-              "Silme miktarı 1'den ufak olamaz."
-            ),
-          ],
-          ephemeral: true,
-        });
-      if (user_bulk == null) {
-        del_ch.bulkDelete(deleteamount);
-        await interaction.reply({
-          content: `${interaction.user}`,
-          embeds: [
-            embed(
-              "success_tr",
-              "Mesajlar silindi",
-              `${deleteamount} tane mesaj silindi.`
-            ),
-          ],
-        });
-        setTimeout(() => interaction.deleteReply(), 10000);
-      } else if (
-        user_bulk != null &&
-        interaction.guild.members.cache.get(user_bulk.id)
-      ) {
-        return interaction.reply({
-          content: `Geliştirme aşamasındadır.`,
-          ephermal: true,
-        });
-      } else if (
-        user_bulk != null &&
-        !interaction.guild.members.cache.get(user_bulk.id)
-      ) {
-        return interaction.reply({
-          content: `${interaction.user}`,
-          embeds: [
-            embed(
-              "err1_tr",
-              "/delete komutunda etiketlenen kullanıcı",
-              "Herhangi bir kulanıcı"
-            ),
-          ],
-          ephermal: true,
-        });
-      } else {
-        return;
-      }
-    }
   },
 };
 
