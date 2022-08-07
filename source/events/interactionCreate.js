@@ -137,7 +137,7 @@ const row2 = new MessageActionRow().addComponents([acp]);
           });
 
           collector_acp.on("end", async(collected) => {
-            interaction.channel.bulkDelete(2);
+            interaction.channel.bulkDelete(1);
           })
      
         });
