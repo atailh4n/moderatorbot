@@ -39,7 +39,7 @@ const GuildModel = require("../models/GuildModel");
         `${main.displaythings.info.bot_name} | Ver: ${main.displaythings.info.version} | Prefix: ${main.displaythings.info.prefix} | ${main.displaythings.info.bot_website}`,
         main.displaythings.cdn.bot_logo
       )
-      .setImage(main.displaythings.cdn.banner_gif);
+      .setImage(main.displaythings.cdn.banner_static);
 
     const davet = new MessageButton()
       .setStyle("LINK")

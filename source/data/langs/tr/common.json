@@ -4,6 +4,8 @@
         "inv": "{{botn}}'ü Davet Et",
         "vote": "{{botn}}'e Oy Ver",
         "site": "Website (Panel, Komutlar v.s.)",
-        "support": "Destek Sunucusu"
+        "support": "Destek Sunucusu",
+        "accept": "Kabul Et",
+        "reject": "Reddet"
     }
 }

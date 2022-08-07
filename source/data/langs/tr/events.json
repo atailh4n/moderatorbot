@@ -7,9 +7,45 @@
     },
     "intCr": {
         "usernull": {
-            "warntype": "warn_tr",
-            "title": "Moderator'u kullanmanıza izin yok.",
-            "desc": "Moderatör botu kullanabilmeniz için 'Destek sunucusu'na gelip hesabınızı #email-confirmation kanalından onaylamanızı ister. Hesabınızı onaylamazsanız botu kullanamazsınız."
+            "author": "{{bot_name}} | Lisans, Gizlilik Politikası ve Kullanım Koşulları",
+            "title": "{{bot_name}} botunu kullanmak için lütfen 'Lisans Koşulları', 'Gizlilik Politikası' ve 'Kullanım Koşulları'na uyduğunuzu kabul edin. 60 saniye içinde kabul etmezseniz bu mesaj geçersiz sayılacaktır.",
+            "desc": {
+                "opensource": "Açık Kaynak Kodu GitHub",
+                "guide": "Discord Kuralları",
+                "privacy": "Gizlilik Politikası",
+                "webprivacy": "Web Panel Politikası",
+                "tos": "Bizim Kullanım Koşullarımız"
+            },
+            "field1": {
+                "title":"{{bot_name}} | Kişisel Amaçlar",
+                "desc": "> {{bot_name}} botunu kullanırken, onu yalnızca kişisel amaçlarla kullanacağımı beyan ederim."
+            },
+            "field2": {
+                "title": "{{bot_name}} | Açık Kaynak Kod",
+                "desc": "> Bu açık kaynaklı yazılımı ({{bot_name}} bot) sadece belirtilen amaçlar için (Eğitim, Öğrenme, İnceleme veya sadece eğlence için vb.) kullanacağım."
+            },
+            "field3": {
+                "title": "{{bot_name}} | Veri Depolama ve İşleme",
+                "desc": "> Bilgilerimin {{bot_name}} bot veritabanında saklandığını kabul ediyorum ve bunları herhangi bir zamanda silme hakkım olduğunu biliyorum ve geliştiriciyle de iletişime geçebileceğimi ve 'Verilerimin nasıl işleceğini' **[gizlilik politikasında]({{privacy}})** okudum."
+            },
+            "field4": {
+                "title": "{{bot_name}} | Hukuki ve Cezai İşlemler",
+                "desc": "> {{bot_name}} botunu yukarıda belirtilen amaç(lar) dışında kullanırsam cezai ve yasal işlemlere tabi tutulacağımı ve onu kullanmamdan sonsuza kadar men edileceğimi biliyorum."
+            },
+            "field5": {
+                "title": "{{bot_name}} | Temel Kurallar ve Discord Kuralları",
+                "desc": "> Discord'un kendi kuralları da dahil olmak üzere yukarıdaki temel kurallara uymayı kabul ediyorum. İki terimi ({{bot_name}} bot kuralları, Discord Yönergeleri) ihlal edersem, 4. maddeye ve Discord'un kendi cezai işlemlerine tabi olacağımı biliyorum."
+            },
+            "success": {
+                "succcd": "success_tr",
+                "title": "Başarıyla profiliniz oluşturuldu",
+                "desc": "{{usr_repl}}, profiliniz oluşturuldu! Verileriniz artık {{botname}} veritabanı sunucularında tutulacak. {{botname}} botunu kullanmaya başlayabilirsiniz!"
+            },
+            "fail": {
+                "failcd": "info_tr",
+                "title": "Bota artık ulaşamazsınız.",
+                "desc": "{{usr_repl}}, hiçbir veri oluşturulmadı ve kurallar kabul edilmedi. Politikalarımızı kabul etmiyorsanız, botu kullanamazsınız. Kabul etmek istiyorsanız, herhangi bir komutu tekrar kullanmanız yeterlidir. Daha ayrıntılı bilgi için [web sitemizi]({{bot_website}}) ziyaret edebilirsiniz."
+            }
         },
         "err1": {
             "errtype": "error_tr",

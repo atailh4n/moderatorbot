@@ -19,5 +19,30 @@
         "sucess_desc2": "{{usrRes}} adındaki kullanıcı sebepsiz şekilde {{days}} gün boyunca yasaklandı.",
         "sucess_desc3": "{{usrRes}} adındaki kullanıcı {{rsn}} sebebi ile sonsuza kadar yasaklandı.",
         "sucess_desc4": "{{usrRes}} adındakş kullanıcı {{rsn}} sebebi ile {{days}} gün boyunca yasaklandı."
+    },
+    "delete": {
+        "warn1": {
+            "warncd": "warn1_tr",
+            "title": "/delete {amount(Miktar 1-100)} [@user (Kullanıcı)]",
+            "desc": "Silme miktarı 100'den fazla olamaz."
+        },
+        "warn2": {
+            "warncd": "warn1_tr",
+            "title": "/delete {amount(Miktar 1-100)} [@user (Kullanıcı)]",
+            "desc": "Silme miktarı 1'den ufak olamaz."
+        },
+        "success1": {
+            "succcd": "success_tr",
+            "title": "Mesajlar silindi",
+            "desc": "{{delamt}} tane mesaj silindi."
+        },
+        "userdelete": {
+            "desc": "Bu opsiyon geliştiriliyor..."
+        },
+        "err1": {
+            "errcd": "err1_tr",
+            "title": "/delete komutunda etiketlenen kullanıcı",
+            "desc": "Herhangi bir kulanıcı"
+        }
     }
 }

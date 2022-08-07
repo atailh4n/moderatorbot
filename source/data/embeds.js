@@ -191,7 +191,7 @@ module.exports = (type, title, desc, image, author, thumb) => {
       .setAuthor(author);
   } else {
     kokturkembed
-      .setColor(`${newColor}`)
+      .setColor(newColor)
       .setTitle(`${newTitle}`)
       .setThumbnail(`${newThumb}`)
       .setFooter(`${newFooter}`, `${main.displaythings.cdn.bot_logo}`)

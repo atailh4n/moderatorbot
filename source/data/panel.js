@@ -101,8 +101,8 @@ const dashconf = (async () => {
           card: {
             category: "Moderator's Panel",
             title: `Welcome the Moderator's web panel. You can easily manage Moderator's settings here`,
-            image: "https://cdn.discordapp.com/attachments/877875685652307978/889874674413076550/static.png",
-            footer: "",
+            image: "https://cdn.discordapp.com/attachments/877875685652307978/1005780415828742154/moderator_site_background.jpg",
+            footer: "Always Stay Safe with Moderator!",
           },
           information: {
             category: "Updates",

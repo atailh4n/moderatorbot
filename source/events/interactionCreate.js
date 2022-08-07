@@ -49,10 +49,23 @@ client.on("interactionCreate", async (interaction) => {
   const supp = new MessageButton()
     .setStyle("LINK")
     .setLabel(t("buttons.support", { ns: "common", lng: interaction.locale }))
-    .setEmoji(main.displaythings.emojis.emoj_web)
-    .setURL(main.displaythings.cdn.bot_webpanel);
+    .setEmoji(main.displaythings.emojis.emoj_sup)
+    .setURL(main.displaythings.cdn.bot_supserver);
 
   const row = new MessageActionRow().addComponents([davet, supp, site, oyver]);
+
+  const acp = new MessageButton()
+  .setStyle("SUCCESS")
+  .setLabel(
+    t("buttons.accept", {
+      ns: "common",
+      lng: interaction.locale,
+    })
+  )
+  .setEmoji('✅')
+  .setCustomId("acp");
+
+const row2 = new MessageActionRow().addComponents([acp]);
 
   const command = await client.commands.get(interaction.commandName);
   let needagreed = command.options.needagreed;
@@ -69,21 +82,65 @@ client.on("interactionCreate", async (interaction) => {
   let lang = interaction.locale;
 
   if (userConfig == null) {
-    return interaction.reply({
-      content: `${interaction.user}`,
-      embeds: [
-        embed(
-          t("intCr.usernull.warntype", {
-            ns: "events",
-            lng: interaction.locale,
-          }),
-          t("intCr.usernull.title", { ns: "events", lng: interaction.locale }),
-          t("intCr.usernull.desc", { ns: "events", lng: interaction.locale })
-        ),
-      ],
-      ephemeral: true,
-      components: [row],
-    });
+    const mitEmbeden = new MessageEmbed()
+    .setColor(main.displaythings.colors.color_main)
+    .setThumbnail(main.displaythings.botlogo)
+    .setAuthor({
+      name: t("intCr.usernull.author", { ns: "events", lng: interaction.locale, bot_name: main.displaythings.info.bot_name }),
+      iconUrl: main.displaythings.cdn.bot_logo
+    })
+    .setTitle(t("intCr.usernull.title", { ns: "events", lng: interaction.locale, bot_name: main.displaythings.info.bot_name }))
+    .setDescription(`[${t("intCr.usernull.desc.opensource", { ns: "events", lng: interaction.locale })}](https://github.com/atailh4n/moderatorbot) | [${t("intCr.usernull.desc.guide", { ns: "events", lng: interaction.locale })}](https://discord.com/guidelines) | [${t("intCr.usernull.desc.privacy", { ns: "events", lng: interaction.locale })}](${main.displaythings.cdn.privacypolicy}) | [${t("intCr.usernull.desc.webprivacy", { ns: "events", lng: interaction.locale })}](${main.displaythings.cdn.webpanelprivacy}) | [${t("intCr.usernull.desc.tos", { ns: "events", lng: interaction.locale })}](${main.displaythings.cdn.tos})`)
+    .addField(
+      t("intCr.usernull.field1.title", { ns: "events", lng: interaction.locale, bot_name: main.displaythings.info.bot_name }),
+      t("intCr.usernull.field1.desc", { ns: "events", lng: interaction.locale, bot_name: main.displaythings.info.bot_name })
+    )
+    .addField(
+      t("intCr.usernull.field2.title", { ns: "events", lng: interaction.locale, bot_name: main.displaythings.info.bot_name }),
+      t("intCr.usernull.field2.desc", { ns: "events", lng: interaction.locale, bot_name: main.displaythings.info.bot_name })
+    )
+    .addField(
+      t("intCr.usernull.field3.title", { ns: "events", lng: interaction.locale, bot_name: main.displaythings.info.bot_name }),
+      t("intCr.usernull.field3.desc", { ns: "events", lng: interaction.locale, bot_name: main.displaythings.info.bot_name, privacy: main.displaythings.cdn.privacypolicy })
+    )
+    .addField(
+      t("intCr.usernull.field4.title", { ns: "events", lng: interaction.locale, bot_name: main.displaythings.info.bot_name }),
+      t("intCr.usernull.field4.desc", { ns: "events", lng: interaction.locale, bot_name: main.displaythings.info.bot_name })
+    )
+    .addField(
+      t("intCr.usernull.field5.title", { ns: "events", lng: interaction.locale, bot_name: main.displaythings.info.bot_name }),
+      t("intCr.usernull.field5.desc", { ns: "events", lng: interaction.locale, bot_name: main.displaythings.info.bot_name })
+    )
+    .setFooter({
+      text: `${main.displaythings.info.bot_name} | Ver: ${main.displaythings.info.version} | Prefix: ${main.displaythings.info.prefix} | ${main.displaythings.info.bot_website}`
+    })
+    .setImage(main.displaythings.cdn.banner_gif);
+
+        await interaction.reply({ content: `${interaction.user}`, embeds: [mitEmbeden], components: [row2], ephemeral: false, fetchReply: true }).then(async(message) => {
+    
+          setTimeout(async() => {
+            message.delete()
+          }, 60000);
+
+          const filter_acp = i => i.customId === "acp" && i.user.id === interaction.user.id;
+
+          const collector_acp = interaction.channel.createMessageComponentCollector({ filter_acp, time: 60000 });
+
+          collector_acp.on('collect', async i => {
+            const userprofile = new userSchema({
+              discordId: i.user.id
+             })
+           await userprofile.save()
+           .then(result => console.log("🔼[USER ADDED] New user added to Database. User ID: " + interaction.user.id))
+           .catch(err => console.log(err));
+            await i.reply({ content: `${interaction.user}`, embeds: [embed(t("intCr.usernull.success.succcd", { ns: "events", lng: interaction.locale }), t("intCr.usernull.success.title", { ns: "events", lng: interaction.locale }), t("intCr.usernull.success.desc", { ns: "events", lng: interaction.locale, usr_repl: interaction.user, botname: main.displaythings.info.bot_name }))] });
+          });
+
+          collector_acp.on("end", async(collected) => {
+            interaction.channel.bulkDelete(2);
+          })
+     
+        });
   } else {
     let checkagree = userConfig.rules_accepted;
     let blacklist = userConfig.blacklisted;

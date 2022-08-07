@@ -9,13 +9,16 @@ module.exports = {
     const embed = require("../data/embeds");
     const Discord = require("discord.js");
 
-    const splitted = message.content.split(' ');
+    const input = message.content;
+    const splitted = input.slice(1).substring(input.indexOf(' ')).split(' ');
+
+    console.dir(splitted)
     
-    if (splitted[1] && splitted[2] && splitted[3] && splitted[4] && splitted[5] == null) return message.channel.send('enter args ```md.dbupdt userdb/guilddb discordId type(push, set) key data```');
-    const idToChange = splitted[2].toString();
-    const __typeToChange = splitted[3].toString();
-    const keyToChange = splitted[4].toString();
-    const dataToChange = splitted[5].toString();
+    if (!splitted[1] && !splitted[2] && !splitted[3] && !splitted[4] && !splitted[5]) return message.channel.send('enter args ```md.dbupdt userdb/guilddb discordId type(push, set) key data```');
+    const idToChange = splitted[2];
+    const __typeToChange = splitted[3];
+    const keyToChange = splitted[4];
+    const dataToChange = splitted[5];
 
     if (splitted[1] == "guilddb") {
       
@@ -29,7 +32,10 @@ module.exports = {
 
     } else if (splitted[1] = "userdb") {
 
+      console.log("split correct")
+
       await userSchema.findOneAndUpdate({ discordId: idToChange }, { $set: { keyToChange: dataToChange }}, { new: true }).then((err, data) => {
+        console.log("workkk")
         if (err) {
           message.channel.send(err)
         } else if (data) {

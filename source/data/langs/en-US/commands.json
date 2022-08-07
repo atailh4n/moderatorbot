@@ -19,5 +19,30 @@
         "sucess_desc2": "User named `{{usrRes}}` is banned from server `{{days}}` days for no reason.",
         "sucess_desc3": "User named `{{usrRes}}` is banned from server forever for `{{rsn}}` reason",
         "sucess_desc4": "User named `{{usrRes}}` is banned from server `{{days}}` days for `{{rsn}}` reason."
+    },
+    "delete": {
+        "warn1": {
+            "warncd": "warn1",
+            "title": "/delete {amount(1-100)} [@user]",
+            "desc": "Delete amount cannot bigger than 100"
+        },
+        "warn2": {
+            "warncd": "warn1",
+            "title": "/delete {amount(1-100)} [@user]",
+            "desc": "Delete amount cannot smaller than 1"
+        },
+        "success1": {
+            "succcd": "success",
+            "title": "Deleted messages",
+            "desc": "{{delamt}} message is deleted."
+        },
+        "userdelete": {
+            "desc": "This option is developing..."
+        },
+        "err1": {
+            "errcd": "err1",
+            "title": "Mentioned user in options of /delete command",
+            "desc": "Any user of this ID or name."
+        }
     }
 }

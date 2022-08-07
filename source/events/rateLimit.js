@@ -14,6 +14,6 @@ const guildSchema = require("../models/GuildModel");
 client.on("rateLimit", async (RateLimitError) => {
   console.error(
     "❗[RATELIMIT]Bot ratelimited for " +
-      RateLimitError.limit.toLocaleString()
+      RateLimitError.limit.toLocaleString() + " days"
   );
 });

@@ -27,8 +27,12 @@ const main = {
       logo_succ: "https://i.hizliresim.com/b7y2dem.png",
       bot_logo_gif:
         "https://cdn.discordapp.com/attachments/877875685652307978/882306430227603506/moderator_gif.gif",
-      banner_gif:
+      banner_static:
         "https://media.discordapp.net/attachments/877875685652307978/978659087820652574/def.jpg",
+      banner_gif: "https://cdn.discordapp.com/attachments/877875685652307978/889874684127092766/standard.gif",
+      privacypolicy: "https://www.moderatorbot.gq/privacy/#privacy-policy",
+      tos: "https://www.moderatorbot.gq/privacy/#tos",
+      webpanelprivacy: "http://panel.moderatorbot.gq/privacy-policy"
     },
 
     colors: {
