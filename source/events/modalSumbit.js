@@ -17,24 +17,14 @@ const db = require("quick.db");
 
 client.on("interactionCreate", async (modal) => {
   if (modal.customId === "code-confirmer") {
-    console.log("work codeess");
     const emailcode = await modal.fields.getTextInputValue("email-code");
+    const userEmail = await userSchema.findOne({ discordId: modal.user.id });
+
+    if(userEmail == null) return modal.reply({ content: modal.user + ` you don't have any account. Use any command and confirm lisance.`, ephemeral: true });
 
     if (emailcode.toUpperCase() === (await client.tempemail.get(`kod.${modal.user.id}`))) {
       const email = await client.tempemail.get(`mail.${modal.user.id}`);
-      const document = new userSchema({
-        discordId: modal.user.id,
-        email: AES.encrypt(email.toString(), process.env.CRYPTO_KEY),
-        rules_accepted: true,
-      });
-      await document
-        .save()
-        .then(
-          console.log(
-            "🔼[ADDED USER DB] A user added to DB named " +
-              modal.user.username
-          )
-        );
+      await userSchema.findOneAndUpdate({ discordId: modal.user.id }, { $set : { "email": AES.encrypt(email.toString(), process.env.CRYPTO_KEY) }}, { new: true });
       modal.reply({
         content:
           modal.user +
@@ -397,7 +387,7 @@ client.on("interactionCreate", async (modal) => {
       .then(async (data, err) => {
         if (data) {
           modal.reply({
-            content: "Your mail is send. Please check your inbox.",
+            content: "Your mail is send to" + email + ". Please check your inbox.",
             ephemeral: true,
           });
         }

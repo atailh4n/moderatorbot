@@ -17,11 +17,9 @@ client.on("interactionCreate", async (interaction) => {
   if (!interaction.isButton()) return;
 
   if (interaction.customId == "emailsend") {
-    const userConf = await UserModel.findOne({
-      discordId: interaction.user.id,
-    });
+    const userEmail = await UserModel.findOne({ discordId: interaction.user.id });
 
-    if (userConf != null) return interaction.reply({ content: "You are already confirmed user.", ephemeral: true });
+    if(userEmail.email != null) return interaction.reply({ content: interaction.user + " you already confirmed your email.", ephemeral: true })
 
     const timeSchedulce =
       (await client.tempemail.get(`timer.${interaction.user.id}`)) ||

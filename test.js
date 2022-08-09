@@ -17,11 +17,12 @@ const {
       async execute(interaction) {
 
         const embed = new MessageEmbed()
-            .setTitle("Confirmation System for Moderator")
-            .setDescription("> :flag_us: In order to use the Moderator, you must confirm your e-mail with the button below. Click once, enter your e-mail, click once more, enter the code. If the code is correct, your account is confirmed.\n\n> :flag_tr: Moderator'ü kullanabilmek için e-postanızı aşağıdaki butondan onaylamanız gereklidir. 1 kez tıklayın, mailinizi girin, 1 kere daha tıklayın, kodu girin. Eğer kod doğru ise hesabınız onaylanır.")
-            .setAuthor("Moderator")
+            .setAuthor({
+              iconURL: main.displaythings.cdn.bot_logo_gif,
+              name: "Confirmation System for Moderator"
+            })
+            .setDescription("> :flag_us: In order to use the Moderator, you must confirm your e-mail with the button below. Click once, enter your e-mail, click once more, enter the code. If the code is correct, your account is confirmed.\n> **NOTE: Your e-mail will be stored on " + main.displaythings.info.bot_name + " Bot's server and your data is stored confidentially and encrypted with the [AES encryption method](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard).**\n\n> :flag_tr: Moderator'ü kullanabilmek için e-postanızı aşağıdaki butondan onaylamanız gereklidir. 1 kez tıklayın, mailinizi girin, 1 kere daha tıklayın, kodu girin. Eğer kod doğru ise hesabınız onaylanır.\n> **NOT: E-posta adresiniz " + main.displaythings.info.bot_name + " Bot'un sunucularında saklanacaktır. Verileriniz, gizli şekilde saklanır ve [AES şifreleme yöntemi](https://tr.wikipedia.org/wiki/AES) ile şifrelenir.**")
             .setColor(main.displaythings.colors.color_main)
-            .setImage(main.displaythings.cdn.bot_logo);
 
             const buton = new MessageButton()
             .setCustomId("emailsend")

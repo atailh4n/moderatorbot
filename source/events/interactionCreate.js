@@ -87,7 +87,7 @@ const row2 = new MessageActionRow().addComponents([acp]);
     .setThumbnail(main.displaythings.botlogo)
     .setAuthor({
       name: t("intCr.usernull.author", { ns: "events", lng: interaction.locale, bot_name: main.displaythings.info.bot_name }),
-      iconUrl: main.displaythings.cdn.bot_logo
+      iconUrl: main.displaythings.cdn.bot_logo_gif
     })
     .setTitle(t("intCr.usernull.title", { ns: "events", lng: interaction.locale, bot_name: main.displaythings.info.bot_name }))
     .setDescription(`[${t("intCr.usernull.desc.opensource", { ns: "events", lng: interaction.locale })}](https://github.com/atailh4n/moderatorbot) | [${t("intCr.usernull.desc.guide", { ns: "events", lng: interaction.locale })}](https://discord.com/guidelines) | [${t("intCr.usernull.desc.privacy", { ns: "events", lng: interaction.locale })}](${main.displaythings.cdn.privacypolicy}) | [${t("intCr.usernull.desc.webprivacy", { ns: "events", lng: interaction.locale })}](${main.displaythings.cdn.webpanelprivacy}) | [${t("intCr.usernull.desc.tos", { ns: "events", lng: interaction.locale })}](${main.displaythings.cdn.tos})`)
