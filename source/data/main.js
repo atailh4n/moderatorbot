@@ -16,7 +16,7 @@ const main = {
       bot_website_link: "https://www.moderatorbot.gq/",
       bot_invite: "https://www.moderatorbot.gq/invite",
       bot_webpanel: "https://panel.moderatorbot.gq/",
-      vote_link: "https://top.gg/bot/733670294086221865",
+      vote_link: "https://top.gg/bot/765156858490126366",
       bot_logo:
         "https://cdn.discordapp.com/attachments/877875685652307978/882306438632964207/moderator.png",
       banner_added:

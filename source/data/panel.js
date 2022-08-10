@@ -226,6 +226,33 @@ const dashconf = (async () => {
                  }
               },
             },
+            {
+              optionId: "welcmCh",
+              optionName: "Welcome Message Channel",
+              optionDescription: "Set your welcome message channel. This channel must be visible all members.",
+              optionType: DBD.formTypes.channelsSelect(false, channelType = ["GUILD_TEXT"]),
+              getActualSet: async ({ guild }) => {
+                const serverConf = await GuildModel.findOne({
+                  discordId: guild.id,
+                });
+                return serverConf.needed.texts.welcome_channel || null;
+              },
+              setNew: async ({ guild, newData }) => {
+                await GuildModel.findOneAndUpdate(
+                  { discordId: guild.id },
+                  { "needed.texts.welcome_channel": newData }
+                );
+              },
+              allowedCheck: async ({guild, user}) => {
+                const userSchema = await UserModel.findOne({ discordId: user.id });
+                const guildSchema = await GuildModel.findOne({ discordId: guild.id });
+                let safeUser = guildSchema.needed.safe.safeUsr;
+                if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
+                if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
+                if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
+                return {allowed: true, errorMessage: null};
+              }
+            },
           ],
         },
         {

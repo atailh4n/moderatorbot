@@ -20,8 +20,11 @@ const GuildModel = require("../models/GuildModel");
     });
     const helpembed = new MessageEmbed()
       .setAuthor({
-        name: `${t("help.embed.author", { ns: "commands", lng: interaction.locale })}`,
-        iconUrl: `${main.displaythings.cdn.bot_logo}`
+        name: `${t("help.embed.author", {
+          ns: "commands",
+          lng: interaction.locale,
+        })}`,
+        iconUrl: `${main.displaythings.cdn.bot_logo}`,
       })
       .setTitle(
         t("help.embed.title", {

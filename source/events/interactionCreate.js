@@ -87,7 +87,8 @@ const row2 = new MessageActionRow().addComponents([acp]);
     .setThumbnail(main.displaythings.botlogo)
     .setAuthor({
       name: t("intCr.usernull.author", { ns: "events", lng: interaction.locale, bot_name: main.displaythings.info.bot_name }),
-      iconUrl: main.displaythings.cdn.bot_logo_gif
+      iconURL: main.displaythings.cdn.bot_logo_gif,
+      url: main.displaythings.cdn.bot_website_link
     })
     .setTitle(t("intCr.usernull.title", { ns: "events", lng: interaction.locale, bot_name: main.displaythings.info.bot_name }))
     .setDescription(`[${t("intCr.usernull.desc.opensource", { ns: "events", lng: interaction.locale })}](https://github.com/atailh4n/moderatorbot) | [${t("intCr.usernull.desc.guide", { ns: "events", lng: interaction.locale })}](https://discord.com/guidelines) | [${t("intCr.usernull.desc.privacy", { ns: "events", lng: interaction.locale })}](${main.displaythings.cdn.privacypolicy}) | [${t("intCr.usernull.desc.webprivacy", { ns: "events", lng: interaction.locale })}](${main.displaythings.cdn.webpanelprivacy}) | [${t("intCr.usernull.desc.tos", { ns: "events", lng: interaction.locale })}](${main.displaythings.cdn.tos})`)
@@ -128,7 +129,8 @@ const row2 = new MessageActionRow().addComponents([acp]);
 
           collector_acp.on('collect', async i => {
             const userprofile = new userSchema({
-              discordId: i.user.id
+              discordId: i.user.id,
+              rules_accepted: true
              })
            await userprofile.save()
            .then(result => console.log("🔼[USER ADDED] New user added to Database. User ID: " + interaction.user.id))
@@ -157,7 +159,7 @@ const row2 = new MessageActionRow().addComponents([acp]);
                 components: `${interaction.user}`,
                 embeds: [
                   embed(
-                    t("intCr.err1.errcode", { ns: "events", lng: interaction.locale }),
+                    t("intCr.err1.errtype", { ns: "events", lng: interaction.locale }),
                     t("intCr.err1.title", { ns: "events", lng: interaction.locale }),
                     t("intCr.err1.desc", { ns: "events", lng: interaction.locale, cmdperms: command.options.perms.join(', ') }),
                   ),
@@ -210,7 +212,7 @@ const row2 = new MessageActionRow().addComponents([acp]);
                   content: `${interaction.user}`,
                   embeds: [
                     embed(
-                      t("intCr.err2.warntype", { ns: "events", lng: interaction.locale }),
+                      t("intCr.err2.errtype", { ns: "events", lng: interaction.locale }),
                       t("intCr.err2.title", { ns: "events", lng: interaction.locale, runtimecd: error.name.toUpperCase() }),
                       t("intCr.err2.desc", { ns: "events", lng: interaction.locale, runtimemsg: Formatters.codeBlock(error.message) }),
                     ),
@@ -235,7 +237,7 @@ const row2 = new MessageActionRow().addComponents([acp]);
               content: `${interaction.user}`,
               embeds: [
                 embed(
-                  t("intCr.err3.warntype", { ns: "events", lng: interaction.locale }),
+                  t("intCr.err3.errtype", { ns: "events", lng: interaction.locale }),
                   t("intCr.err3.title", { ns: "events", lng: interaction.locale }),
                   t("intCr.err3.desc", { ns: "events", lng: interaction.locale, suppserver: main.displaythings.cdn.bot_supserver, rightarr: main.displaythings.emojis.emoj_arrow_right }),
                 ),
@@ -254,7 +256,7 @@ const row2 = new MessageActionRow().addComponents([acp]);
               components: `${interaction.user}`,
               embeds: [
                 embed(
-                  t("intCr.err1.errcode", { ns: "events", lng: interaction.locale }),
+                  t("intCr.err1.errtype", { ns: "events", lng: interaction.locale }),
                   t("intCr.err1.title", { ns: "events", lng: interaction.locale }),
                   t("intCr.err1.desc", { ns: "events", lng: interaction.locale, cmdperms: command.options.perms.join(', ') }),
                 ),
@@ -307,7 +309,7 @@ const row2 = new MessageActionRow().addComponents([acp]);
                 content: `${interaction.user}`,
                 embeds: [
                   embed(
-                    t("intCr.err2.warntype", { ns: "events", lng: interaction.locale }),
+                    t("intCr.err2.errtype", { ns: "events", lng: interaction.locale }),
                     t("intCr.err2.title", { ns: "events", lng: interaction.locale, runtimecd: error.name.toUpperCase() }),
                     t("intCr.err2.desc", { ns: "events", lng: interaction.locale, runtimemsg: Formatters.codeBlock(error.message) }),
                   ),

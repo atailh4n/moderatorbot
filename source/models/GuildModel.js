@@ -18,6 +18,10 @@ const GuildModel = new Schema({
         type: String,
         default: null,
       },
+      welcome_channel: {
+        type: String,
+        default: null
+      }
     },
     safe: {
       safeUsr: {
@@ -58,6 +62,10 @@ const GuildModel = new Schema({
         default: "en-US",
         type: String,
       },
+      welcomeSys: {
+        default: false,
+        type: Boolean
+      }
     },
     roles: {
       jailRol: {

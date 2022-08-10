@@ -4,9 +4,18 @@ const Discord = require("discord.js");
 const moment = require("moment");
 const UserModel = require("../models/UserModel");
 const GuildModel = require("../models/GuildModel");
+const { joinVoiceChannel } = require("@discordjs/voice")
 require("moment-duration-format");
 
 client.on("ready", async (client) => {
+
+  const connection = joinVoiceChannel(
+    {
+        channelId: "1006844255047798805",
+        guildId: "877671612156084224",
+        adapterCreator: client.guilds.cache.get("877671612156084224").voiceAdapterCreator
+    });
+
   async function updatedInfos() {
     const seksizaman = moment
       .duration(client.uptime)
@@ -15,10 +24,7 @@ client.on("ready", async (client) => {
       .setColor(main.displaythings.colors.color_main)
       .setTitle(` ${client.user.username} İstatistik`)
       .setThumbnail(client.user.avatarURL())
-      .setFooter(
-        "©️ 2020-2022 Kokturk Web Software",
-        client.user.avatarURL()
-      )
+      .setFooter("©️ 2020-2022 Kokturk Web Software", client.user.avatarURL())
 
       .setDescription(
         `**Creator of the bot:**\n**Ata İlhan#0528**\n \n**Total User:** __` +
@@ -43,7 +49,7 @@ client.on("ready", async (client) => {
       .get("980851819918024745")
       .messages.fetch("1006478664642330624");
 
-    return await msg.edit({ content: `Stats of Moderator`, embeds: [cse] });
+    return await msg.edit({ embeds: [cse] });
   }
 
   const statusArray = [
@@ -100,6 +106,7 @@ client.on("ready", async (client) => {
       console.error(error);
     }
   }
+
   pickPresence();
   setInterval(pickPresence, 1000 * 60 * 50);
   updatedInfos();
