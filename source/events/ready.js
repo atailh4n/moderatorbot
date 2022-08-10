@@ -37,7 +37,7 @@ client.on("ready", async (client) => {
           client.channels.cache.size.toLocaleString() +
           `__\n \n` +
           `**RAM Usage: **__` +
-          (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) +
+          (process.memoryUsage().heapUsed / 1024 / 512).toFixed(2) +
           ` MB__\n` +
           `**Uptime: **__${seksizaman}__\n \n` +
           `**Discord.JS Version:** __v` +
