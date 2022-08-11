@@ -130,7 +130,7 @@ const row2 = new MessageActionRow().addComponents([acp]);
           collector_acp.on('collect', async i => {
             const userprofile = new userSchema({
               discordId: i.user.id,
-              rules_accepted: true
+              rules_accepted: false
              })
            await userprofile.save()
            .then(result => console.log("🔼[USER ADDED] New user added to Database. User ID: " + interaction.user.id))
@@ -239,7 +239,7 @@ const row2 = new MessageActionRow().addComponents([acp]);
                 embed(
                   t("intCr.err3.errtype", { ns: "events", lng: interaction.locale }),
                   t("intCr.err3.title", { ns: "events", lng: interaction.locale }),
-                  t("intCr.err3.desc", { ns: "events", lng: interaction.locale, suppserver: main.displaythings.cdn.bot_supserver, rightarr: main.displaythings.emojis.emoj_arrow_right }),
+                  t("intCr.err3.desc", { ns: "events", lng: interaction.locale, suppserver: main.displaythings.cdn.bot_supserver}),
                 ),
               ],
               ephemeral: true,

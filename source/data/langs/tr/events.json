@@ -59,8 +59,8 @@
         },
         "err3": {
             "errtype": "error_tr",
-            "title": "ERRCD: ERRCD: NOT_AGREED",
-            "desc": "Bu komut çalıştırılabilmek için **E-mail Doğrulaması** gerektirir. Lütfen emailinizi **[Destek Sunucusu]({{suppserver}}) {{rightarr}} #email-confirmation** kanalında onaylatın."
+            "title": "ERRCD: NOT_AGREED",
+            "desc": "Bu komut çalıştırılabilmek için **E-mail Doğrulaması** gerektirir. Lütfen emailinizi **[Destek Sunucusu]({{suppserver}}) <:arr:878338531641139210> #email-confirmation** kanalında onaylatın."
         },
         "warn1": {
             "warntype": "warn_tr",

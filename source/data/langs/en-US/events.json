@@ -59,8 +59,8 @@
         },
         "err3": {
             "errtype": "error",
-            "title": "ERRCD: ERRCD: NOT_AGREED",
-            "desc": "This command needs **E-mail Confirmation** to run. Please confirm your email on: **[Support server]({{suppserver}}) {{rightarr}} #email-confirmation**"
+            "title": "ERRCD: NOT_AGREED",
+            "desc": "This command needs **E-mail Confirmation** to run. Please confirm your email on: **[Support server]({{suppserver}}) <:arr:878338531641139210> #email-confirmation**"
         },
         "warn1": {
             "warntype": "warn",

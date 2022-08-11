@@ -24,7 +24,8 @@ client.on("interactionCreate", async (modal) => {
 
     if (emailcode.toUpperCase() === (await client.tempemail.get(`kod.${modal.user.id}`))) {
       const email = await client.tempemail.get(`mail.${modal.user.id}`);
-      await userSchema.findOneAndUpdate({ discordId: modal.user.id }, { $set : { "email": AES.encrypt(email.toString(), process.env.CRYPTO_KEY) }}, { new: true });
+      await userSchema.findOneAndUpdate({ discordId: modal.user.id }, { $set : { "email": AES.encrypt(email.toString(), process.env.CRYPTO_KEY) }}, { new: true })
+      await userSchema.findOneAndUpdate({ discordId: modal.user.id }, { $set: { "rules_accepted": true }}, { new: true});
       modal.reply({
         content:
           modal.user +
@@ -44,11 +45,6 @@ client.on("interactionCreate", async (modal) => {
 
     const email = modal.fields.getTextInputValue("email-popup");
 
-    if (email.includes("gmail"))
-      return modal.reply({
-        content: modal.user + ", we not allow Gmail accounts. Try another.",
-        ephemeral: true,
-      });
 
     const randomstring = require("randomstring");
 
@@ -67,11 +63,11 @@ client.on("interactionCreate", async (modal) => {
     await client.tempemail.set(`mail.${modal.user.id}`, email.toString());
 
     let transporter = nodemailer.createTransport({
-      host: "moderatorbot.gq",
+      host: "mail.moderatorbot.gq",
       port: "465",
       secure: true,
       auth: {
-        user: "no.reply@moderatorbot.gq",
+        user: "no-reply@moderatorbot.gq",
         pass: "ZorBey1221!",
       },
     });

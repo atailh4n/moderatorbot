@@ -10,6 +10,7 @@ const { t } = require("i18next");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const main = require("../data/main");
 const GuildModel = require("../models/GuildModel");
+const embed = require('../data/embeds');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -29,7 +30,7 @@ module.exports = {
     ),
 
   async execute(interaction) {
-    const deleteamount = interaction.options.getString("amount");
+    const deleteamount = interaction.options.getInteger("amount");
     const user_bulk = interaction.options.getUser("user");
     const del_ch = interaction.channel;
     const serverConf = await GuildModel.findOne({
@@ -42,9 +43,9 @@ module.exports = {
           content: `${interaction.user}`,
           embeds: [
             embed(
-              t("delete.warn1.warncd", { ns: "command", lng: interaction.locale }),
-              t("delete.warn1.title", { ns: "command", lng: interaction.locale }),
-              t("delete.warn1.desc", { ns: "command", lng: interaction.locale })
+              t("delete.warn1.warncd", { ns: "commands", lng: interaction.locale }),
+              t("delete.warn1.title", { ns: "commands", lng: interaction.locale }),
+              t("delete.warn1.desc", { ns: "commands", lng: interaction.locale })
             ),
           ],
           ephemeral: true,
@@ -54,9 +55,9 @@ module.exports = {
           content: `${interaction.user}`,
           embeds: [
             embed(
-              t("delete.warn2.warncd", { ns: "command", lng: interaction.locale }),
-              t("delete.warn2.title", { ns: "command", lng: interaction.locale }),
-              t("delete.warn2.desc", { ns: "command", lng: interaction.locale })
+              t("delete.warn2.warncd", { ns: "commands", lng: interaction.locale }),
+              t("delete.warn2.title", { ns: "commands", lng: interaction.locale }),
+              t("delete.warn2.desc", { ns: "commands", lng: interaction.locale })
             ),
           ],
           ephemeral: true,
@@ -67,19 +68,18 @@ module.exports = {
           content: `${interaction.user}`,
           embeds: [
             embed(
-              t("delete.success1.succcd", { ns: "command", lng: interaction.locale }),
-              t("delete.success1.title", { ns: "command", lng: interaction.locale }),
-              t("delete.success1.desc", { ns: "command", lng: interaction.locale, delamt: deleteamount })
+              t("delete.success1.succcd", { ns: "commands", lng: interaction.locale }),
+              t("delete.success1.title", { ns: "commands", lng: interaction.locale }),
+              t("delete.success1.desc", { ns: "commands", lng: interaction.locale, delamt: deleteamount })
             ),
           ],
         });
-        setTimeout(() => interaction.deleteReply(), 10000);
       } else if (
         user_bulk != null &&
         interaction.guild.members.cache.get(user_bulk.id)
       ) {
         return interaction.reply({
-          content: t("delete.userdelete.desc", { ns: "command", lng: interaction.locale }),
+          content: t("delete.userdelete.desc", { ns: "commands", lng: interaction.locale }),
           ephermal: true,
         });
       } else if (
@@ -90,9 +90,9 @@ module.exports = {
           content: `${interaction.user}`,
           embeds: [
             embed(
-              t("delete.err1.errcd", { ns: "command", lng: interaction.locale }),
-              t("delete.err1.title", { ns: "command", lng: interaction.locale }),
-              t("delete.err1.desc", { ns: "command", lng: interaction.locale })
+              t("delete.err1.errcd", { ns: "commands", lng: interaction.locale }),
+              t("delete.err1.title", { ns: "commands", lng: interaction.locale }),
+              t("delete.err1.desc", { ns: "commands", lng: interaction.locale })
             ),
           ],
           ephermal: true,
