@@ -22,9 +22,9 @@ client.on("ready", async (client) => {
       .format(" D [Days], H [Hours], m [Mins], s [Secs]");
     const cse = new Discord.MessageEmbed()
       .setColor(main.displaythings.colors.color_main)
-      .setTitle(` ${client.user.username} İstatistik`)
+      .setTitle(` ${client.user.username} Status`)
       .setThumbnail(client.user.avatarURL())
-      .setFooter("©️ 2020-2022 Kokturk Web Software", client.user.avatarURL())
+      .setFooter("©️ 2020-2022 Moderator | Kokturk Web Software | Status will be updated every 5 min.", client.user.avatarURL())
 
       .setDescription(
         `**Creator of the bot:**\n**Ata İlhan#0528**\n \n**Total User:** __` +
