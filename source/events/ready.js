@@ -108,7 +108,7 @@ client.on("ready", async (client) => {
   }
 
   pickPresence();
-  setInterval(pickPresence, 1000 * 60 * 50);
+  setInterval(pickPresence, 1000 * 60 * 120);
   updatedInfos();
   setInterval(updatedInfos, 1000 * 60 * 5);
 
