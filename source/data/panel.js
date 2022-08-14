@@ -150,7 +150,7 @@ const dashconf = (async () => {
         {
           categoryId: "setup",
           categoryName: "Set-Up",
-          categoryDescription: "Default settings is here. Can you change it.",
+          categoryDescription: "Default settings is here. You can change it.",
           categoryOptionsList: [
             {
               optionId: "lang",
@@ -173,6 +173,8 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
@@ -184,7 +186,7 @@ const dashconf = (async () => {
               optionName: "Log System",
               optionDescription:
                 "On/Off log system for all logs.",
-              optionType: DBD.formTypes.switch((disabled = false)),
+              optionType: DBD.formTypes.switch(false),
               getActualSet: async ({ guild }) => {
                 const serverConf = await GuildModel.findOne({
                   discordId: guild.id,
@@ -198,13 +200,24 @@ const dashconf = (async () => {
                 );
                 return;
               },
+              allowedCheck: async ({guild, user}) => {
+                const userSchema = await UserModel.findOne({ discordId: user.id });
+                const guildSchema = await GuildModel.findOne({ discordId: guild.id });
+                let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
+                if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
+                if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
+                if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
+                return {allowed: true, errorMessage: null};
+              }
             },
             {
               optionId: "logch",
               optionName: "Log Channel",
               optionDescription:
                 "Set your log channel. All logs send 1 channel. So, select it carefully.",
-              optionType: DBD.formTypes.channelsSelect(false, channelType = ["GUILD_TEXT"]),
+              optionType: DBD.formTypes.channelsSelect(false, ["GUILD_TEXT"]),
               getActualSet: async ({ guild }) => {
                 const serverConf = await GuildModel.findOne({
                   discordId: guild.id,
@@ -216,21 +229,23 @@ const dashconf = (async () => {
                   { discordId: guild.id },
                   { "needed.texts.modlog": newData }
                 );
-                allowedCheck: async ({guild, user}) => {
-                    const userSchema = await UserModel.findOne({ discordId: user.id });
-                    const guildSchema = await GuildModel.findOne({ discordId: guild.id });
-                    let safeUser = guildSchema.needed.safe.safeUsr;
-                    if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
-                    if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
-                    return {allowed: true, errorMessage: null};
-                 }
               },
+              allowedCheck: async ({guild, user}) => {
+                const userSchema = await UserModel.findOne({ discordId: user.id });
+                const guildSchema = await GuildModel.findOne({ discordId: guild.id });
+                let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
+                if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
+                if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
+                return {allowed: true, errorMessage: null};
+             }
             },
             {
               optionId: "welcmCh",
               optionName: "Welcome Message Channel",
               optionDescription: "Set your welcome message channel. This channel must be visible all members.",
-              optionType: DBD.formTypes.channelsSelect(false, channelType = ["GUILD_TEXT"]),
+              optionType: DBD.formTypes.channelsSelect(false, ["GUILD_TEXT"]),
               getActualSet: async ({ guild }) => {
                 const serverConf = await GuildModel.findOne({
                   discordId: guild.id,
@@ -247,13 +262,196 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
                 return {allowed: true, errorMessage: null};
               }
             },
+            {
+              optionId: "linkKill",
+              optionName: "Link Killer System",
+              optionDescription:
+                "Link Killer System is killing links and senders except for your safe links",
+              optionType: DBD.formTypes.switch(false),
+              getActualSet: async ({ guild }) => {
+                const serverConf = await GuildModel.findOne({
+                  discordId: guild.id,
+                });
+                return serverConf.needed.systems.linkKill || false;
+              },
+              setNew: async ({ guild, newData }) => {
+                await GuildModel.findOneAndUpdate(
+                  { discordId: guild.id },
+                  { "needed.systems.linkKill": newData }
+                );
+              },
+              allowedCheck: async ({guild, user}) => {
+                const userSchema = await UserModel.findOne({ discordId: user.id });
+                const guildSchema = await GuildModel.findOne({ discordId: guild.id });
+                let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
+                if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
+                if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
+                return {allowed: true, errorMessage: null};
+             }
+            },
+            {
+              optionId: "badWKill",
+              optionName: "Bad Word Killer System",
+              optionDescription:
+                "Bad Word Killer System is killing all badwords and sender.",
+              optionType: DBD.formTypes.switch(false),
+              getActualSet: async ({ guild }) => {
+                const serverConf = await GuildModel.findOne({
+                  discordId: guild.id,
+                });
+                return serverConf.needed.systems.badWKill || false;
+              },
+              setNew: async ({ guild, newData }) => {
+                await GuildModel.findOneAndUpdate(
+                  { discordId: guild.id },
+                  { "needed.systems.badWKill": newData }
+                );
+              },
+              allowedCheck: async ({guild, user}) => {
+                const userSchema = await UserModel.findOne({ discordId: user.id });
+                const guildSchema = await GuildModel.findOne({ discordId: guild.id });
+                let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
+                if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
+                if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
+                return {allowed: true, errorMessage: null};
+             }
+            },
+            {
+              optionId: "voiceMuteSys",
+              optionName: "Voice Mute System",
+              optionDescription:
+                "Voice Mute System is allow to suspend a user in voice.",
+              optionType: DBD.formTypes.switch(true),
+              getActualSet: async ({ guild }) => {
+                const serverConf = await GuildModel.findOne({
+                  discordId: guild.id,
+                });
+                return serverConf.needed.systems.voiceMuteSys || false;
+              },
+              setNew: async ({ guild, newData }) => {
+                await GuildModel.findOneAndUpdate(
+                  { discordId: guild.id },
+                  { "needed.systems.voiceMuteSys": newData }
+                );
+              },
+              allowedCheck: async ({guild, user}) => {
+                const userSchema = await UserModel.findOne({ discordId: user.id });
+                const guildSchema = await GuildModel.findOne({ discordId: guild.id });
+                let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
+                if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
+                if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
+                return {allowed: true, errorMessage: null};
+             }
+            },
           ],
+        },
+        {
+          categoryId: "roles",
+          categoryName: "Roles",
+          categoryDescription: "Set up bot roles.",
+          categoryOptionsList: [
+            {
+              optionId: "jailr",
+              optionName: "Jail Role",
+              optionDescription: "Jail role for punishments",
+              optionType: DBD.formTypes.rolesSelect(false),
+              getActualSet: async ({ guild }) => {
+                const serverConf = await GuildModel.findOne({
+                  discordId: guild.id,
+                });
+                return serverConf.needed.roles.jailRol || null;
+              },
+              setNew: async ({ guild, newData }) => {
+                await GuildModel.findOneAndUpdate(
+                  { discordId: guild.id },
+                  { "needed.roles.jailRol": newData }
+                );
+              },
+              allowedCheck: async ({guild, user}) => {
+                const userSchema = await UserModel.findOne({ discordId: user.id });
+                const guildSchema = await GuildModel.findOne({ discordId: guild.id });
+                let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
+                if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
+                if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
+                if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
+                return {allowed: true, errorMessage: null};
+              }
+            },
+            {
+              optionId: "susr",
+              optionName: "Suspicious Role",
+              optionDescription: "Suspicious role for who joined to server and account too young.",
+              optionType: DBD.formTypes.rolesSelect(false),
+              getActualSet: async ({ guild }) => {
+                const serverConf = await GuildModel.findOne({
+                  discordId: guild.id,
+                });
+                return serverConf.needed.roles.susRol || null;
+              },
+              setNew: async ({ guild, newData }) => {
+                await GuildModel.findOneAndUpdate(
+                  { discordId: guild.id },
+                  { "needed.roles.susRol": newData }
+                );
+              },
+              allowedCheck: async ({guild, user}) => {
+                const userSchema = await UserModel.findOne({ discordId: user.id });
+                const guildSchema = await GuildModel.findOne({ discordId: guild.id });
+                let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
+                if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
+                if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
+                if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
+                return {allowed: true, errorMessage: null};
+              }
+            },
+            {
+              optionId: "adminr",
+              optionName: "Admin Role",
+              optionDescription: "Admin role to avoid inadvertent punishment.",
+              optionType: DBD.formTypes.rolesSelect(false),
+              getActualSet: async ({ guild }) => {
+                const serverConf = await GuildModel.findOne({
+                  discordId: guild.id,
+                });
+                return serverConf.needed.roles.adminRol || null;
+              },
+              setNew: async ({ guild, newData }) => {
+                await GuildModel.findOneAndUpdate(
+                  { discordId: guild.id },
+                  { "needed.roles.adminRol": newData }
+                );
+              },
+              allowedCheck: async ({guild, user}) => {
+                const userSchema = await UserModel.findOne({ discordId: user.id });
+                const guildSchema = await GuildModel.findOne({ discordId: guild.id });
+                let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
+                if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
+                if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
+                if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
+                return {allowed: true, errorMessage: null};
+              }
+            },
+          ]
         },
         {
           categoryId: "events",
@@ -282,6 +480,8 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
@@ -309,6 +509,8 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
@@ -336,6 +538,8 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
@@ -363,6 +567,8 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
@@ -390,6 +596,8 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
@@ -398,8 +606,8 @@ const dashconf = (async () => {
             },
             {
               optionId: "usrAdd",
-              optionName: "Member Join",
-              optionDescription: "If somebody join your server, Moderator will log it to you. You can turn it on/off.",
+              optionName: "Member Join [Welcome Message]",
+              optionDescription: "If somebody join your server, Moderator will log it to you. You can turn it on/off. Your Welcome Channel must be setted.",
               optionType: DBD.formTypes.switch(true),
               getActualSet: async ({ guild }) => {
                 const serverConf = await GuildModel.findOne({
@@ -417,6 +625,8 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
@@ -425,7 +635,7 @@ const dashconf = (async () => {
             },
             {
               optionId: "usrRem",
-              optionName: "Member Leave",
+              optionName: "Member Leave [Left Message]",
               optionDescription: "If somebody leaves your server, Moderator will log it to you. You can turn it on/off.",
               optionType: DBD.formTypes.switch(true),
               getActualSet: async ({ guild }) => {
@@ -444,6 +654,8 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
@@ -471,6 +683,8 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
@@ -498,6 +712,8 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
@@ -525,6 +741,8 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
@@ -552,6 +770,8 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
@@ -579,6 +799,8 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
@@ -606,6 +828,8 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
@@ -633,6 +857,8 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
@@ -660,6 +886,8 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
@@ -687,6 +915,8 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
@@ -714,6 +944,8 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
@@ -741,6 +973,8 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
@@ -768,6 +1002,8 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
@@ -795,6 +1031,8 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
@@ -822,6 +1060,8 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
@@ -849,6 +1089,8 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
@@ -876,6 +1118,8 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
@@ -912,6 +1156,8 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}

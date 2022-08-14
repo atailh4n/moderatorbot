@@ -12,8 +12,10 @@ const discordModal = require("discord-modals");
 const guildSchema = require("../models/GuildModel");
 
 client.on("guildCreate", async (guild) => {
+  const ownerGuild = await guild.fetchOwner();
   const document = new guildSchema({
     discordId: guild.id,
+    ownerId: ownerGuild.id
   });
 
   await document

@@ -7,6 +7,11 @@ const GuildModel = new Schema({
     required: true,
     unique: true,
   },
+  ownerId: {
+    type: String,
+    required: true,
+    unique: true
+  },
   needed: {
     //Needed values
     texts: {
@@ -19,6 +24,10 @@ const GuildModel = new Schema({
         default: null,
       },
       welcome_channel: {
+        type: String,
+        default: null
+      },
+      goodbye_channel: {
         type: String,
         default: null
       }
@@ -62,10 +71,6 @@ const GuildModel = new Schema({
         default: "en-US",
         type: String,
       },
-      welcomeSys: {
-        default: false,
-        type: Boolean
-      }
     },
     roles: {
       jailRol: {

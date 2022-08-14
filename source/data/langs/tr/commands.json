@@ -44,5 +44,27 @@
             "title": "/delete komutunda etiketlenen kullanıcı",
             "desc": "Herhangi bir kulanıcı"
         }
+    },
+    "safecommand": {
+        "succ1": {
+            "succcd": "success_tr",
+            "title": "{{setname}} bölümüne eklendi",
+            "desc": "```{{objec}}```, **{{setname}}** listesine eklendi."
+        },
+        "warn1": {
+            "warncd": "warn1_tr",
+            "title": "/safe link {link}",
+            "desc": "Linkiniz \"https:\", \"http:\" ya da \"/\" içermemelidir. Linkiniz yalın olmalıdır.\n\nÖrneğin: domain.com\nYanlış Kullanım: https://domain.com"
+        },
+        "warn2": {
+            "warncd": "warn1_tr",
+            "title": "/safe user {@user}",
+            "desc": "Bu bir bot. Bir kullanıcı değil."
+        },
+        "warn3": {
+            "warncd": "warn1_tr",
+            "title": "/safe user {@user}",
+            "desc": "Bu bir kullanıcı. Bir bot değil."
+        }
     }
 }

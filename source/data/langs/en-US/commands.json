@@ -44,5 +44,27 @@
             "title": "Mentioned user in options of /delete command",
             "desc": "Any user of this ID or name."
         }
+    },
+    "safecommand": {
+        "succ1": {
+            "succcd": "success",
+            "title": "An {{setname}} element added",
+            "desc": "```{{objec}}``` successfully added to **{{setname}}** list."
+        },
+        "warn1": {
+            "warncd": "warn1",
+            "title": "/safe link {link}",
+            "desc": "Your link mustn't be contain \"https:\", \"http:\" or \"/\". Your link must be plain.\n\nExample: domain.com\nWrong usage: https://domain.com/"
+        },
+        "warn2": {
+            "warncd": "warn1",
+            "title": "/safe user {@user}",
+            "desc": "This is a bot. Not a user."
+        },
+        "warn3": {
+            "warncd": "warn1",
+            "title": "/safe user {@user}",
+            "desc": "This is a user. Not a bot."
+        }
     }
 }
