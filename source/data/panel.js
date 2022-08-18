@@ -23,6 +23,7 @@ const dashconf = (async () => {
       domain: process.env.WEB_URL,
       bot: client,
       acceptPrivacyPolicy: true,
+      disableResolvingGuildCache: true,
       guildAfterAuthorization: {
         use: true,
         guildId: main.datasowner.mainserver,
