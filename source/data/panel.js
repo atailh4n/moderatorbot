@@ -275,7 +275,7 @@ const dashconf = (async () => {
               optionName: "Link Killer System",
               optionDescription:
                 "Link Killer System is killing links and senders except for your safe links",
-              optionType: DBD.formTypes.switch(false),
+              optionType: DBD.formTypes.switch(true),
               getActualSet: async ({ guild }) => {
                 const serverConf = await GuildModel.findOne({
                   discordId: guild.id,
@@ -304,7 +304,7 @@ const dashconf = (async () => {
               optionName: "Bad Word Killer System",
               optionDescription:
                 "Bad Word Killer System is killing all badwords and sender.",
-              optionType: DBD.formTypes.switch(false),
+              optionType: DBD.formTypes.switch(true),
               getActualSet: async ({ guild }) => {
                 const serverConf = await GuildModel.findOne({
                   discordId: guild.id,
@@ -721,64 +721,6 @@ const dashconf = (async () => {
             },
             },
             {
-              optionId: "badWCatch",
-              optionName: "Bad Word Catch",
-              optionDescription: "If somebody uses badwords on server, Moderator will log it to you. You can turn it on/off.",
-              optionType: DBD.formTypes.switch(true),
-              getActualSet: async ({ guild }) => {
-                const serverConf = await GuildModel.findOne({
-                  discordId: guild.id,
-                });
-                return serverConf.needed.events.msgSnd.badWordPr.activated || false;
-              },
-              setNew: async ({ guild, newData }) => {
-                await GuildModel.findOneAndUpdate(
-                  { discordId: guild.id },
-                  { "needed.events.msgSnd.badWordPr.activated": newData }
-                );
-              },
-              allowedCheck: async ({guild, user}) => {
-                const userSchema = await UserModel.findOne({ discordId: user.id });
-                const guildSchema = await GuildModel.findOne({ discordId: guild.id });
-                let safeUser = guildSchema.needed.safe.safeUsr;
-                let ownerGuild = guildSchema.ownerId;
-                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
-                if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
-                if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
-                if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
-                return {allowed: true, errorMessage: null};
-            },
-            },
-            {
-              optionId: "linkCatch",
-              optionName: "Member Join",
-              optionDescription: "If somebody join your server, Moderator will log it to you. You can turn it on/off.",
-              optionType: DBD.formTypes.switch(true),
-              getActualSet: async ({ guild }) => {
-                const serverConf = await GuildModel.findOne({
-                  discordId: guild.id,
-                });
-                return serverConf.needed.events.msgSnd.linkPr.activated || false;
-              },
-              setNew: async ({ guild, newData }) => {
-                await GuildModel.findOneAndUpdate(
-                  { discordId: guild.id },
-                  { "needed.events.msgSnd.linkPr.activated": newData }
-                );
-              },
-              allowedCheck: async ({guild, user}) => {
-                const userSchema = await UserModel.findOne({ discordId: user.id });
-                const guildSchema = await GuildModel.findOne({ discordId: guild.id });
-                let safeUser = guildSchema.needed.safe.safeUsr;
-                let ownerGuild = guildSchema.ownerId;
-                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
-                if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
-                if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
-                if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
-                return {allowed: true, errorMessage: null};
-            },
-            },
-            {
               optionId: "msgDel",
               optionName: "Message Delete",
               optionDescription: "If somebody deletes message on your server, Moderator will log it to you. You can turn it on/off.",
@@ -822,35 +764,6 @@ const dashconf = (async () => {
                 await GuildModel.findOneAndUpdate(
                   { discordId: guild.id },
                   { "needed.events.msgDelBulk.activated": newData }
-                );
-              },
-              allowedCheck: async ({guild, user}) => {
-                const userSchema = await UserModel.findOne({ discordId: user.id });
-                const guildSchema = await GuildModel.findOne({ discordId: guild.id });
-                let safeUser = guildSchema.needed.safe.safeUsr;
-                let ownerGuild = guildSchema.ownerId;
-                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
-                if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
-                if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
-                if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
-                return {allowed: true, errorMessage: null};
-            },
-            },
-            {
-              optionId: "msgUp",
-              optionName: "Message Update",
-              optionDescription: "If somebody updates a message on your server, Moderator will log it to you. You can turn it on/off.",
-              optionType: DBD.formTypes.switch(true),
-              getActualSet: async ({ guild }) => {
-                const serverConf = await GuildModel.findOne({
-                  discordId: guild.id,
-                });
-                return serverConf.needed.events.msgUp.activated || false;
-              },
-              setNew: async ({ guild, newData }) => {
-                await GuildModel.findOneAndUpdate(
-                  { discordId: guild.id },
-                  { "needed.events.msgUp.activated": newData }
                 );
               },
               allowedCheck: async ({guild, user}) => {
