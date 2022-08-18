@@ -48,7 +48,7 @@ const {
 
         if (usertofetch.bot === true) return interaction.reply({ content: `${interaction.user}`, embeds: [embed(t("safecommand.warn2.warncd", { ns: "commands", lng: guildDb.needed.systems.langPr }), t("safecommand.warn2.title", { ns: "commands", lng: guildDb.needed.systems.langPr }), t("safecommand.warn2.desc", { ns: "commands", lng: guildDb.needed.systems.langPr }))]});
         await guildConf.findOneAndUpdate({ discordId: interaction.guild.id }, { $addToSet: { "needed.safe.safeUsr": usertofetch.id}}, { new: true });
-        await interaction.reply({ content: `${interaction.user}`, embeds: [embed(t("safecommand.succ1.succcd", { ns: "commands", lng: guildDb.needed.systems.langPr }), t("safecommand.succ1.title", { ns: "commands", lng: guildDb.needed.systems.langPr, setname: "Safe User" }), t("safecommand.succ1.title", { ns: "commands", lng: guildDb.needed.systems.langPr, objec: usertofetch.username, setname: "Safe User" }))] });
+        await interaction.reply({ content: `${interaction.user}`, embeds: [embed(t("safecommand.succ1.succcd", { ns: "commands", lng: guildDb.needed.systems.langPr }), t("safecommand.succ1.title", { ns: "commands", lng: guildDb.needed.systems.langPr, setname: "Safe User" }), t("safecommand.succ1.desc", { ns: "commands", lng: guildDb.needed.systems.langPr, objec: usertofetch.username, setname: "Safe User" }))] });
         
       } else if (interaction.options.getSubcommand() === "bot") {
 
@@ -56,23 +56,23 @@ const {
 
         if (bottofetch.bot === false) return interaction.reply({ content: `${interaction.user}`, embeds: [embed(t("safecommand.warn3.warncd", { ns: "commands", lng: guildDb.needed.systems.langPr }), t("safecommand.warn3.title", { ns: "commands", lng: guildDb.needed.systems.langPr }), t("safecommand.warn3.desc", { ns: "commands", lng: guildDb.needed.systems.langPr }))]});
         await guildConf.findOneAndUpdate({ discordId: interaction.guild.id }, { $addToSet: { "needed.safe.safeBot": bottofetch.id}}, { new: true });
-        await interaction.reply({ content: `${interaction.user}`, embeds: [embed(t("safecommand.succ1.succcd", { ns: "commands", lng: guildDb.needed.systems.langPr }), t("safecommand.succ1.title", { ns: "commands", lng: guildDb.needed.systems.langPr, setname: "Safe Bot" }), t("safecommand.succ1.title", { ns: "commands", lng: guildDb.needed.systems.langPr, objec: bottofetch.username, setname: "Safe Bot" }))] });
+        await interaction.reply({ content: `${interaction.user}`, embeds: [embed(t("safecommand.succ1.succcd", { ns: "commands", lng: guildDb.needed.systems.langPr }), t("safecommand.succ1.title", { ns: "commands", lng: guildDb.needed.systems.langPr, setname: "Safe Bot" }), t("safecommand.succ1.desc", { ns: "commands", lng: guildDb.needed.systems.langPr, objec: bottofetch.username, setname: "Safe Bot" }))] });
 
       } else if (interaction.options.getSubcommand() === "role") {
 
         const roletofetch = interaction.options.getRole('role');
 
         await guildConf.findOneAndUpdate({ discordId: interaction.guild.id }, { $addToSet: { "needed.safe.safeRol": roletofetch.id}}, { new: true });
-        await interaction.reply({ content: `${interaction.user}`, embeds: [embed(t("safecommand.succ1.succcd", { ns: "commands", lng: guildDb.needed.systems.langPr }), t("safecommand.succ1.title", { ns: "commands", lng: guildDb.needed.systems.langPr, setname: "Safe Role" }), t("safecommand.succ1.title", { ns: "commands", lng: guildDb.needed.systems.langPr, objec: roletofetch.name, setname: "Safe Role" }))] });
+        await interaction.reply({ content: `${interaction.user}`, embeds: [embed(t("safecommand.succ1.succcd", { ns: "commands", lng: guildDb.needed.systems.langPr }), t("safecommand.succ1.title", { ns: "commands", lng: guildDb.needed.systems.langPr, setname: "Safe Role" }), t("safecommand.succ1.desc", { ns: "commands", lng: guildDb.needed.systems.langPr, objec: roletofetch.name, setname: "Safe Role" }))] });
 
       } else if (interaction.options.getSubcommand() === "link") {
 
         const linktofetch = interaction.options.getString('link');
 
-        if (linktofetch.includes("https") || linktofetch.includes("http") || linktofetch.includes("/") || linktofetch.includes(":") ) return interaction.reply({ content: `${interaction.user}`, embeds: [embed(t("safecommand.warn1.warncd", { ns: "commands", lng: guildDb.needed.systems.langPr }), t("safecommand.warn1.title", { ns: "commands", lng: guildDb.needed.systems.langPr }), t("safecommand.warn1.desc", { ns: "commands", lng: guildDb.needed.systems.langPr }))] })
+        if (linktofetch.includes("https") || linktofetch.includes("http") || linktofetch.includes("/") || linktofetch.includes(":") ) return interaction.reply({ content: `${interaction.user}`, embeds: [embed(t("safecommand.warn1.warncd", { ns: "commands", lng: guildDb.needed.systems.langPr }), t("safecommand.warn1.desc", { ns: "commands", lng: guildDb.needed.systems.langPr }), t("safecommand.warn1.desc", { ns: "commands", lng: guildDb.needed.systems.langPr }))] })
 
         await guildConf.findOneAndUpdate({ discordId: interaction.guild.id }, { $addToSet: { "needed.safe.safeLink": linktofetch}}, { new: true });
-        await interaction.reply({ content: `${interaction.user}`, embeds: [embed(t("safecommand.succ1.succcd", { ns: "commands", lng: guildDb.needed.systems.langPr }), t("safecommand.succ1.title", { ns: "commands", lng: guildDb.needed.systems.langPr, setname: "Safe Link" }), t("safecommand.succ1.title", { ns: "commands", lng: guildDb.needed.systems.langPr, objec: linktofetch, setname: "Safe Link" }))] });
+        await interaction.reply({ content: `${interaction.user}`, embeds: [embed(t("safecommand.succ1.succcd", { ns: "commands", lng: guildDb.needed.systems.langPr }), t("safecommand.succ1.title", { ns: "commands", lng: guildDb.needed.systems.langPr, setname: "Safe Link" }), t("safecommand.succ1.desc", { ns: "commands", lng: guildDb.needed.systems.langPr, objec: linktofetch, setname: "Safe Link" }))] });
 
       };
     }
