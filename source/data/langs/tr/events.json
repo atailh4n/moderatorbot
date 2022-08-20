@@ -73,5 +73,15 @@
         "vote": "Moderator'e Oy Ver",
         "website": "Web Sitesi (Panel, Komutlar v.s.)",
         "support": "Destek Sunucusu"
+    },
+    "usrAdd": {
+        "year": "YY **[Yıl,]** DD **[Gün,]** HH **[Saat,]** mm **[Dakika,]** ss **[Saniye]**",
+        "author": "Sunucuya Hoşgeldin!",
+        "title": "{{usrn}}, *{{srvn}}* sunucusuna katıldı.",
+        "desc": "<a:welcome:878338530840027218><a:welcome2:878338531146227734> {{usrm}}({{usrid}}) isimli kullanıcı sunucuya katıldı.\n📅 Hesap `{{time}}` önce oluşturulmuş.\n\n> <:sup:888738778355740683> Hesap güvenilirliği: {{contr}}",
+        "control0_pre": "**Güvenli değil, Şüpheli rolü verildi.**",
+        "control0": "Eğer kullanıcının güvenli olup olmadığını öğrenmek istiyorsan, **premium al!** Premiumu **destek sunucusundan** alabilirsin.",
+        "control1": "**Güvenli, katılabilir.**",
+        "control2": "Öğrenmek istiyorsan premium al!"
     }
 }

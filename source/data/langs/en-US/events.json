@@ -73,5 +73,15 @@
         "vote": "Moderator'e Oy Ver",
         "website": "Web Sitesi (Panel, Komutlar v.s.)",
         "support": "Destek Sunucusu"
+    },
+    "usrAdd": {
+        "year": "YY **[Years,]** DD **[Days,]** HH **[Hour,]** mm **[Minitues,]** ss **[Seconds]**",
+        "author": "Welcome the Server!",
+        "title": "{{usrn}} joined to {{srvn}}",
+        "desc": "<a:welcome:878338530840027218><a:welcome2:878338531146227734> Member named {{usrm}}({{usrid}}) is joined to server.\n📅 Account is created `{{time}}` ago.\n\n> <:sup:888738778355740683> Account Safety: {{contr}}",
+        "control0_pre": "**Not safe, Suspicious role given.**",
+        "control0": "If you want to learn this user safe or not, **buy premium!** You can buy premium at **support server**",
+        "control1": "**Safe, can join.**",
+        "control2": "If you want to learn buy premium!"
     }
 }

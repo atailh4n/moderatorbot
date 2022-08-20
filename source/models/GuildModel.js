@@ -71,6 +71,10 @@ const GuildModel = new Schema({
         default: "en-US",
         type: String,
       },
+      autoRoleSys: {
+        default: false,
+        type: Boolean
+      },
     },
     roles: {
       jailRol: {
@@ -84,6 +88,10 @@ const GuildModel = new Schema({
       adminRol: {
         default: null,
         type: String,
+      },
+      autoRole: {
+        default: null,
+        type: String
       },
     },
     events: {
@@ -333,6 +341,7 @@ const GuildModel = new Schema({
       default: false,
       type: Boolean,
     },
+    preLastDate: String, 
     prefeature: {
       captcha: {
         channel: {

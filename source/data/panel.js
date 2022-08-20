@@ -330,6 +330,39 @@ const dashconf = (async () => {
              }
             },
             {
+              optionId: "autoRoleSys",
+              optionName: "Auto Role System",
+              optionDescription:
+                "Auto Role System is gives your selected role when a user joined to server.",
+              optionType: DBD.formTypes.switch(true),
+              getActualSet: async ({ guild }) => {
+                const serverConf = await GuildModel.findOne({
+                  discordId: guild.id,
+                });
+                return serverConf.needed.systems.autoRoleSys || false;
+              },
+              setNew: async ({ guild, newData }) => {
+                await GuildModel.findOneAndUpdate(
+                  { discordId: guild.id },
+                  { "needed.systems.autoRoleSys": newData }
+                );
+              },
+              allowedCheck: async ({guild, user}) => {
+                const userSchema = await UserModel.findOne({ discordId: user.id });
+                const guildSchema = await GuildModel.findOne({ discordId: guild.id });
+                let safeUser = guildSchema.needed.safe.safeUsr;
+                let autoRole = guildSchema.needed.roles.autoRole;
+                let susRole = guildSchema.needed.roles.susRol;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
+                if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
+                if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
+                if (!autoRole || autoRole == null) return {allowed: false, errorMessage: "Your auto role is not setted. Please first set your auto role."}
+                if (!susRole || susRole == null) return {allowed: false, errorMessage: "Your suspicious role is not setted. Please set your suspicious role."}
+                return {allowed: true, errorMessage: null};
+             }
+            },
+            {
               optionId: "voiceMuteSys",
               optionName: "Voice Mute System",
               optionDescription:
@@ -438,6 +471,35 @@ const dashconf = (async () => {
                 await GuildModel.findOneAndUpdate(
                   { discordId: guild.id },
                   { "needed.roles.adminRol": newData }
+                );
+              },
+              allowedCheck: async ({guild, user}) => {
+                const userSchema = await UserModel.findOne({ discordId: user.id });
+                const guildSchema = await GuildModel.findOne({ discordId: guild.id });
+                let safeUser = guildSchema.needed.safe.safeUsr;
+                let ownerGuild = guildSchema.ownerId;
+                if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
+                if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
+                if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
+                if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
+                return {allowed: true, errorMessage: null};
+              }
+            },
+            {
+              optionId: "autorl",
+              optionName: "Auto Role",
+              optionDescription: "Auto role for welcomer system.",
+              optionType: DBD.formTypes.rolesSelect(false),
+              getActualSet: async ({ guild }) => {
+                const serverConf = await GuildModel.findOne({
+                  discordId: guild.id,
+                });
+                return serverConf.needed.roles.autoRole || null;
+              },
+              setNew: async ({ guild, newData }) => {
+                await GuildModel.findOneAndUpdate(
+                  { discordId: guild.id },
+                  { "needed.roles.autoRole": newData }
                 );
               },
               allowedCheck: async ({guild, user}) => {
@@ -626,11 +688,15 @@ const dashconf = (async () => {
                 const userSchema = await UserModel.findOne({ discordId: user.id });
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
+                let autoRole = guildSchema.needed.roles.autoRole;
+                let susRole = guildSchema.needed.roles.susRol;
                 let ownerGuild = guildSchema.ownerId;
                 if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
                 if (!safeUser.includes(user.id)) return {allowed: false, errorMessage: "You are not safe user. You cannot use any moderation commands. Please contact with server owner."}
+                if (!autoRole || autoRole == null) return {allowed: false, errorMessage: "Your auto role is not setted. Please first set your auto role."}
+                if (!susRole || susRole == null) return {allowed: false, errorMessage: "Your suspicious role is not setted. Please set your suspicious role."}
                 return {allowed: true, errorMessage: null};
             },
             },

@@ -90,7 +90,7 @@ client.on("guildCreate", async (guild) => {
     .setStyle("LINK")
     .setLabel("Support Server")
     .setEmoji(main.displaythings.emojis.emoj_sup)
-    .setURL(main.displaythings.cdn.vote_link);
+    .setURL(main.displaythings.cdn.bot_supserver);
 
   const site = new MessageButton()
     .setStyle("LINK")
