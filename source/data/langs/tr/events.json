@@ -1,0 +1,87 @@
+{
+    "invCr": {
+        "infocd": "info",
+        "info_title_unc": "Davet oluşturuldu",
+        "invite_desc_unc": "{{invite}} oluşturuldu ancak kimin oluşturduğu bilinmiyor. ```ADMINISTRAOR``` iznim olduğundan ve rolümün en üstte olduğundan emin misin?",
+        "asd": "test"
+    },
+    "intCr": {
+        "usernull": {
+            "author": "{{bot_name}} | Lisans, Gizlilik Politikası ve Kullanım Koşulları",
+            "title": "{{bot_name}} botunu kullanmak için lütfen 'Lisans Koşulları', 'Gizlilik Politikası' ve 'Kullanım Koşulları'na uyduğunuzu kabul edin. 60 saniye içinde kabul etmezseniz bu mesaj geçersiz sayılacaktır.",
+            "desc": {
+                "opensource": "Açık Kaynak Kodu GitHub",
+                "guide": "Discord Kuralları",
+                "privacy": "Gizlilik Politikası",
+                "webprivacy": "Web Panel Politikası",
+                "tos": "Bizim Kullanım Koşullarımız"
+            },
+            "field1": {
+                "title":"{{bot_name}} | Kişisel Amaçlar",
+                "desc": "> {{bot_name}} botunu kullanırken, onu yalnızca kişisel amaçlarla kullanacağımı beyan ederim."
+            },
+            "field2": {
+                "title": "{{bot_name}} | Açık Kaynak Kod",
+                "desc": "> Bu açık kaynaklı yazılımı ({{bot_name}} bot) sadece belirtilen amaçlar için (Eğitim, Öğrenme, İnceleme veya sadece eğlence için vb.) kullanacağım."
+            },
+            "field3": {
+                "title": "{{bot_name}} | Veri Depolama ve İşleme",
+                "desc": "> Bilgilerimin {{bot_name}} bot veritabanında saklandığını kabul ediyorum ve bunları herhangi bir zamanda silme hakkım olduğunu biliyorum ve geliştiriciyle de iletişime geçebileceğimi ve 'Verilerimin nasıl işleceğini' **[gizlilik politikasında]({{privacy}})** okudum."
+            },
+            "field4": {
+                "title": "{{bot_name}} | Hukuki ve Cezai İşlemler",
+                "desc": "> {{bot_name}} botunu yukarıda belirtilen amaç(lar) dışında kullanırsam cezai ve yasal işlemlere tabi tutulacağımı ve onu kullanmamdan sonsuza kadar men edileceğimi biliyorum."
+            },
+            "field5": {
+                "title": "{{bot_name}} | Temel Kurallar ve Discord Kuralları",
+                "desc": "> Discord'un kendi kuralları da dahil olmak üzere yukarıdaki temel kurallara uymayı kabul ediyorum. İki terimi ({{bot_name}} bot kuralları, Discord Yönergeleri) ihlal edersem, 4. maddeye ve Discord'un kendi cezai işlemlerine tabi olacağımı biliyorum."
+            },
+            "success": {
+                "succcd": "success_tr",
+                "title": "Başarıyla profiliniz oluşturuldu",
+                "desc": "{{usr_repl}}, profiliniz oluşturuldu! Verileriniz artık {{botname}} veritabanı sunucularında tutulacak. {{botname}} botunu kullanmaya başlayabilirsiniz!"
+            },
+            "fail": {
+                "failcd": "info_tr",
+                "title": "Bota artık ulaşamazsınız.",
+                "desc": "{{usr_repl}}, hiçbir veri oluşturulmadı ve kurallar kabul edilmedi. Politikalarımızı kabul etmiyorsanız, botu kullanamazsınız. Kabul etmek istiyorsanız, herhangi bir komutu tekrar kullanmanız yeterlidir. Daha ayrıntılı bilgi için [web sitemizi]({{bot_website}}) ziyaret edebilirsiniz."
+            }
+        },
+        "err1": {
+            "errtype": "error_tr",
+            "title": "ERRCD: PERM_ERR",
+            "desc": "Bu komutu çalıştırabilmek için şu izin(ler)e ihtiyacınız var:\n> {{cmdperms}}"
+        },
+        "err2": {
+            "errtype": "error_tr",
+            "title": "ERRCD: RUNTIME_{{runtimecd}}",
+            "desc": "Komut çalıştırılırken bir hata oluştu. Lütfen geliştirici ile iletişime geçin.\n\n> **Hata Mesajı:**\n > {{runtimemsg}}"
+        },
+        "err3": {
+            "errtype": "error_tr",
+            "title": "ERRCD: NOT_AGREED",
+            "desc": "Bu komut çalıştırılabilmek için **E-mail Doğrulaması** gerektirir. Lütfen emailinizi **[Destek Sunucusu]({{suppserver}}) <:arr:878338531641139210> #email-confirmation** kanalında onaylatın."
+        },
+        "warn1": {
+            "warntype": "warn_tr",
+            "title": "Hâla beklemedesiniz (Zaman aşımı)",
+            "desc": "Hâla bekleme süresindesiniz (Zaman aşımı). Maalesef fazla yük olmaması için bekleme süreleri (Zaman aşımları) gereklidir.\n\n> Kalan bekleme (Zaman aşımı) süreniz:\n {{cooldown}}"
+        }
+    },
+    "row": {
+        "invite": "Moderator'u Davet Et",
+        "vote": "Moderator'e Oy Ver",
+        "website": "Web Sitesi (Panel, Komutlar v.s.)",
+        "support": "Destek Sunucusu"
+    },
+    "usrAdd": {
+        "year": "YY **[Yıl,]** DD **[Gün,]** HH **[Saat,]** mm **[Dakika,]** ss **[Saniye]**",
+        "author": "Sunucuya Hoşgeldin!",
+        "title": "{{usrn}}, *{{srvn}}* sunucusuna katıldı.",
+        "desc": "<a:welcome:878338530840027218><a:welcome2:878338531146227734> {{usrm}}({{usrid}}) isimli kullanıcı sunucuya katıldı.\n📅 Hesap `{{time}}` önce oluşturulmuş.\n\n> <:sup:888738778355740683> Hesap güvenilirliği: {{contr}}",
+        "control0_pre": "**Güvenli değil, Şüpheli rolü verildi.**",
+        "control0": "Eğer kullanıcının güvenli olup olmadığını öğrenmek istiyorsan, **premium al!** Premiumu **destek sunucusundan** alabilirsin.",
+        "control1": "**Güvenli, katılabilir.**",
+        "control2": "Öğrenmek istiyorsan premium al!"
+    }
+}

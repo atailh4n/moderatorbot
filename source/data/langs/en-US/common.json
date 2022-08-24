@@ -1,0 +1,11 @@
+{
+    "timeunit_s": "second",
+    "buttons": {
+        "inv": "Invite {{botn}}",
+        "vote": "Vote {{botn}}",
+        "site": "Website (Panel, Commands etc.)",
+        "support": "Support Server",
+        "accept": "Accept",
+        "reject": "Reject"
+    }
+}

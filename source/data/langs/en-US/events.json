@@ -1,0 +1,87 @@
+{
+    "invCr": {
+        "infocd": "info",
+        "info_title_unc": "Created a invite",
+        "invite_desc_unc": "{{invite}} is created but we dont know who is created. Are you sure that my role is at the top and that I have ```ADMINISTRAOR``` perm?",
+        "asd": "test"
+    },
+    "intCr": {
+        "usernull": {
+            "author": "{{bot_name}} | License, Privacy Policy and Terms of Use",
+            "title": "Please acknowledge that you comply with the 'License Terms', 'Privacy Policy' and 'Terms of Use' to use the {{bot_name}} bot. If you do not accept within 60 seconds, this message will be considered invalid.",
+            "desc": {
+                "opensource": "Open Source GitHub",
+                "guide": "Discord Guidelines",
+                "privacy": "Privacy Policy",
+                "webprivacy": "Web Panel Privacy",
+                "tos": "Our Terms of Service"
+            },
+            "field1": {
+                "title":"{{bot_name}} | Personal Purposes",
+                "desc": "> When using {{bot_name}} bot, I declare that I will only use it for personal purposes."
+            },
+            "field2": {
+                "title": "{{bot_name}} | Open Source Code",
+                "desc": "> I will use this open source software ({{bot_name}} bot) only for the stated purposes (Education, Learning, Review or just for fun etc.)."
+            },
+            "field3": {
+                "title": "{{bot_name}} | Data Storage and Processing",
+                "desc": "> I accept that my information(s) is stored in the {{bot_name}} bot database and I know that I have the right to delete it at any time and I can also contact the developer and I have read in the [privacy policies](${main.displaythings.cdn.privacypolicy}) 'how my data is processed'."
+            },
+            "field4": {
+                "title": "{{bot_name}} | Legal and Criminal Actions",
+                "desc": "> I know that if I use {{bot_name}} bot for other than the above stated purpose(s), I will be subject to criminal and legal action and will be banned from using it forever."
+            },
+            "field5": {
+                "title": "{{bot_name}} | Basic Rules and Discord Guidelines",
+                "desc": "> I agree to abide by the above ground rules, including Discord's own rules. I know that if I break two terms ({{bot_name}} bot rules, Discord Guidelines), I will be subject to the 4th clause and Discord's own criminal actions."
+            },
+            "success": {
+                "succcd": "success",
+                "title": "Successfully created profile",
+                "desc": "{{usr_repl}}, Your profile has been created! Your data will now be kept on {{botname}} database servers. You can start using the {{botname}} bot!"
+            },
+            "fail": {
+                "failcd": "info",
+                "title": "You can't access the bot anymore.",
+                "desc": "{{usr_repl}}, no data was created and rules were not accepted. If you do not accept our policies, you cannot use the bot. If you want to accept, simply use any command again. You can visit [our website]({{bot_website}}) for more detailed information."
+            }
+        },
+        "err1": {
+            "errtype": "error",
+            "title": "ERRCD: PERM_ERR",
+            "desc": "To run this command, you need this permission(s):\n> {{cmdperms}}"
+        },
+        "err2": {
+            "errtype": "error",
+            "title": "ERRCD: RUNTIME_{{runtimecd}}",
+            "desc": "There was an error while executing this command. Contact with developer.\n\n> **Error Message:**\n > {{runtimemsg}}"
+        },
+        "err3": {
+            "errtype": "error",
+            "title": "ERRCD: NOT_AGREED",
+            "desc": "This command needs **E-mail Confirmation** to run. Please confirm your email on: **[Support server]({{suppserver}}) <:arr:878338531641139210> #email-confirmation**"
+        },
+        "warn1": {
+            "warntype": "warn",
+            "title": "You are still in cooldown",
+            "desc": "You are still in the cooldown. Sorry, cooldowns are required to avoid overload.\n\n> Your remaining cooldown:\n {{cooldown}}"
+        }
+    },
+    "row": {
+        "invite": "Moderator'u Davet Et",
+        "vote": "Moderator'e Oy Ver",
+        "website": "Web Sitesi (Panel, Komutlar v.s.)",
+        "support": "Destek Sunucusu"
+    },
+    "usrAdd": {
+        "year": "YY **[Years,]** DD **[Days,]** HH **[Hour,]** mm **[Minitues,]** ss **[Seconds]**",
+        "author": "Welcome the Server!",
+        "title": "{{usrn}} joined to {{srvn}}",
+        "desc": "<a:welcome:878338530840027218><a:welcome2:878338531146227734> Member named {{usrm}}({{usrid}}) is joined to server.\n📅 Account is created `{{time}}` ago.\n\n> <:sup:888738778355740683> Account Safety: {{contr}}",
+        "control0_pre": "**Not safe, Suspicious role given.**",
+        "control0": "If you want to learn this user safe or not, **buy premium!** You can buy premium at **support server**",
+        "control1": "**Safe, can join.**",
+        "control2": "If you want to learn buy premium!"
+    }
+}
