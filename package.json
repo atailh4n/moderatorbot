@@ -1,6 +1,6 @@
 {
   "name": "moderatorbot",
-  "version": "0.0.2CB_patch2",
+  "version": "0.0.1OB",
   "description": "Moderator is developed by Ata İlhan Köktürk. It's a useful moderation bot",
   "main": "index.js",
   "scripts": {
