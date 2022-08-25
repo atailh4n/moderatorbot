@@ -12,6 +12,7 @@ const discordModal = require("discord-modals");
 const guildSchema = require("../models/GuildModel");
 
 client.on("messageDeleteBulk", async (message, guild) => {
+    /*
     const serverConf = await guildSchema.findOne({ discordId: guild.id });
 
     let isActivated = serverConf.needed.events.msgDelBulk.activated;
@@ -36,4 +37,5 @@ client.on("messageDeleteBulk", async (message, guild) => {
     const deletionLog = fetchedLogs.entries.first();
 
     console.log(deletionLog);
+    */
 })
