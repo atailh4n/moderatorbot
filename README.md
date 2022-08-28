@@ -12,10 +12,6 @@ Kokturk is an auto-moderation bot developed by **Kokturk Web Software**. It is v
   <img src="https://img.shields.io/github/last-commit/atailh4n/moderatorbot?label=LAST%20UPDATE&style=for-the-badge"/>
 </p>
 
-<p align="center">
-<iframe src="https://discord.com/widget?id=877671612156084224&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-</p>
-
 ## <img src="https://cdn.discordapp.com/emojis/877833413678235658.webp?size=128&quality=low" alt="drawing" width="25"/> ATTENTION
 Our bot still in **open-beta development**, so we are still developing bot. For more information please check the [contact section](#contact).
 
