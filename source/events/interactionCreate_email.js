@@ -17,6 +17,9 @@ client.on("interactionCreate", async (interaction) => {
   if (!interaction.isButton()) return;
 
   if (interaction.customId == "emailsend") {
+
+    return interaction.reply({ content: "Disabled for a while", ephemeral: true});
+
     const userEmail = await UserModel.findOne({ discordId: interaction.user.id });
 
     if(userEmail.email != null) return interaction.reply({ content: interaction.user + " you already confirmed your email.", ephemeral: true })

@@ -420,6 +420,7 @@ const dashconf = (async () => {
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
                 let ownerGuild = guildSchema.ownerId;
+                if (!guildSchema.other.preOne || guildSchema.other.preOne == false) return {allowed: false, errorMessage: "You don't have premium. Buy on our Discord Server."}
                 if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
@@ -449,6 +450,7 @@ const dashconf = (async () => {
                 const guildSchema = await GuildModel.findOne({ discordId: guild.id });
                 let safeUser = guildSchema.needed.safe.safeUsr;
                 let ownerGuild = guildSchema.ownerId;
+                if (!guildSchema.other.preOne || guildSchema.other.preOne == false) return {allowed: false, errorMessage: "You don't have premium. Buy on our Discord Server."}
                 if (user.id === ownerGuild) return {allowed: true, errorMessage: null}
                 if (guildSchema.needed.texts.modlog == null || undefined) return {allowed: false, errorMessage: "Your moderation log channel is not setted. Set your moderation log channel first."}
                 if (userSchema.blacklisted == true) return {allowed: false, errorMessage: "You are blacklisted. You cannot use Moderator forever."}
@@ -1147,6 +1149,7 @@ const dashconf = (async () => {
           ],
         },
       ],
+      
     });
     await Dashboard.init();
   })();

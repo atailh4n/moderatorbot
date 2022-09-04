@@ -16,6 +16,7 @@ const UserModel = require("../models/UserModel");
 const db = require("quick.db");
 
 client.on("interactionCreate", async (modal) => {
+
   if (modal.customId === "code-confirmer") {
     const emailcode = await modal.fields.getTextInputValue("email-code");
     const userEmail = await userSchema.findOne({ discordId: modal.user.id });

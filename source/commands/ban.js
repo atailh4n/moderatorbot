@@ -192,7 +192,8 @@ module.exports = {
 };
 
 module.exports.options = {
-  needagreed: true,
+  needagreed: false,
+  needvote: false,
   perms: ["4"],
   cooldown: 15,
 };

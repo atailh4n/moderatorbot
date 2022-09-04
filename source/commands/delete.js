@@ -104,7 +104,8 @@ module.exports = {
 };
 
 module.exports.options = {
-  needagreed: true,
+  needagreed: false,
+  needvote: false,
   perms: ["8192"],
   cooldown: 20,
 };

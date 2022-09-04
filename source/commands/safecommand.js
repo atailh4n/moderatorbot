@@ -80,6 +80,7 @@ const {
 
   module.exports.options = {
     needagreed: false,
+    needvote: false,
     perms: ["4"],
     cooldown: 15,
   };
