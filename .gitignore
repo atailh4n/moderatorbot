@@ -2,3 +2,5 @@ node_modules
 .npm
 .cache
 moderatorbotgit.zip
+source/data/.env
+test.js

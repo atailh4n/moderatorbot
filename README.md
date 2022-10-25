@@ -5,7 +5,7 @@
 </b> </p>
 
 
-Kokturk is an auto-moderation bot developed by **Kokturk Web Software**. It is very easy to use and it is very useful for your easy moderation missions.
+Moderator is an auto-moderation bot developed by **Kokturk Web Software**. It is very easy to use and it is very useful for your easy moderation missions.
 
 <p align="center">
   <img src="https://img.shields.io/github/commit-activity/w/atailh4n/moderatorbot?label=ACTIVITY&style=for-the-badge"/>
