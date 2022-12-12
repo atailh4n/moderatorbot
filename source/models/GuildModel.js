@@ -10,7 +10,7 @@ const GuildModel = new Schema({
   ownerId: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   needed: {
     //Needed values
@@ -25,12 +25,12 @@ const GuildModel = new Schema({
       },
       welcome_channel: {
         type: String,
-        default: null
+        default: null,
       },
       goodbye_channel: {
         type: String,
-        default: null
-      }
+        default: null,
+      },
     },
     safe: {
       safeUsr: {
@@ -73,7 +73,7 @@ const GuildModel = new Schema({
       },
       autoRoleSys: {
         default: false,
-        type: Boolean
+        type: Boolean,
       },
     },
     roles: {
@@ -91,7 +91,7 @@ const GuildModel = new Schema({
       },
       autoRole: {
         default: null,
-        type: String
+        type: String,
       },
     },
     events: {
@@ -341,22 +341,45 @@ const GuildModel = new Schema({
       default: false,
       type: Boolean,
     },
-    preLastDate: String, 
+    preLastDate: {
+      preOneLast: {
+        type: String,
+        default: null,
+      },
+      preTwoLast: {
+        type: String,
+        default: null,
+      },
+    },
     prefeature: {
-      captcha: {
-        channel: {
-          default: null,
-          type: String,
-        },
-        role: {
-          default: null,
-          type: String,
-        },
-        activated: {
-          default: false,
-          type: Boolean,
+      preOneFeat: {
+        captcha: {
+          channel: {
+            default: null,
+            type: String,
+          },
+          role: {
+            default: null,
+            type: String,
+          },
+          activated: {
+            default: false,
+            type: Boolean,
+          },
         },
       },
+      preTwoFeat: {
+        unloadVote: {
+          activated: {
+            type: Boolean,
+            default: false,
+          },
+        },
+      },
+    },
+    unwantedWordList: {
+      type: Array,
+      default: null,
     },
   },
 });

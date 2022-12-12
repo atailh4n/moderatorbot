@@ -8,28 +8,117 @@ const {
 } = require("discord.js");
 const { client } = require("../../index");
 const userSchema = require("../models/UserModel");
-const discordModal = require("discord-modals");
 const guildSchema = require("../models/GuildModel");
+const wait = require("node:timers/promises").setTimeout;
 
 client.on("messageCreate", async (message) => {
+  /*
   const serverConf = await guildSchema.findOne({ discordId: message.guild.id });
+  const userConf = await userSchema.findOne({ discordId: message.author.id });
 
-  let isActivated = serverConf.needed.events.chCr.activated;
+  let isActivated = serverConf.needed.systems.linkKill;
 
-  if (isActivated == false) return;
+  //if (isActivated == false) return;
 
   let logValue = serverConf.needed.systems.logSys;
   let modlogValue = serverConf.needed.texts.modlog;
-  let badWkiller = serverConf.needed.events.msgSnd.badWordPr;
+  let safeLinks = serverConf.needed.safe.safeLink;
   let killType = serverConf.needed.events.msgSnd.killty;
   let safeBot = serverConf.needed.safe.safeBot;
   let safeUser = serverConf.needed.safe.safeUsr;
   let safeRol = serverConf.needed.safe.safeRol;
   let lang = serverConf.needed.systems.langPr;
+
+  let usrwarn = userConf.warns;
   let sendLog = client.channels.cache.get(modlogValue);
 
-  const badWords = require("../models/BadWordModel");
+  let wrnG = null;
+  let wrnA = null;
 
+  for (var i in usrwarn) {
+    return wrnG = message.guildId, wrnA = i.warn
+  }
+
+  if (
+    message.content.includes("http") ||
+    message.content.includes("https") ||
+    /(https?:\/\/[^\s]+)/g.test(message.content) === true ||
+    /(http?:\/\/[^\s]+)/g.test(message.content) === true ||
+    /(([a-z]+:\/\/)?(([a-z0-9\-]+\.)+([a-z]{2}|aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|local|internal|tk|ml|gq|ml|co|xyz|tr))(:[0-9]{1,5})?(\/[a-z0-9_\-\.~]+)*(\/([a-z0-9_\-\.]*)(\?[a-z0-9+_\-\.%=&amp;]*)?)?(#[a-zA-Z0-9!$&'()*+.=-_~:@/?]*)?)(\s+|$)/gi.test(
+      message.content
+    )
+  ) {
+    if (safeLinks.some((res) => message.content.includes(res))) {
+      return;
+    } else {
+      if (logValue != false && client.channels.cache.get(modlogValue)) {
+        if (killType != null) {
+          if (killType == "kick") {
+            message.delete();
+            wait(400);
+            message.channel
+              .send({
+                embeds: [
+                  embed(
+                    "warn",
+                    "You are sended a link.",
+                    "please dont send bro"
+                  ),
+                ],
+              })
+              .then((x) => setTimeout(() => x.delete(), 5000));
+          } else if (killType == "ban") {
+            message.delete();
+            wait(400);
+            message.channel
+              .send({
+                embeds: [
+                  embed(
+                    "warn",
+                    "You are sended a link.",
+                    "please dont send bro"
+                  ),
+                ],
+              })
+              .then((x) => setTimeout(() => x.delete(), 5000));
+          } else if (killType == "mute") {
+            message.delete();
+            wait(400);
+            message.channel
+              .send({
+                embeds: [
+                  embed(
+                    "warn",
+                    "You are sended a link.",
+                    "please dont send bro"
+                  ),
+                ],
+              })
+              .then((x) => setTimeout(() => x.delete(), 5000));
+          } else if (killType == "jail") {
+            message.delete();
+            wait(400);
+            message.channel
+              .send({
+                embeds: [
+                  embed(
+                    "warn",
+                    "You are sended a link.",
+                    "please dont send bro"
+                  ),
+                ],
+              })
+              .then((x) => setTimeout(() => x.delete(), 5000));
+          }
+        } else {
+          return;
+        }
+      }
+    }
+  }
+  */
+
+  /*
   if (lang == "en-US") {
     if (
       badWords.some(
@@ -219,4 +308,5 @@ client.on("messageCreate", async (message) => {
       return;
     }
   }
+  */
 });

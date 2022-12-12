@@ -11,7 +11,7 @@ const main = require("./source/data/main");
 const embed = require("./source/data/embeds");
 const i18next = require("i18next");
 const backend = require("i18next-fs-backend");
-const { dashconf } = require("./source/data/panel");
+const { dashconf } = require("./source/data/panelSoftUI");
 
 // .env Config Reader
 require("dotenv").config({
@@ -151,4 +151,4 @@ client.login(process.env.TOKEN);
 
 dashconf;
 
-//https://discord.com/oauth2/authorize?client_id=905564998615592991&permissions=2415922176&scope=bot%20applications.commands
+//https://discord.com/api/oauth2/authorize?client_id=765156858490126366&permissions=1540282117366&scope=bot%20applications.commands

@@ -24,7 +24,10 @@ client.on("ready", async (client) => {
       .setColor(main.displaythings.colors.color_main)
       .setTitle(` ${client.user.username} Status`)
       .setThumbnail(client.user.avatarURL())
-      .setFooter("©️ 2020-2022 Moderator | Kokturk Web Software | Status will be updated every 5 min.", client.user.avatarURL())
+      .setFooter({
+        text: "©️ 2020-2022 Moderator | Kokturk Web Software | Status will be updated every 5 min.",
+        iconURL: client.user.avatarURL()
+      }) 
 
       .setDescription(
         `**Creator of the bot:**\n**Ata İlhan#0528**\n \n**Total User:** __` +
@@ -65,12 +68,12 @@ client.on("ready", async (client) => {
     },
     {
       type: "WATCHING",
-      content: `/help | Our Sponsor: www.dostsunucum.com`,
+      content: `/help | Our Sponsor: We are looking for a sponsor!`,
       status: "dnd",
     },
     {
-      type: "LISTENING",
-      content: `/help | Our Sponsor: www.dostsunucum.com`,
+      type: "WATCHING",
+      content: `/help | Always Stay Safe!`,
       status: "dnd",
     },
     {

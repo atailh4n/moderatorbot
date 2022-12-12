@@ -82,6 +82,24 @@
         "control0_pre": "**Güvenli değil, Şüpheli rolü verildi.**",
         "control0": "Eğer kullanıcının güvenli olup olmadığını öğrenmek istiyorsan, **premium al!** Premiumu **destek sunucusundan** alabilirsin.",
         "control1": "**Güvenli, katılabilir.**",
-        "control2": "Öğrenmek istiyorsan premium al!"
+        "control2": "Öğrenmek istiyorsan premium al!",
+        "canvastxt": "Hoşgeldin📥😁"
+    },
+    "usrRem": {
+        "author": "Görüşürüz dostum!",
+        "title": "{{usrn}}, *{{srvn}}* sunucusundan ayrıldı.",
+        "desc": "<:leav:1043877426708611263> {{usrm}}({{usrid}}) isimli kullanıcı sunucudan ayrıldı.",
+        "canvastxt": "Görüşürüz📤😥"
+    },
+    "msgDel": {
+        "infocd": "info_tr",
+        "title": "Mesaj silindi",
+        "infodesc_ktnull": "{{cnt}}({{chname}}, {{chid}}) mesajı silindi ancak ceza bulunamadı/Cezalandırma devre dışı.\n> **Kullanıcı:**\n{{membr}}({{membrid}})",
+        "infodesc_safe": "{{cnt}}({{chname}}, {{chid}}) mesajı silindi.\n> **Kullanıcı:**\n{{membr}}({{membrid}})",
+        "infodesc_ktkick": "{{cnt}}({{chname}}, {{chid}}) mesajı silindi. Kullanıcı atıldı.\n> **Kullanıcı:**\n{{membr}}({{membrid}})",
+        "infodesc_ktban": "{{cnt}}({{chname}}, {{chid}}) mesajı silindi. Kullanıcı yasaklandı.\n> **Kullanıcı:**\n{{membr}}({{membrid}})",
+        "infodesc_ktjail": "{{cnt}}({{chname}}, {{chid}}) mesajı silindi. Kullanıcı hapise atıldı.\n> **Kullanıcı:**\n{{membr}}({{membrid}})",
+        "infodesc_ktmute": "{{cnt}}({{chname}}, {{chid}}) mesajı silindi. Kullanıcı susturuldu.\n> **Kullanıcı:**\n{{membr}}({{membrid}})",
+        "infodesc_ktmutetemp": "{{cnt}}({{chname}}, {{chid}}) mesajı silindi. Kullanıcı {{punishTime}} süresince susturuldu.\n> **Kullanıcı:**\n{{membr}}({{membrid}})"
     }
 }

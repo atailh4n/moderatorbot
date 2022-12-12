@@ -9,10 +9,10 @@
     "ban": {
         "noreason": "No reason given.",
         "errcd2": "err2",
-        "errusg": "ban user reason days(1-7)",
+        "errusg": "/ban {@user} [reason] [days(1-7)]",
         "errcd3": "err3",
         "warncd1": "warn1",
-        "warnusg": "ban user reason days(1-7)",
+        "warnusg": "/ban {@user} [reason] [days(1-7)]",
         "successcd": "success",
         "sucess_title": "Someone banned from server",
         "sucess_desc": "User named `{{usrRes}}` is banned from server forever for no reason.",
@@ -46,6 +46,7 @@
         }
     },
     "safecommand": {
+        "errpermcd": "err4",
         "succ1": {
             "succcd": "success",
             "title": "An {{setname}} element added",
@@ -63,8 +64,21 @@
         },
         "warn3": {
             "warncd": "warn1",
-            "title": "/safe user {@user}",
+            "title": "/safe bot {@bot}",
             "desc": "This is a user. Not a bot."
         }
+    },
+    "unwanted": {
+        "errpermcd": "err4",
+        "succ1": {
+            "succcd": "success",
+            "title": "An {{setname}} element added",
+            "desc": "```{{objec}}``` successfully added to **{{setname}}** list."
+        },
+        "warn1": {
+            "warncd": "warn1",
+            "title": "/unwanted words {word}",
+            "desc": "Your word mustn't be contain spaces.\n\nExample: hello\nWrong usage: hel lo"
+        },
     }
 }

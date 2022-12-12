@@ -5,7 +5,7 @@ const main = {
       prefix: "/",
       ownerdcname: "Ata İlhan#0528, smollmancar#4906",
       ownername: "Ata İlhan Köktürk",
-      version: "0.0.1OB",
+      version: "0.0.2CB_patch2",
       bot_website: "www.moderatorbot.gq",
       slogan: "Always stay safe!",
       slogantr: "Her zaman güvende olun!",
@@ -73,6 +73,7 @@ const main = {
       emoj_web: "<:ppw:888740286065434675>",
       emoj_arrow_right: "<:arr:878338531641139210>",
       emoj_arrow_left: "<:arl:878338531284619284>",
+      emoj_leave: "<:leav:1043877426708611263>",
     },
   },
   datasowner: {

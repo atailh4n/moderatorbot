@@ -83,7 +83,7 @@ module.exports = (type, title, desc, image, author, thumb) => {
       (newThumb = `${main.displaythings.cdn.logo_err}`),
       (newFooter = `${main.displaythings.info.bot_name} | Ver: ${main.displaythings.version} | Prefix: ${main.displaythings.prefix} | ${main.displaythings.botwebsite}`),
       (newAuthor = `${main.displaythings.info.bot_name} | Error`),
-      (newDescription = `No key/value was found with this key/value, or something already exists with this key/value.\n> **This tryed**:\n\`\`\`${
+      (newDescription = `No key/value was found with this key/value, or something already exists with this key/value.\n> **This tried**:\n\`\`\`${
         title || "Err on trying data. Please contact with developer."
       }\`\`\`\n> **Response:**\n\`\`\`${desc || "No response"}\`\`\``),
       (newTitle = `ERRCD: 0001 | Database Error`);
@@ -93,7 +93,7 @@ module.exports = (type, title, desc, image, author, thumb) => {
       (newThumb = `${main.displaythings.cdn.logo_err}`),
       (newFooter = `${main.displaythings.info.bot_name} | Ver: ${main.displaythings.info.version} | Prefix: ${main.displaythings.info.prefix} | ${main.displaythings.info.bot_website}`),
       (newAuthor = `${main.displaythings.info.bot_name} | Error`),
-      (newDescription = `This command is a command that you cannot run on yourself. If any argument in this command contains information about you and you are the one using the command, this command cannot be executed.\n> **Example Usage:**\n\`\`\`${title}\`\`\``),
+      (newDescription = `This command is a command that you cannot run on yourself. If any argument in this command contains information about you and you are the one using the command, this command cannot be executed.\n> *({} Required, []: Optional)*\n> **Example Usage:**\n\`\`\`${title}\`\`\``),
       (newTitle = `ERRCD: 0002 | This Command Cannot Runable on Yourself`);
   else if (type == "warn1")
     (newColor = `${main.displaythings.colors.color_warn}`),
@@ -101,7 +101,7 @@ module.exports = (type, title, desc, image, author, thumb) => {
       (newThumb = `${main.displaythings.cdn.logo_warn}`),
       (newFooter = `${main.displaythings.info.bot_name} | Ver: ${main.displaythings.info.version} | Prefix: ${main.displaythings.info.prefix} | ${main.displaythings.info.bot_website}`),
       (newAuthor = `${main.displaythings.info.bot_name} | Warn`),
-      (newDescription = `Missing argument. Usually you get this error when you forget an argument or if the argument is incorrect.\n> **Example Usage:**\n\`\`\`${
+      (newDescription = `Missing argument. Usually you get this error when you forget an argument or if the argument is incorrect.\n> *({} Required, []: Optional)*\n> **Example Usage:**\n\`\`\`${
         title || "Any usage given"
       }\`\`\`\n> **Cause of Error:**\n\`\`\`${
         desc || "No explanation given"
@@ -129,7 +129,7 @@ module.exports = (type, title, desc, image, author, thumb) => {
       (newThumb = `${main.displaythings.cdn.logo_err}`),
       (newFooter = `${main.displaythings.info.bot_name} | Ver: ${main.displaythings.version} | Prefix: ${main.displaythings.prefix} | ${main.displaythings.botwebsite}`),
       (newAuthor = `${main.displaythings.info.bot_name} | Hata`),
-      (newDescription = `Bu anahtar/değer ile hiçbir anahtar/değer bulunamadı veya bu anahtar/değer zaten bir şey var.\n> **Denenen**:\n\`\`\`${
+      (newDescription = `Bu anahtar/değer ile hiçbir anahtar/değer bulunamadı veya bu anahtar/değer zaten bir şey var.\n> *({} Zorunlu, []: İsteğe Bağlı)*\n> **Denenen**:\n\`\`\`${
         title || "Veri alınırken hata. Geliştirici ile iletişime geçin."
       }\`\`\`\n> **Cevap:**\n\`\`\`${desc || "Cevap yok"}\`\`\``),
       (newTitle = `ERRCD: 0001 | Database Error`);
@@ -139,7 +139,7 @@ module.exports = (type, title, desc, image, author, thumb) => {
       (newThumb = `${main.displaythings.cdn.logo_err}`),
       (newFooter = `${main.displaythings.info.bot_name} | Ver: ${main.displaythings.info.version} | Prefix: ${main.displaythings.info.prefix} | ${main.displaythings.info.bot_website}`),
       (newAuthor = `${main.displaythings.info.bot_name} | Hata`),
-      (newDescription = `Bu komut, kendi başınıza çalıştıramayacağınız bir komuttur. Bu komuttaki herhangi bir argüman sizin hakkınızda bilgi içeriyorsa ve komutu kullanan sizseniz, bu komut yürütülemez.\n> **Örnek Kullanım:**\n\`\`\`${title}\`\`\``),
+      (newDescription = `Bu komut, kendi başınıza çalıştıramayacağınız bir komuttur. Bu komuttaki herhangi bir argüman sizin hakkınızda bilgi içeriyorsa ve komutu kullanan sizseniz, bu komut yürütülemez.\n> *({} Zorunlu, []: İsteğe Bağlı)*\n> **Örnek Kullanım:**\n\`\`\`${title}\`\`\``),
       (newTitle = `ERRCD: 0002 | Bu Komut Kendi Üzerinde Kullanılamaz`);
   else if (type == "err3")
     (newColor = `${main.displaythings.colors.color_err}`),
@@ -147,7 +147,7 @@ module.exports = (type, title, desc, image, author, thumb) => {
       (newThumb = `${main.displaythings.cdn.logo_err}`),
       (newFooter = `${main.displaythings.info.bot_name} | Ver: ${main.displaythings.info.version} | Prefix: ${main.displaythings.info.prefix} | ${main.displaythings.info.bot_website}`),
       (newAuthor = `${main.displaythings.info.bot_name} | Error`),
-      (newDescription = `This command is a command that you cannot run on the Moderator. If any argument in this command contains information about the Moderator, this command cannot be executed.\n> **Örnek Kullanım:**\n\`\`\`${title}\`\`\``),
+      (newDescription = `This command is a command that you cannot run on the Moderator. If any argument in this command contains information about the Moderator, this command cannot be executed.\n> *({} Required, []: Optional)*\n> **Example Usage:**\n\`\`\`${title}\`\`\``),
       (newTitle = `ERRCD: 0003 | This command cannot be used on Moderator`);
   else if (type == "err3_tr")
     (newColor = `${main.displaythings.colors.color_err}`),
@@ -155,15 +155,35 @@ module.exports = (type, title, desc, image, author, thumb) => {
       (newThumb = `${main.displaythings.cdn.logo_err}`),
       (newFooter = `${main.displaythings.info.bot_name} | Ver: ${main.displaythings.info.version} | Prefix: ${main.displaythings.info.prefix} | ${main.displaythings.info.bot_website}`),
       (newAuthor = `${main.displaythings.info.bot_name} | Hata`),
-      (newDescription = `Bu komut, Moderator üzerinde çalıştıramayacağınız bir komuttur. Bu komuttaki herhangi bir argüman Moderator hakkında bilgi içeriyorsa, bu komut yürütülemez.\n> **Örnek Kullanım:**\n\`\`\`${title}\`\`\``),
+      (newDescription = `Bu komut, Moderator üzerinde çalıştıramayacağınız bir komuttur. Bu komuttaki herhangi bir argüman Moderator hakkında bilgi içeriyorsa, bu komut yürütülemez.\n> *({}: Zorunlu, []: İsteğe Bağlı)*\n> **Örnek Kullanım:**\n\`\`\`${title}\`\`\``),
       (newTitle = `ERRCD: 0003 | Bu Komut Moderator Üzerinde Kullanılamaz`);
+      else if (type == "err4")
+      (newColor = `${main.displaythings.colors.color_err}`),
+        (emojidisp = `${main.displaythings.emojis.emoj_err}`),
+        (newThumb = `${main.displaythings.cdn.logo_err}`),
+        (newFooter = `${main.displaythings.info.bot_name} | Ver: ${main.displaythings.version} | Prefix: ${main.displaythings.prefix} | ${main.displaythings.botwebsite}`),
+        (newAuthor = `${main.displaythings.info.bot_name} | Error`),
+        (newDescription = `Your permission to run this command is not enough.\n> **You must have this permission(s)**:\n\`\`\`${
+          title || "Err on getting data. Please contact with developer."
+        }\`\`\`\n> **Your current MAX permission:**\n\`\`\`${desc || "Unable to fetch. Contact with developer"}\`\`\``),
+        (newTitle = `ERRCD: 0004 | Permission Error`);
+        else if (type == "err4_tr")
+        (newColor = `${main.displaythings.colors.color_err}`),
+          (emojidisp = `${main.displaythings.emojis.emoj_err}`),
+          (newThumb = `${main.displaythings.cdn.logo_err}`),
+          (newFooter = `${main.displaythings.info.bot_name} | Ver: ${main.displaythings.version} | Prefix: ${main.displaythings.prefix} | ${main.displaythings.botwebsite}`),
+          (newAuthor = `${main.displaythings.info.bot_name} | Error`),
+          (newDescription = `Bu komutu çalıştırmak için izniniz yeterli değildir.\n> **Şu izin(ler)e sahip olmalısınız**:\n\`\`\`${
+            title || "Err on getting data. Please contact with developer."
+          }\`\`\`\n> **Şuanki MAX izniniz:**\n\`\`\`${desc || "Görüntülenemiyor. Geliştirici ile iletişime geçin."}\`\`\``),
+          (newTitle = `ERRCD: 0004 | İzin Hatası`);
   else if (type == "warn1_tr")
     (newColor = `${main.displaythings.colors.color_warn}`),
       (emojidisp = `${main.displaythings.emojis.emoj_warn}`),
       (newThumb = `${main.displaythings.cdn.logo_warn}`),
       (newFooter = `${main.displaythings.info.bot_name} | Ver: ${main.displaythings.info.version} | Prefix: ${main.displaythings.info.prefix} | ${main.displaythings.info.bot_website}`),
       (newAuthor = `${main.displaythings.info.bot_name} | Uyarı`),
-      (newDescription = `Kayıp argüman. Genellikle bir argümanı unuttuğunuzda veya argüman yanlışsa bu hatayı alırsınız..\n> **Örnek Kullanım:**\n\`\`\`${
+      (newDescription = `Kayıp argüman. Genellikle bir argümanı unuttuğunuzda veya argüman yanlışsa bu hatayı alırsınız..\n> *({} Zorunlu, []: İsteğe Bağlı)*\n> **Örnek Kullanım:**\n\`\`\`${
         title || "Kullanım belirtilmemiş"
       }\`\`\`\n> **Hata Sebebi:**\n\`\`\`${desc || "Sebep verilmemiş"}\`\`\``),
       (newTitle = `WARNCD: 0001 | Kayıp Argüman`);
@@ -194,7 +214,10 @@ module.exports = (type, title, desc, image, author, thumb) => {
       .setColor(newColor)
       .setTitle(`${newTitle}`)
       .setThumbnail(`${newThumb}`)
-      .setFooter(`${newFooter}`, `${main.displaythings.cdn.bot_logo}`)
+      .setFooter({
+        text: `${newFooter}`, 
+        iconURL: `${main.displaythings.cdn.bot_logo}`
+      })
       .setDescription(emojidisp + " " + newDescription)
       .setAuthor({
         name: newAuthor,

@@ -16,27 +16,57 @@ const {
   (module.exports = {
     data: new SlashCommandBuilder()
     .setName("safe")
-    .setDescription("Set new safe perms.")
+    .setNameLocalizations({
+      tr: "güvenli"
+    })
+    .setDescription("Set new safe perms")
+    .setDescriptionLocalizations({
+      tr: "Yeni güvenli kullanıcı/link v.b. ayarlayın"
+    })
     .addSubcommand(subcommand =>
       subcommand
         .setName('user')
+        .setNameLocalizations({
+          tr: "kullanıcı"
+        })
         .setDescription('Add a user to give admin perm safely')
-        .addUserOption(option => option.setName('user').setDescription('Add a user to give admin perm safely').setRequired(true)))
+        .setDescriptionLocalizations({
+          tr: "Güvenli bir şekilde admin olabilecek kullanıcıları ekleyin"
+        })
+        .addUserOption(option => option.setName('user').setNameLocalizations({tr: "kullanıcı"}).setDescription('The user who can use admin perm safely').setDescriptionLocalizations({tr: "Güvenli adminlik verilecek kullanıcı"}).setRequired(true)))
     .addSubcommand(subcommand =>
       subcommand
         .setName('bot')
+        .setNameLocalizations({
+          tr: "bot"
+        })
         .setDescription('Add a bot to give admin perm safely')
-        .addUserOption(option => option.setName('bot').setDescription('Add a bot to give admin perm safely').setRequired(true)))
+        .setDescriptionLocalizations({
+          tr: "Güvenli bir şekilde admin olabilecek botları ekleyin"
+        })
+        .addUserOption(option => option.setName('bot').setNameLocalizations({tr: "bot"}).setDescription('The bot who can use admin perm safely').setDescriptionLocalizations({tr: "Güvenli adminlik verilecek bot"}).setRequired(true)))
     .addSubcommand(subcommand =>
       subcommand
         .setName('role')
+        .setNameLocalizations({
+          tr: "rol"
+        })
         .setDescription('Add a role to give admin perm safely')
-        .addRoleOption(option => option.setName('role').setDescription('Add a role to give admin perm safely').setRequired(true)))
+        .setDescriptionLocalizations({
+          tr: "Güvenli bir şekilde sunucuyu yönetebilecek rolleri ekleyin"
+        })
+        .addRoleOption(option => option.setName('role').setNameLocalizations({tr: "rol"}).setDescription('Add a role to give admin perm safely').setDescriptionLocalizations({tr: "Güvenli adminlik verilecek rol"}).setRequired(true)))
     .addSubcommand(subcommand =>
       subcommand
         .setName('link')
+        .setNameLocalizations({
+          tr: "link"
+        })
         .setDescription('Add a link for not delete automaticly by Moderator')
-        .addStringOption(option => option.setName('link').setDescription('Add a link for not delete automaticly by Moderator').setRequired(true))),
+        .setDescriptionLocalizations({
+          tr: "Güvenli bir şekilde paylaşılabilecek ve Moderator tarafondan engellenmeyecek linkleri ekleyin"
+        })
+        .addStringOption(option => option.setName('link').setNameLocalizations({tr: "link"}).setDescription('Add a link for not delete automaticly by Moderator').setDescriptionLocalizations({tr: "Moderator tarafından otomatik engellenmeyecek link"}).setRequired(true))),
 
     async execute(interaction) {
       const guildDb = await guildConf.findOne({ discordId: interaction.guild.id });

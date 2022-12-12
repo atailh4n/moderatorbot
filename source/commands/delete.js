@@ -15,17 +15,35 @@ const embed = require('../data/embeds');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("delete")
+    .setNameLocalizations({
+      tr: "sil"
+    })
     .setDescription("Delete messages")
+    .setDescriptionLocalizations({
+      tr: "Mesajları silin"
+    })
     .addIntegerOption((option) =>
       option
         .setName("amount")
+        .setNameLocalizations({
+          tr: "miktar"
+        })
         .setDescription("Delete amount (1-100)")
+        .setDescriptionLocalizations({
+          tr: "Silme miktarı (1-100)"
+        })
         .setRequired(true)
     )
     .addUserOption((option) =>
       option
         .setName("user")
+        .setNameLocalizations({
+          tr: "kullanıcı"
+        })
         .setDescription("Delete a spesific users message")
+        .setDescriptionLocalizations({
+          tr: "Belirli bir kullanıcının mesajlarını silmek için kullanın"
+        })
         .setRequired(false)
     ),
 

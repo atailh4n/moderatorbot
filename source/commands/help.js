@@ -12,7 +12,15 @@ const main = require("../data/main");
 const GuildModel = require("../models/GuildModel");
 
 (module.exports = {
-  data: new SlashCommandBuilder().setName("help").setDescription("Help Menu"),
+  data: new SlashCommandBuilder()
+  .setName("help")
+  .setNameLocalizations({
+    tr: "yardım"
+  })
+  .setDescription("Help Menu")
+  .setDescriptionLocalizations({
+    tr: "Yardım menüsü"
+  }),
 
   async execute(interaction) {
     const serverConf = await GuildModel.findOne({

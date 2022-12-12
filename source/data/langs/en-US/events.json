@@ -77,11 +77,29 @@
     "usrAdd": {
         "year": "YY **[Years,]** DD **[Days,]** HH **[Hour,]** mm **[Minitues,]** ss **[Seconds]**",
         "author": "Welcome the Server!",
-        "title": "{{usrn}} joined to {{srvn}}",
+        "title": "{{usrn}} joined to the *{{srvn}}*",
         "desc": "<a:welcome:878338530840027218><a:welcome2:878338531146227734> Member named {{usrm}}({{usrid}}) is joined to server.\n📅 Account is created `{{time}}` ago.\n\n> <:sup:888738778355740683> Account Safety: {{contr}}",
         "control0_pre": "**Not safe, Suspicious role given.**",
         "control0": "If you want to learn this user safe or not, **buy premium!** You can buy premium at **support server**",
         "control1": "**Safe, can join.**",
-        "control2": "If you want to learn buy premium!"
+        "control2": "If you want to learn buy premium!",
+        "canvastxt": "Welcome📥😁"
+    },
+    "usrRem": {
+        "author": "Goodbye buddy!",
+        "title": "<:leav:1043877426708611263> {{usrn}} left from the *{{srvn}}*",
+        "desc": " Member named {{usrm}}({{usrid}}) is left from server.",
+        "canvastxt": "Goodbye📤😥"
+    },
+    "msgDel": {
+        "infocd": "info",
+        "title": "Message deleted",
+        "infodesc_ktnull": "{{cnt}}({{chname}}, {{chid}}) is deleted but cant find punishment type/No punishment selected.\n> **User:**\n{{membr}}({{membrid}})",
+        "infodesc_safe": "{{cnt}}({{chname}}, {{chid}}) is deleted.\n> **User:**\n{{membr}}({{membrid}})",
+        "infodesc_ktkick": "{{cnt}}({{chname}}, {{chid}}) is deleted. User kicked.\n> **Kullanıcı:**\n{{membr}}({{membrid}})",
+        "infodesc_ktban": "{{cnt}}({{chname}}, {{chid}}) is deleted. User banned.\n> **User:**\n{{membr}}({{membrid}})",
+        "infodesc_ktjail": "{{cnt}}({{chname}}, {{chid}}) is deleted. User jailed.\n> **User:**\n{{membr}}({{membrid}})",
+        "infodesc_ktmute": "{{cnt}}({{chname}}, {{chid}}) is deleted. User muted.\n> **User:**\n{{membr}}({{membrid}})",
+        "infodesc_ktmutetemp": "{{cnt}}({{chname}}, {{chid}}) is deleted. User muted for {{punishTime}}.\n> **User:**\n{{membr}}({{membrid}})"
     }
 }

@@ -37,37 +37,15 @@ client.on("guildCreate", async (guild) => {
       iconURL: main.displaythings.cdn.bot_logo_gif,
       url: main.displaythings.cdn.bot_website_link
     })
-    .addField(
-      `<:arr:878338531641139210> ${botname} | Hello!`,
-      `**Hello. I'm ${main.displaythings.info.ownername}. Developer of ${botname} Discord Bot. Thanks for adding my bot. I hope you like and enjoy with my bot**\n\n> *This Server Unique DB ID: ||${guildId_unique._id}||*`
-    )
-    .addField(
-      `<:arr:878338531641139210> ${botname} | Language`,
-      `> ${botname} has 2 languages for guilds; Türkçe🇹🇷, English🇬🇧. Sunucu dilini değiştirmek için **"Web Panel"**e gidin/For change guild language go to **"Web Panel"** (Normal kullanıcı diliniz algılanır/Your normal user language is detected)`
-    )
-    .addField(
-      `<:arr:878338531641139210> ${botname} | Prefix`,
-      `> **${botname}**'s has no prefix. Use slash commands. **If commands not displaying, refresh your Discord or kick and add bot again.**`
-    )
-    .addField(
-      `<:arr:878338531641139210> ${botname} | How to use?`,
-      `> To take advantage of all the features of **${botname}**, go to **"Web Panel"** and read the commands.`
-    )
-    .addField(
-      `<:arr:878338531641139210> ${botname} | Guild Settings`,
-      `> To change the server settings, you have to go **"Web Panel"**.`
-    )
-    .addField(
-      `<:arr:878338531641139210> ${botname} | Help`,
-      `> For help: \`/help\``
-    )
-    .addField(
-      `<:arr:878338531641139210> ${botname} | Saving datas`,
-      `> We always store user data with encryption. For help with the **"Which datas we save?"**, first read to **[our Privacy Policy](${main.displaythings.cdn.privacypolicy})** and after that if you have a question, contact with developer. When adding the ${botname}, you will be deemed to have accepted our policies and **[Term Of Service](${main.displaythings.cdn.tos})**.\n> *Developer:* **${main.displaythings.info.ownerdcname}**`
-    )
-    .addField(
-      `<:arr:878338531641139210> ${botname} | Open Source`,
-      `> **This bot was coded by Ata İlhan Köktürk.** Please do not delete the reference part! You can only copy this infrastructure for personal use (for example: Training, Learning Code and Handler systems, etc.). If it is copied for profit, the legal process will be initiated! The most important reason it's open source code is to show that there's no malware in our bot. For more information:\n> *DM our Instagram address:* **@kokturkwebsoftware**`
+    .addFields(
+    { name: `<:arr:878338531641139210> ${botname} | Hello!`, value:  `**Hello. I'm ${main.displaythings.info.ownername}. Developer of ${botname} Discord Bot. Thanks for adding my bot. I hope you like and enjoy with my bot**\n\n> *This Server Unique DB ID: ||${guildId_unique._id}||*` },
+    { name: `<:arr:878338531641139210> ${botname} | Language`, value: `> ${botname} has 2 languages for guilds; Türkçe🇹🇷, English🇬🇧. Sunucu dilini değiştirmek için **"Web Panel"**e gidin/For change guild language go to **"Web Panel"** (Normal kullanıcı diliniz algılanır/Your normal user language is detected)` },
+    { name: `<:arr:878338531641139210> ${botname} | Prefix`, value: `> **${botname}**'s has no prefix. Use slash commands. **If commands not displaying, refresh your Discord or kick and add bot again.**`},
+    { name: `<:arr:878338531641139210> ${botname} | How to use?`, value: `> To take advantage of all the features of **${botname}**, go to **"Web Panel"** and read the commands.`},
+    { name: `<:arr:878338531641139210> ${botname} | Guild Settings`, value: `> To change the server settings, you have to go **"Web Panel"**.`},
+    { name: `<:arr:878338531641139210> ${botname} | Help`, value: `> For help: \`/help\``},
+    { name: `<:arr:878338531641139210> ${botname} | Saving datas`, value: `> We always store user data with encryption. For help with the **"Which datas we save?"**, first read to **[our Privacy Policy](${main.displaythings.cdn.privacypolicy})** and after that if you have a question, contact with developer. When adding the ${botname}, you will be deemed to have accepted our policies and **[Term Of Service](${main.displaythings.cdn.tos})**.\n> *Developer:* **${main.displaythings.info.ownerdcname}**`},
+    { name: `<:arr:878338531641139210> ${botname} | Open Source`, value: `> **This bot was coded by Ata İlhan Köktürk.** Please do not delete the reference part! You can only copy this infrastructure for personal use (for example: Training, Learning Code and Handler systems, etc.). If it is copied for profit, the legal process will be initiated! The most important reason it's open source code is to show that there's no malware in our bot. For more information:\n> *DM our Instagram address:* **@kokturkwebsoftware**`}
     )
     .setDescription(
       `**[Invite Bot](${main.displaythings.cdn.bot_invite})** | **[Support Server](${main.displaythings.cdn.bot_supserver})** | **[Website](https://${main.displaythings.info.bot_website}/)** | **[Term Of Service](${main.displaythings.cdn.tos})** | **[Privacy Policy](${main.displaythings.cdn.privacypolicy})**`
@@ -95,7 +73,7 @@ client.on("guildCreate", async (guild) => {
   const site = new MessageButton()
     .setStyle("LINK")
     .setLabel("Web Panel, Privacy Policy, Commands etc.")
-    .setEmoji(main.displaythings.emojis.emoj_main)
+    .setEmoji(main.displaythings.emojis.emoj_web)
     .setURL(`https://${main.displaythings.info.bot_website}/`);
 
   const oyver = new MessageButton()

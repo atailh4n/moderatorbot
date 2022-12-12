@@ -3,4 +3,3 @@ node_modules
 .cache
 moderatorbotgit.zip
 source/data/.env
-test.js

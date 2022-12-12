@@ -9,10 +9,10 @@
     "ban": {
         "noreason": "Sebep girilmemiş.",
         "errcd2": "err2_tr",
-        "errusg": "ban user(Kullanıcı) reason(Sebep) days(Gün sayısı 1-7)",
+        "errusg": "/yasakla {@kullanıcı} [sebep] [günsayısı(1-7 Gün)]",
         "errcd3": "err3_tr",
         "warncd1": "warn1_tr",
-        "warnusg": "ban user(Kullanıcı) reason(Sebep) day(Gün sayısı 1-7)",
+        "warnusg": "/yasakla {@kullanıcı} [sebep] [günsayısı(1-7 Gün)]",
         "successcd": "success_tr",
         "sucess_title": "Birileri sunucudan yasaklandı",
         "sucess_desc": "{{usrRes}} adındaki kullanıcı sebepsiz şekilde sonsuza kadar yasaklandı.",
@@ -23,12 +23,12 @@
     "delete": {
         "warn1": {
             "warncd": "warn1_tr",
-            "title": "/delete {amount(Miktar 1-100)} [@user (Kullanıcı)]",
+            "title": "/sil {miktar(1-100)} [@kullanıcı]",
             "desc": "Silme miktarı 100'den fazla olamaz."
         },
         "warn2": {
             "warncd": "warn1_tr",
-            "title": "/delete {amount(Miktar 1-100)} [@user (Kullanıcı)]",
+            "title": "/sil {miktar(1-100)} [@kullanıcı]",
             "desc": "Silme miktarı 1'den ufak olamaz."
         },
         "success1": {
@@ -41,7 +41,7 @@
         },
         "err1": {
             "errcd": "err1_tr",
-            "title": "/delete komutunda etiketlenen kullanıcı",
+            "title": "/sil komutunda etiketlenen kullanıcı",
             "desc": "Herhangi bir kulanıcı"
         }
     },
@@ -53,18 +53,31 @@
         },
         "warn1": {
             "warncd": "warn1_tr",
-            "title": "/safe link {link}",
+            "title": "/güvenli link {link}",
             "desc": "Linkiniz \"https:\", \"http:\" ya da \"/\" içermemelidir. Linkiniz yalın olmalıdır.\n\nÖrneğin: domain.com\nYanlış Kullanım: https://domain.com"
         },
         "warn2": {
             "warncd": "warn1_tr",
-            "title": "/safe user {@user}",
+            "title": "/güvenli kullanıcı {@kullanıcı}",
             "desc": "Bu bir bot. Bir kullanıcı değil."
         },
         "warn3": {
             "warncd": "warn1_tr",
-            "title": "/safe user {@user}",
+            "title": "/güvenli bot {@bot}",
             "desc": "Bu bir kullanıcı. Bir bot değil."
+        }
+    },
+    "unwanted": {
+        "errpermcd": "err4_tr",
+        "succ1": {
+            "succcd": "success_tr",
+            "title": "{{setname}} bölümüne eklendi",
+            "desc": "```{{objec}}```, **{{setname}}** listesine eklendi."
+        },
+        "warn1": {
+            "warncd": "warn1_tr",
+            "title": "/istenmeyen kelimeler {kelime}",
+            "desc": "Kelimeniz boşluk içermemelidir.\n\nÖrneğin: merhaba\nYanlış Kullanım: merh ab a"
         }
     }
 }

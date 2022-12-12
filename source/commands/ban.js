@@ -16,23 +16,47 @@ const guildConf = require("../models/GuildModel");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("ban")
+    .setNameLocalizations({
+      tr: "yasakla"
+    })
     .setDescription("Ban somebody from server")
+    .setDescriptionLocalizations({
+      tr: "Birilerini sunucudan yasakla"
+    })
     .addUserOption((option) =>
       option
         .setName("user")
+        .setNameLocalizations({
+          tr: "kullanıcı"
+        })
         .setDescription("Who to ban from server")
+        .setDescriptionLocalizations({
+          tr: "Sunucudan yasaklanacak kişi"
+        })
         .setRequired(true)
     )
     .addStringOption((option) =>
       option
         .setName("reason")
+        .setNameLocalizations({
+          tr: "sebep"
+        })
         .setDescription("Reason to ban")
+        .setDescriptionLocalizations({
+          tr: "Yasaklanma sebebi"
+        })
         .setRequired(false)
     )
     .addIntegerOption((option) =>
       option
         .setName("days")
+        .setNameLocalizations({
+          tr: "günsayısı"
+        })
         .setDescription("How much days for ban (1-7 Days)")
+        .setDescriptionLocalizations({
+          tr: "Kaç gün yasaklanacağını belirler (1-7 gün arası)"
+        })
         .setRequired(false)
     ),
 
